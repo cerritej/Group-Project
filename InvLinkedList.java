@@ -40,6 +40,16 @@ public class InvLinkedList {
 
      return list; 
  } 
+ 
+ public static InvLinkedList remove(int data) {
+	 Node temp = this.head;
+	 while(temp.next != data) {
+		 temp = temp.next;
+	 }
+	 temp.next = temp.next.next;
+	 return list;
+ }
+ 
  public static void printList(InvLinkedList list) 
  { 
      Node currNode = list.head; 
