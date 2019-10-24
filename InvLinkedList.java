@@ -1,5 +1,6 @@
 package package1;
 
+# (Testing git -  commit verstion)
 
 public class InvLinkedList { 
 
@@ -54,7 +55,7 @@ public class InvLinkedList {
  { 
      Node currNode = list.head; 
 
-     System.out.print("LinkedList: "); 
+     System.out.print("Inventory: "); 
 
      while (currNode != null) {         
          
