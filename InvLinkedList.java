@@ -1,7 +1,7 @@
 package package1;
 
 
-public class InventoryLinkedList { 
+public class InvLinkedList { 
 
  Node head;
 
@@ -20,7 +20,7 @@ public class InventoryLinkedList {
  } 
 
 
- public static InventoryLinkedList insert(InventoryLinkedList list, int data) 
+ public static InvLinkedList insert(InvLinkedList list, int data) 
  { 
      Node new_node = new Node(data); 
      new_node.next = null; 
@@ -40,5 +40,17 @@ public class InventoryLinkedList {
 
      return list; 
  } 
- 
+ public static void printList(InvLinkedList list) 
+ { 
+     Node currNode = list.head; 
+
+     System.out.print("LinkedList: "); 
+
+     while (currNode != null) {         
+         
+    	 System.out.print(currNode.data + " "); 
+
+         currNode = currNode.next; 
+     }
+ }
 }
