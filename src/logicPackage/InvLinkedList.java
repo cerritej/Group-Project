@@ -1,6 +1,7 @@
-//public class InvLinkedList {
+//package logicPackage;
 //
-// Node head;
+//public class InvLinkedList {
+//    private Node head;
 //
 // static class Node {
 //     int data;

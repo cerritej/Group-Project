@@ -1,15 +1,14 @@
-package pack1;
+package gamePackage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class primaryGUI extends JFrame {
+class primaryGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public primaryGUI() {
+	primaryGUI() {
 		super("Soul Survivor");
 
 		JPanel panel = new JPanel() {
