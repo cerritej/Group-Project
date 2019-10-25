@@ -1,6 +1,9 @@
 package pack1;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class primaryGUI extends JFrame {
 
@@ -52,8 +55,17 @@ public class primaryGUI extends JFrame {
 		add(panel, BorderLayout.CENTER);
 
 		setSize(1920, 1080);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setVisible(true);
+
+		KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+		Action escapeAction = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		};
+
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKey, "ESCAPE");
+		getRootPane().getActionMap().put("ESCAPE", escapeAction);
 	}
 }
