@@ -70,6 +70,7 @@ class primaryGUI extends JFrame {
 		// Opens and plays the assigned main menu audio clip.
 		audioClip.open(music);
 		audioClip.start();
+		audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
 		// Adds and center aligns the primary JPanel of the GUI.
 		add(panel, BorderLayout.CENTER);
