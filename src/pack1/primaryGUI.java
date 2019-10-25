@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 
-public class MainFrame extends JFrame {
+public class primaryGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
 	JButton secretBtn;
 	GridBagConstraints gbc = new GridBagConstraints();
 
-	public MainFrame() {
+	public primaryGUI() {
 		
 		super("Soul Survivor");
 		
