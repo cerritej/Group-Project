@@ -1,13 +1,8 @@
-//
-//
-//
-//
 //public class InvLinkedList {
 //
 // Node head;
 //
 // static class Node {
-//
 //     int data;
 //     Node next;
 //
@@ -35,7 +30,6 @@
 //
 //         last.next = new_node;
 //     }
-//
 //     return list;
 // }
 //
