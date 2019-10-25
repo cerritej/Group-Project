@@ -1,14 +1,17 @@
 package gamePackage;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 class primaryGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	primaryGUI() {
+	public primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		super("Soul Survivor");
 
 		JPanel panel = new JPanel() {
@@ -50,6 +53,14 @@ class primaryGUI extends JFrame {
 		mainMenu.setAlignmentY(CENTER_ALIGNMENT);
 		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
 		panel.add(mainMenu);
+
+		AudioInputStream music = AudioSystem.getAudioInputStream(new File("resources\\music\\Soul Survivor.wav"));
+		AudioFormat format = music.getFormat();
+		DataLine.Info info = new DataLine.Info(Clip.class, format);
+		Clip audioClip = (Clip) AudioSystem.getLine(info);
+
+		audioClip.open(music);
+		audioClip.start();
 
 		add(panel, BorderLayout.CENTER);
 
