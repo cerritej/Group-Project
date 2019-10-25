@@ -7,11 +7,24 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
+/***********************************************************************
+ * The primaryGUI class creates the components and general functions
+ * that can be displayed when the GUI is executed.
+ *
+ * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @version (10/25/18)
+ ***********************************************************************/
 class primaryGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+	/******************************************************************
+	 * Main method that runs the primaryGUI class.
+	 * @throws IOException
+	 * @throws UnsupportedAudioFileException
+	 * @throws LineUnavailableException
+	 ******************************************************************/
+	primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		super("Soul Survivor");
 
 		// Allows the panel to draw the specified components.
@@ -25,33 +38,33 @@ class primaryGUI extends JFrame {
 		LayoutManager overlay = new OverlayLayout(panel);
 		panel.setLayout(overlay);
 
-		// Creates and aligns the start button for the main menu.
-		JButton startBtn = new JButton("");
-		startBtn.setMaximumSize(new Dimension(25, 25));
-		startBtn.setAlignmentX(CENTER_ALIGNMENT);
-		startBtn.setAlignmentY(CENTER_ALIGNMENT);
-		panel.add(startBtn);
-
-		// Creates and aligns the load button for the main menu.
-		JButton loadBtn = new JButton("");
-		loadBtn.setMaximumSize(new Dimension(50, 50));
-		loadBtn.setAlignmentX(CENTER_ALIGNMENT);
-		loadBtn.setAlignmentY(CENTER_ALIGNMENT);
-		panel.add(loadBtn);
-
-		// Creates and aligns the options button for the main menu.
-		JButton optnBtn = new JButton("");
-		optnBtn.setMaximumSize(new Dimension(100, 100));
-		optnBtn.setAlignmentX(CENTER_ALIGNMENT);
-		optnBtn.setAlignmentY(CENTER_ALIGNMENT);
-		panel.add(optnBtn);
-
-		// Creates and aligns the credits button for the main menu.
-		JButton secretBtn = new JButton("");
-		secretBtn.setMaximumSize(new Dimension(200, 200));
-		secretBtn.setAlignmentX(CENTER_ALIGNMENT);
-		secretBtn.setAlignmentY(CENTER_ALIGNMENT);
-		panel.add(secretBtn);
+//		// Creates and aligns the start button for the main menu.
+//		JButton startBtn = new JButton("");
+//		startBtn.setMaximumSize(new Dimension(25, 25));
+//		startBtn.setAlignmentX(CENTER_ALIGNMENT);
+//		startBtn.setAlignmentY(CENTER_ALIGNMENT);
+//		panel.add(startBtn);
+//
+//		// Creates and aligns the load button for the main menu.
+//		JButton loadBtn = new JButton("");
+//		loadBtn.setMaximumSize(new Dimension(50, 50));
+//		loadBtn.setAlignmentX(CENTER_ALIGNMENT);
+//		loadBtn.setAlignmentY(CENTER_ALIGNMENT);
+//		panel.add(loadBtn);
+//
+//		// Creates and aligns the options button for the main menu.
+//		JButton optnBtn = new JButton("");
+//		optnBtn.setMaximumSize(new Dimension(100, 100));
+//		optnBtn.setAlignmentX(CENTER_ALIGNMENT);
+//		optnBtn.setAlignmentY(CENTER_ALIGNMENT);
+//		panel.add(optnBtn);
+//
+//		// Creates and aligns the credits button for the main menu.
+//		JButton secretBtn = new JButton("");
+//		secretBtn.setMaximumSize(new Dimension(200, 200));
+//		secretBtn.setAlignmentX(CENTER_ALIGNMENT);
+//		secretBtn.setAlignmentY(CENTER_ALIGNMENT);
+//		panel.add(secretBtn);
 
 		// Creates a background for the GUI using the assigned photo.
 		JLabel mainMenu = new JLabel("");

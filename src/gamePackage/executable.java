@@ -4,20 +4,25 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.IOException;
 
+/***********************************************************************
+ * The executable class contains the main method which allows the
+ * application to be executed.
+ *
+ * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @version (10/25/18)
+ ***********************************************************************/
 public class executable {
-	public static void main(String[]args) {
-		SwingUtilities.invokeLater(new Runnable() {
 
-			public void run() {
-				try {
-					new primaryGUI();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (UnsupportedAudioFileException e) {
-					e.printStackTrace();
-				} catch (LineUnavailableException e) {
-					e.printStackTrace();
-				}
+	/******************************************************************
+	 * Main method that runs the primaryGUI class.
+	 ******************************************************************/
+	public static void main(String[]args) {
+		SwingUtilities.invokeLater(() -> {
+			try {
+				new primaryGUI();
+			}
+			catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+				e.printStackTrace();
 			}
 		});
 	}

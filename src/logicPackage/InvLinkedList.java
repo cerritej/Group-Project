@@ -1,6 +1,13 @@
 //package logicPackage;
 //
-//public class InvLinkedList {
+///***********************************************************************
+// * The invLinkedList class contains the overall structure of the
+// * in-game inventory that will be present in the GUI.
+// *
+// * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+// * @version (10/25/18)
+// ***********************************************************************/
+//public class invLinkedList {
 //    private Node head;
 //
 // static class Node {
@@ -14,7 +21,7 @@
 //     }
 // }
 //
-// public static InvLinkedList insert(InvLinkedList list, int data)
+// public static invLinkedList insert(invLinkedList list, int data)
 // {
 //     Node new_node = new Node(data);
 //     new_node.next = null;
@@ -34,7 +41,7 @@
 //     return list;
 // }
 //
-// public static InvLinkedList remove(int data) {
+// public static invLinkedList remove(int data) {
 //	 Node temp = this.head;
 //	 while(temp.next != data) {
 //		 temp = temp.next;
@@ -43,7 +50,7 @@
 //	 return list;
 // }
 //
-// public static void printList(InvLinkedList list)
+// public static void printList(invLinkedList list)
 // {
 //     Node currNode = list.head;
 //     System.out.print("Inventory: ");
