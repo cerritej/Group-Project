@@ -27,44 +27,17 @@ class primaryGUI extends JFrame {
 	primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		super("Soul Survivor");
 
-		// Allows the panel to draw the specified components.
-		JPanel panel = new JPanel() {
-			public boolean isOptimizedDrawingEnabled() {
-				return false;
-			}
-		};
+		// Instantiates panels for the mainMenu.
+		JLayeredPane backgroundPane = new JLayeredPane();
+		JLayeredPane mainMenuButtonsPane = new JLayeredPane();
 
-		// Defines the layout for the GUI.
-		LayoutManager overlay = new OverlayLayout(panel);
-		panel.setLayout(overlay);
+		// Creates a layout manager to handle the organization.
+		LayoutManager overlayBackgroundPanel = new OverlayLayout(backgroundPane);
+		LayoutManager overlayButtonsPanel = new GridBagLayout();
 
-//		// Creates and aligns the start button for the main menu.
-//		JButton startBtn = new JButton("");
-//		startBtn.setMaximumSize(new Dimension(25, 25));
-//		startBtn.setAlignmentX(CENTER_ALIGNMENT);
-//		startBtn.setAlignmentY(CENTER_ALIGNMENT);
-//		panel.add(startBtn);
-//
-//		// Creates and aligns the load button for the main menu.
-//		JButton loadBtn = new JButton("");
-//		loadBtn.setMaximumSize(new Dimension(50, 50));
-//		loadBtn.setAlignmentX(CENTER_ALIGNMENT);
-//		loadBtn.setAlignmentY(CENTER_ALIGNMENT);
-//		panel.add(loadBtn);
-//
-//		// Creates and aligns the options button for the main menu.
-//		JButton optnBtn = new JButton("");
-//		optnBtn.setMaximumSize(new Dimension(100, 100));
-//		optnBtn.setAlignmentX(CENTER_ALIGNMENT);
-//		optnBtn.setAlignmentY(CENTER_ALIGNMENT);
-//		panel.add(optnBtn);
-//
-//		// Creates and aligns the credits button for the main menu.
-//		JButton secretBtn = new JButton("");
-//		secretBtn.setMaximumSize(new Dimension(200, 200));
-//		secretBtn.setAlignmentX(CENTER_ALIGNMENT);
-//		secretBtn.setAlignmentY(CENTER_ALIGNMENT);
-//		panel.add(secretBtn);
+		// Sets the layout for each of the panels.
+		backgroundPane.setLayout(overlayBackgroundPanel);
+		mainMenuButtonsPane.setLayout(overlayButtonsPanel);
 
 		// Creates a background for the GUI using the assigned photo.
 		JLabel mainMenu = new JLabel("");
@@ -72,7 +45,35 @@ class primaryGUI extends JFrame {
 		mainMenu.setAlignmentX(CENTER_ALIGNMENT);
 		mainMenu.setAlignmentY(CENTER_ALIGNMENT);
 		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
-		panel.add(mainMenu);
+		backgroundPane.add(mainMenu);
+
+		// Creates and aligns the start button for the main menu.
+		JButton startBtn = new JButton("");
+		startBtn.setSize(25, 25);
+		startBtn.setAlignmentX(CENTER_ALIGNMENT);
+		startBtn.setAlignmentY(CENTER_ALIGNMENT);
+		mainMenuButtonsPane.add(startBtn);
+
+		// Creates and aligns the load button for the main menu.
+		JButton loadBtn = new JButton("");
+		startBtn.setSize(25, 25);
+		loadBtn.setAlignmentX(CENTER_ALIGNMENT);
+		loadBtn.setAlignmentY(CENTER_ALIGNMENT);
+		mainMenuButtonsPane.add(loadBtn);
+
+		// Creates and aligns the options button for the main menu.
+		JButton optnBtn = new JButton("");
+		startBtn.setSize(25, 25);
+		optnBtn.setAlignmentX(CENTER_ALIGNMENT);
+		optnBtn.setAlignmentY(CENTER_ALIGNMENT);
+		mainMenuButtonsPane.add(optnBtn);
+
+		// Creates and aligns the credits button for the main menu.
+		JButton secretBtn = new JButton("");
+		startBtn.setSize(25, 25);
+		secretBtn.setAlignmentX(CENTER_ALIGNMENT);
+		secretBtn.setAlignmentY(CENTER_ALIGNMENT);
+		mainMenuButtonsPane.add(secretBtn);
 
 		// Allows an audio clip to play in the background on the main menu.
 		AudioInputStream music = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
@@ -85,11 +86,13 @@ class primaryGUI extends JFrame {
 		audioClip.start();
 		audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-		// Adds and center aligns the primary JPanel of the GUI.
-		add(panel, BorderLayout.CENTER);
+		// Adds and center aligns the primary JPanels of the GUI.
+		add(mainMenuButtonsPane);
+		add(backgroundPane);
 
 		// Defines the size and general appearance of the frame.
 		setSize(1920, 1080);
+		mainMenuButtonsPane.setSize(1920, 1080);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setVisible(true);
