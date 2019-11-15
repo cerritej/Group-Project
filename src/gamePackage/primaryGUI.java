@@ -32,48 +32,49 @@ class primaryGUI extends JFrame {
 		JLayeredPane mainMenuButtonsPane = new JLayeredPane();
 
 		// Creates a layout manager to handle the organization.
-		LayoutManager overlayBackgroundPanel = new OverlayLayout(backgroundPane);
-		LayoutManager overlayButtonsPanel = new GridBagLayout();
+		OverlayLayout overlayBackgroundPanel = new OverlayLayout(backgroundPane);
 
-		// Sets the layout for each of the panels.
+		// Sets the layouts for the  panels.
 		backgroundPane.setLayout(overlayBackgroundPanel);
-		mainMenuButtonsPane.setLayout(overlayButtonsPanel);
+		mainMenuButtonsPane.setLayout(null);
 
 		// Creates a background for the GUI using the assigned photo.
 		JLabel mainMenu = new JLabel("");
 		mainMenu.setMaximumSize(new Dimension(1920, 1080));
-		mainMenu.setAlignmentX(CENTER_ALIGNMENT);
-		mainMenu.setAlignmentY(CENTER_ALIGNMENT);
 		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
 
 		// Creates and aligns the start button for the main menu.
 		JButton startBtn = new JButton("");
-		startBtn.setSize(25, 25);
-		startBtn.setAlignmentX(CENTER_ALIGNMENT);
-		startBtn.setAlignmentY(CENTER_ALIGNMENT);
+		startBtn.setOpaque(true);
+		startBtn.setContentAreaFilled(false);
+		startBtn.setBorderPainted(true);
 		mainMenuButtonsPane.add(startBtn);
+		startBtn.setBounds(10, 905, 620, 75);
 
 		// Creates and aligns the load button for the main menu.
 		JButton loadBtn = new JButton("");
-		startBtn.setSize(25, 25);
-		loadBtn.setAlignmentX(CENTER_ALIGNMENT);
-		loadBtn.setAlignmentY(CENTER_ALIGNMENT);
+		loadBtn.setOpaque(true);
+		loadBtn.setContentAreaFilled(false);
+		loadBtn.setBorderPainted(true);
 		mainMenuButtonsPane.add(loadBtn);
+		loadBtn.setBounds(10, 1003, 570, 75);
 
 		// Creates and aligns the options button for the main menu.
-		JButton optnBtn = new JButton("");
-		startBtn.setSize(25, 25);
-		optnBtn.setAlignmentX(CENTER_ALIGNMENT);
-		optnBtn.setAlignmentY(CENTER_ALIGNMENT);
-		mainMenuButtonsPane.add(optnBtn);
+		JButton optionBtn = new JButton("");
+		optionBtn.setOpaque(true);
+		optionBtn.setContentAreaFilled(false);
+		optionBtn.setBorderPainted(true);
+		mainMenuButtonsPane.add(optionBtn);
+		optionBtn.setBounds(1500, 1003, 410, 75);
 
 		// Creates and aligns the credits button for the main menu.
 		JButton secretBtn = new JButton("");
-		startBtn.setSize(25, 25);
-		secretBtn.setAlignmentX(CENTER_ALIGNMENT);
-		secretBtn.setAlignmentY(CENTER_ALIGNMENT);
+		secretBtn.setOpaque(true);
+		secretBtn.setContentAreaFilled(false);
+		secretBtn.setBorderPainted(true);
 		mainMenuButtonsPane.add(secretBtn);
+		secretBtn.setBounds(10, 10, 970, 75);
 
 		// Allows an audio clip to play in the background on the main menu.
 		AudioInputStream music = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
@@ -86,7 +87,7 @@ class primaryGUI extends JFrame {
 		audioClip.start();
 		audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-		// Adds and center aligns the primary JPanels of the GUI.
+		// Adds the primary JPanels of the GUI.
 		add(mainMenuButtonsPane);
 		add(backgroundPane);
 
