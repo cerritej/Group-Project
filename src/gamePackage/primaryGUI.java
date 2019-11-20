@@ -22,6 +22,12 @@ class primaryGUI extends JFrame {
 	private JButton optionBtn = new JButton("");
 	private JButton secretBtn = new JButton("");
 	private JButton exitBtn = new JButton("");
+	private JButton openObjBtn = new JButton("");
+	private JButton closeObjBtn = new JButton("");
+	private JButton inspectObjBtn = new JButton("");
+	private JButton useObjBtn = new JButton("");
+	private JButton takeItemBtn = new JButton("");
+	private JButton beginDialogueBtn = new JButton("");
 
 	private static final long serialVersionUID = 1L;
 
@@ -71,18 +77,6 @@ class primaryGUI extends JFrame {
 
 		mainMenuButtonsPane.add(startBtn);
 		startBtn.setBounds(10, 905, 620, 75);
-		
-		// ---------- Exit Button ------------ //
-		exitBtn.setOpaque(true);
-		exitBtn.setContentAreaFilled(false);
-		exitBtn.setBorderPainted(false);
-		
-		mainMenuButtonsPane.add(exitBtn);
-		exitBtn.setBounds(10,905,620,75);
-		
-		// Functionality for the exit button
-		exitBtn.addActionListener(event -> System.exit(0));
-		
 		
 
 		// The functionality of the startBtn.
@@ -157,6 +151,66 @@ class primaryGUI extends JFrame {
 
 		mainMenuButtonsPane.add(secretBtn);
 		secretBtn.setBounds(10, 10, 970, 75);
+		
+		// ---------- Exit Button ------------ //
+		exitBtn.setOpaque(true);
+		exitBtn.setContentAreaFilled(false);
+		exitBtn.setBorderPainted(false);
+				
+		mainMenuButtonsPane.add(exitBtn);
+		exitBtn.setBounds(10,950,620,75);
+		
+		// Functionality for the exit button
+		exitBtn.addActionListener(event -> System.exit(0));
+		
+		
+		// ---------- Open Object Button ------------ //
+		openObjBtn.setOpaque(true);
+		openObjBtn.setContentAreaFilled(false);
+		openObjBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(openObjBtn); 
+		openObjBtn.setBounds(null); //TO DO
+		
+		// ---------- Close Object Button ------------ //
+		closeObjBtn.setOpaque(true);
+		closeObjBtn.setContentAreaFilled(false);
+		closeObjBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(closeObjBtn); 
+		closeObjBtn.setBounds(null); //TO DO
+		
+		// ---------- Inspect Object Button ------------ //
+		inspectObjBtn.setOpaque(true);
+		inspectObjBtn.setContentAreaFilled(false);
+		inspectObjBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(inspectObjBtn); 
+		inspectObjBtn.setBounds(null); //TO DO
+		
+		// ---------- Use Object Button ------------ //
+		useObjBtn.setOpaque(true);
+		useObjBtn.setContentAreaFilled(false);
+		useObjBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(useObjBtn); 
+		useObjBtn.setBounds(null); //TO DO		
+		
+		// ---------- Take Item Button ------------ //
+		takeItemBtn.setOpaque(true);
+		takeItemBtn.setContentAreaFilled(false);
+		takeItemBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(takeItemBtn); 
+		takeItemBtn.setBounds(null); //TO DO	
+		
+		// ---------- Begin Dialogue Button ------------ //
+		beginDialogueBtn.setOpaque(true);
+		beginDialogueBtn.setContentAreaFilled(false);
+		beginDialogueBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(beginDialogueBtn); 
+		beginDialogueBtn.setBounds(null); //TO DO
 
 		// Adds the primary JPanels of the GUI.
 		add(mainMenuButtonsPane);
