@@ -3,7 +3,6 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -96,9 +95,13 @@ class primaryGUI extends JFrame {
 				takeItemBtn.setVisible(true);
 				beginDialogueBtn.setVisible(true);
 
+				// Changes the background image to the game screen.
 				mainMenu.setIcon(new ImageIcon("resources\\photos\\introduction\\Intro Sequence 1.jpg"));
+
+				// Ends the main menu music.
 				audioClip.stop();
 
+				// Assigns an audio file to an AudioInputStream.
 				AudioInputStream music1 = null;
 				try {
 					music1 = AudioSystem.getAudioInputStream(new File("resources\\music\\Soul Survivor.wav"));
@@ -106,6 +109,7 @@ class primaryGUI extends JFrame {
 					e.printStackTrace();
 				}
 
+				// Gets information about the music track that has been assigned.
 				AudioFormat format1 = music1.getFormat();
 				DataLine.Info info1 = new DataLine.Info(Clip.class, format1);
 				Clip audioClip1 = null;
@@ -115,13 +119,14 @@ class primaryGUI extends JFrame {
 					e.printStackTrace();
 				}
 
-				// Opens and plays the updated music track for the primary game.
+				// Opens the updated music track for the game screen.
 				try {
 					audioClip1.open(music1);
 				} catch (LineUnavailableException | IOException e) {
 					e.printStackTrace();
 				}
 
+				// Starts and loops the updated music track for the game screen.
 				audioClip1.start();
 				audioClip1.loop(Clip.LOOP_CONTINUOUSLY);
 			}
