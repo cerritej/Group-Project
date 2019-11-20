@@ -89,7 +89,12 @@ class primaryGUI extends JFrame {
 				
 				//Overlay buttons
 				exitBtn.setVisible(true);
-				exitBtn.setOpaque(false); //So I can figure out the correct dimensions
+				openObjBtn.setVisible(true);
+				closeObjBtn.setVisible(true);
+				inspectObjBtn.setVisible(true);
+				useObjBtn.setVisible(true);
+				takeItemBtn.setVisible(true);
+				beginDialogueBtn.setVisible(true);
 
 				mainMenu.setIcon(new ImageIcon("resources\\photos\\introduction\\Intro Sequence 1.jpg"));
 				audioClip.stop();
@@ -156,6 +161,7 @@ class primaryGUI extends JFrame {
 		exitBtn.setOpaque(true);
 		exitBtn.setContentAreaFilled(false);
 		exitBtn.setBorderPainted(false);
+		exitBtn.setVisible(false);
 				
 		mainMenuButtonsPane.add(exitBtn);
 		exitBtn.setBounds(10,950,620,75);
@@ -168,6 +174,7 @@ class primaryGUI extends JFrame {
 		openObjBtn.setOpaque(true);
 		openObjBtn.setContentAreaFilled(false);
 		openObjBtn.setBorderPainted(false);
+		openObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(openObjBtn); 
 		openObjBtn.setBounds(null); //TO DO
@@ -176,6 +183,7 @@ class primaryGUI extends JFrame {
 		closeObjBtn.setOpaque(true);
 		closeObjBtn.setContentAreaFilled(false);
 		closeObjBtn.setBorderPainted(false);
+		closeObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(closeObjBtn); 
 		closeObjBtn.setBounds(null); //TO DO
@@ -184,6 +192,7 @@ class primaryGUI extends JFrame {
 		inspectObjBtn.setOpaque(true);
 		inspectObjBtn.setContentAreaFilled(false);
 		inspectObjBtn.setBorderPainted(false);
+		inspectObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(inspectObjBtn); 
 		inspectObjBtn.setBounds(null); //TO DO
@@ -192,6 +201,7 @@ class primaryGUI extends JFrame {
 		useObjBtn.setOpaque(true);
 		useObjBtn.setContentAreaFilled(false);
 		useObjBtn.setBorderPainted(false);
+		useObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(useObjBtn); 
 		useObjBtn.setBounds(null); //TO DO		
@@ -200,6 +210,7 @@ class primaryGUI extends JFrame {
 		takeItemBtn.setOpaque(true);
 		takeItemBtn.setContentAreaFilled(false);
 		takeItemBtn.setBorderPainted(false);
+		takeItemBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(takeItemBtn); 
 		takeItemBtn.setBounds(null); //TO DO	
@@ -208,6 +219,7 @@ class primaryGUI extends JFrame {
 		beginDialogueBtn.setOpaque(true);
 		beginDialogueBtn.setContentAreaFilled(false);
 		beginDialogueBtn.setBorderPainted(false);
+		beginDialogueBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(beginDialogueBtn); 
 		beginDialogueBtn.setBounds(null); //TO DO
