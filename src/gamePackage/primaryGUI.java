@@ -77,17 +77,17 @@ class primaryGUI extends JFrame {
 
 		mainMenuButtonsPane.add(startBtn);
 		startBtn.setBounds(10, 905, 620, 75);
-		
 
-		// The functionality of the startBtn.
+		// The functionality of the start button, changes all resources to the primary game screen.
 		startBtn.addActionListener(event -> {
 			if(event.getSource() == startBtn){
+				// Hide the main menu buttons.
 				startBtn.setVisible(false);
 				loadBtn.setVisible(false);
 				optionBtn.setVisible(false);
 				secretBtn.setVisible(false);
 				
-				//Overlay buttons
+				// Reveal the overlay buttons.
 				exitBtn.setVisible(true);
 				openObjBtn.setVisible(true);
 				closeObjBtn.setVisible(true);
@@ -158,6 +158,8 @@ class primaryGUI extends JFrame {
 		secretBtn.setBounds(10, 10, 970, 75);
 		
 		// ---------- Exit Button ------------ //
+
+		// Creates and aligns the exit button for the game screen.
 		exitBtn.setOpaque(true);
 		exitBtn.setContentAreaFilled(false);
 		exitBtn.setBorderPainted(false);
@@ -165,12 +167,13 @@ class primaryGUI extends JFrame {
 				
 		mainMenuButtonsPane.add(exitBtn);
 		exitBtn.setBounds(10,950,620,75);
-		
-		// Functionality for the exit button
+
+		// The functionality of the exit button, closes the game.
 		exitBtn.addActionListener(event -> System.exit(0));
-		
-		
+
 		// ---------- Open Object Button ------------ //
+
+		// Creates and aligns the open object button for the game screen.
 		openObjBtn.setOpaque(true);
 		openObjBtn.setContentAreaFilled(false);
 		openObjBtn.setBorderPainted(false);
@@ -180,6 +183,8 @@ class primaryGUI extends JFrame {
 		openObjBtn.setBounds(5,5,5,5); //TO DO
 		
 		// ---------- Close Object Button ------------ //
+
+		// Creates and aligns the close object button for the game screen.
 		closeObjBtn.setOpaque(true);
 		closeObjBtn.setContentAreaFilled(false);
 		closeObjBtn.setBorderPainted(false);
@@ -189,6 +194,8 @@ class primaryGUI extends JFrame {
 		closeObjBtn.setBounds(5,5,5,5); //TO DO
 		
 		// ---------- Inspect Object Button ------------ //
+
+		// Creates and aligns the inspect object button for the game screen.
 		inspectObjBtn.setOpaque(true);
 		inspectObjBtn.setContentAreaFilled(false);
 		inspectObjBtn.setBorderPainted(false);
@@ -197,7 +204,9 @@ class primaryGUI extends JFrame {
 		mainMenuButtonsPane.add(inspectObjBtn); 
 		inspectObjBtn.setBounds(5,5,5,5); //TO DO
 		
-		// ---------- Use Object Button ------------ //
+		// ---------- Use Item Button ------------ //
+
+		// Creates and aligns the use item button for the game screen.
 		useObjBtn.setOpaque(true);
 		useObjBtn.setContentAreaFilled(false);
 		useObjBtn.setBorderPainted(false);
@@ -207,6 +216,8 @@ class primaryGUI extends JFrame {
 		useObjBtn.setBounds(5,5,5,5); //TO DO		
 		
 		// ---------- Take Item Button ------------ //
+
+		// Creates and aligns the take item button for the game screen.
 		takeItemBtn.setOpaque(true);
 		takeItemBtn.setContentAreaFilled(false);
 		takeItemBtn.setBorderPainted(false);
@@ -216,6 +227,8 @@ class primaryGUI extends JFrame {
 		takeItemBtn.setBounds(5,5,5,5); //TO DO	
 		
 		// ---------- Begin Dialogue Button ------------ //
+
+		// Creates and aligns the begin dialogue button for the game screen.
 		beginDialogueBtn.setOpaque(true);
 		beginDialogueBtn.setContentAreaFilled(false);
 		beginDialogueBtn.setBorderPainted(false);
