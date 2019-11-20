@@ -51,7 +51,7 @@ public class invLinkedList {
      // If head node itself holds the key to be deleted 
 
      if (currNode != null && currNode.data == key) { 
-         list.head = currNode.next; // Changed head 
+         list.head = currNode.next;  
 
          System.out.println(key + " found and deleted"); 
 
@@ -78,7 +78,7 @@ public class invLinkedList {
      // CASE 3: The key is not present 
     
      if (currNode == null) { 
-         // Display the message 
+         
          System.out.println(key + " not found"); 
      } 
 

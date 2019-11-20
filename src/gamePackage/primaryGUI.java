@@ -3,6 +3,7 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ class primaryGUI extends JFrame {
 	private JButton loadBtn = new JButton("");
 	private JButton optionBtn = new JButton("");
 	private JButton secretBtn = new JButton("");
+	private JButton exitBtn = new JButton("");
 
 	private static final long serialVersionUID = 1L;
 
@@ -69,6 +71,19 @@ class primaryGUI extends JFrame {
 
 		mainMenuButtonsPane.add(startBtn);
 		startBtn.setBounds(10, 905, 620, 75);
+		
+		// ---------- Exit Button ------------ //
+		exitBtn.setOpaque(true);
+		exitBtn.setContentAreaFilled(false);
+		exitBtn.setBorderPainted(false);
+		
+		mainMenuButtonsPane.add(exitBtn);
+		exitBtn.setBounds(10,905,620,75);
+		
+		// Functionality for the exit button
+		exitBtn.addActionListener(event -> System.exit(0));
+		
+		
 
 		// The functionality of the startBtn.
 		startBtn.addActionListener(event -> {
@@ -77,6 +92,10 @@ class primaryGUI extends JFrame {
 				loadBtn.setVisible(false);
 				optionBtn.setVisible(false);
 				secretBtn.setVisible(false);
+				
+				//Overlay buttons
+				exitBtn.setVisible(true);
+				exitBtn.setOpaque(false); //So I can figure out the correct dimensions
 
 				mainMenu.setIcon(new ImageIcon("resources\\photos\\introduction\\Intro Sequence 1.jpg"));
 				audioClip.stop();
