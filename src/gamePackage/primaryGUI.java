@@ -177,7 +177,7 @@ class primaryGUI extends JFrame {
 		openObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(openObjBtn); 
-		openObjBtn.setBounds(null); //TO DO
+		openObjBtn.setBounds(5,5,5,5); //TO DO
 		
 		// ---------- Close Object Button ------------ //
 		closeObjBtn.setOpaque(true);
@@ -186,7 +186,7 @@ class primaryGUI extends JFrame {
 		closeObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(closeObjBtn); 
-		closeObjBtn.setBounds(null); //TO DO
+		closeObjBtn.setBounds(5,5,5,5); //TO DO
 		
 		// ---------- Inspect Object Button ------------ //
 		inspectObjBtn.setOpaque(true);
@@ -195,7 +195,7 @@ class primaryGUI extends JFrame {
 		inspectObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(inspectObjBtn); 
-		inspectObjBtn.setBounds(null); //TO DO
+		inspectObjBtn.setBounds(5,5,5,5); //TO DO
 		
 		// ---------- Use Object Button ------------ //
 		useObjBtn.setOpaque(true);
@@ -204,7 +204,7 @@ class primaryGUI extends JFrame {
 		useObjBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(useObjBtn); 
-		useObjBtn.setBounds(null); //TO DO		
+		useObjBtn.setBounds(5,5,5,5); //TO DO		
 		
 		// ---------- Take Item Button ------------ //
 		takeItemBtn.setOpaque(true);
@@ -213,7 +213,7 @@ class primaryGUI extends JFrame {
 		takeItemBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(takeItemBtn); 
-		takeItemBtn.setBounds(null); //TO DO	
+		takeItemBtn.setBounds(5,5,5,5); //TO DO	
 		
 		// ---------- Begin Dialogue Button ------------ //
 		beginDialogueBtn.setOpaque(true);
@@ -222,7 +222,7 @@ class primaryGUI extends JFrame {
 		beginDialogueBtn.setVisible(false);
 		
 		mainMenuButtonsPane.add(beginDialogueBtn); 
-		beginDialogueBtn.setBounds(null); //TO DO
+		beginDialogueBtn.setBounds(5,5,5,5); //TO DO
 
 		// Adds the primary JPanels of the GUI.
 		add(mainMenuButtonsPane);
