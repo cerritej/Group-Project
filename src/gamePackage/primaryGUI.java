@@ -16,6 +16,9 @@ import java.io.IOException;
 
 class primaryGUI extends JFrame {
 
+	/* A dynamic value to help specify gameState conditions. */
+	private int gameState = 0;
+
 	/* Buttons for the main menu */
 	private JButton startBtn = new JButton("");
 	private JButton loadBtn = new JButton("");
@@ -88,12 +91,15 @@ class primaryGUI extends JFrame {
 		// The functionality of the start button, changes all resources to the primary game screen.
 		startBtn.addActionListener(beginGame -> {
 			if(beginGame.getSource() == startBtn){
+				// Acknowledges the gameState has changed to the game screen.
+				gameState = 1;
+
 				// Hide the main menu buttons.
 				startBtn.setVisible(false);
 				loadBtn.setVisible(false);
 				optionBtn.setVisible(false);
 				secretBtn.setVisible(false);
-				
+
 				// Reveal the overlay buttons.
 				exitBtn.setVisible(true);
 				openObjBtn.setVisible(true);
@@ -265,15 +271,24 @@ class primaryGUI extends JFrame {
 			confirmBtn.setVisible(false);
 			cancelBtn.setVisible(false);
 
-            if(!startBtn.isVisible() && !loadBtn.isVisible() && !optionBtn.isVisible() && !secretBtn.isVisible()) {
-                exitBtn.setVisible(true);
-                openObjBtn.setVisible(true);
-                closeObjBtn.setVisible(true);
-                inspectObjBtn.setVisible(true);
-                useObjBtn.setVisible(true);
-                takeItemBtn.setVisible(true);
-                beginDialogueBtn.setVisible(true);
-            }
+			// Performs the correct cancel button operations for main menu.
+			if(gameState == 0) {
+				startBtn.setVisible(true);
+				loadBtn.setVisible(true);
+				optionBtn.setVisible(true);
+				secretBtn.setVisible(true);
+			}
+
+			// Performs the correct cancel button operations for game screen.
+			if(gameState == 1) {
+				exitBtn.setVisible(true);
+				openObjBtn.setVisible(true);
+				closeObjBtn.setVisible(true);
+				inspectObjBtn.setVisible(true);
+				useObjBtn.setVisible(true);
+				takeItemBtn.setVisible(true);
+				beginDialogueBtn.setVisible(true);
+			}
 		});
 
 		// ---------- Open Object Button ------------ //
@@ -287,7 +302,7 @@ class primaryGUI extends JFrame {
 		// Adds the open object button.
 		gameButtonsPane.add(openObjBtn);
 		openObjBtn.setBounds(131,925,175,130);
-		
+
 		// ---------- Close Object Button ------------ //
 
 		// Creates and aligns the close object button for the game screen.
@@ -299,7 +314,7 @@ class primaryGUI extends JFrame {
 		// Adds the close object button.
 		gameButtonsPane.add(closeObjBtn);
 		closeObjBtn.setBounds(332,925,175,130);
-		
+
 		// ---------- Inspect Object Button ------------ //
 
 		// Creates and aligns the inspect object button for the game screen.
@@ -311,7 +326,7 @@ class primaryGUI extends JFrame {
 		// Adds the inspect object button.
 		gameButtonsPane.add(inspectObjBtn);
 		inspectObjBtn.setBounds(532,924,175,130);
-		
+
 		// ---------- Use Item Button ------------ //
 
 		// Creates and aligns the use item button for the game screen.
@@ -323,7 +338,7 @@ class primaryGUI extends JFrame {
 		// Adds the use item button.
 		gameButtonsPane.add(useObjBtn);
 		useObjBtn.setBounds(730,924,175,130);
-		
+
 		// ---------- Take Item Button ------------ //
 
 		// Creates and aligns the take item button for the game screen.
@@ -335,7 +350,7 @@ class primaryGUI extends JFrame {
 		// Adds the take item button.
 		gameButtonsPane.add(takeItemBtn);
 		takeItemBtn.setBounds(927,923,175,130);
-		
+
 		// ---------- Begin Dialogue Button ------------ //
 
 		// Creates and aligns the begin dialogue button for the game screen.
@@ -368,13 +383,24 @@ class primaryGUI extends JFrame {
 				confirmBtn.setVisible(true);
 				cancelBtn.setVisible(true);
 
-				exitBtn.setVisible(false);
-				openObjBtn.setVisible(false);
-				closeObjBtn.setVisible(false);
-				inspectObjBtn.setVisible(false);
-				useObjBtn.setVisible(false);
-				takeItemBtn.setVisible(false);
-				beginDialogueBtn.setVisible(false);
+				// Performs the correct cancel button operations for main menu.
+				if (gameState == 0) {
+					startBtn.setVisible(false);
+					loadBtn.setVisible(false);
+					optionBtn.setVisible(false);
+					secretBtn.setVisible(false);
+				}
+
+				// Performs the correct cancel button operations for game screen.
+				if (gameState == 1) {
+					exitBtn.setVisible(false);
+					openObjBtn.setVisible(false);
+					closeObjBtn.setVisible(false);
+					inspectObjBtn.setVisible(false);
+					useObjBtn.setVisible(false);
+					takeItemBtn.setVisible(false);
+					beginDialogueBtn.setVisible(false);
+				}
 			}
 		};
 
