@@ -266,13 +266,15 @@ class primaryGUI extends JFrame {
 			confirmBtn.setVisible(false);
 			cancelBtn.setVisible(false);
 
-			exitBtn.setVisible(true);
-			openObjBtn.setVisible(true);
-			closeObjBtn.setVisible(true);
-			inspectObjBtn.setVisible(true);
-			useObjBtn.setVisible(true);
-			takeItemBtn.setVisible(true);
-			beginDialogueBtn.setVisible(true);
+            if(!startBtn.isVisible() && !loadBtn.isVisible() && !optionBtn.isVisible() && !secretBtn.isVisible()) {
+                exitBtn.setVisible(true);
+                openObjBtn.setVisible(true);
+                closeObjBtn.setVisible(true);
+                inspectObjBtn.setVisible(true);
+                useObjBtn.setVisible(true);
+                takeItemBtn.setVisible(true);
+                beginDialogueBtn.setVisible(true);
+            }
 		});
 
 		// ---------- Open Object Button ------------ //
