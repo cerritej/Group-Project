@@ -77,7 +77,23 @@ class primaryGUI extends JFrame {
 		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
 
-		// ---------- Start Button ------------ //
+        // ---------- Pause Message ------------ //
+
+        // Creates and aligns the pause message.
+        JLabel pauseMessage = new JLabel();
+        pauseMessage.setOpaque(true);
+		pauseMessage.setFont(new Font("Dialog", Font.BOLD, 20));
+		pauseMessage.setText("WOULD YOU LIKE TO QUIT?");
+		pauseMessage.setBackground(Color.black);
+        pauseMessage.setForeground(Color.red);
+
+        gameButtonsPane.add(pauseMessage);
+        pauseMessage.setHorizontalAlignment(SwingConstants.CENTER);
+        pauseMessage.setVerticalAlignment(SwingConstants.CENTER);
+        pauseMessage.setBounds(1400,875,405,40);
+        pauseMessage.setVisible(false);
+
+        // ---------- Start Button ------------ //
 
 		// Creates and aligns the start button for the main menu.
 		startBtn.setOpaque(true);
@@ -227,6 +243,8 @@ class primaryGUI extends JFrame {
 			useObjBtn.setVisible(false);
 			takeItemBtn.setVisible(false);
 			beginDialogueBtn.setVisible(false);
+
+			pauseMessage.setVisible(true);
 		});
 
 		// ---------- Confirm Button ------------ //
@@ -277,6 +295,8 @@ class primaryGUI extends JFrame {
 				loadBtn.setVisible(true);
 				optionBtn.setVisible(true);
 				secretBtn.setVisible(true);
+				
+				pauseMessage.setVisible(false);
 			}
 
 			// Performs the correct cancel button operations for game screen.
@@ -288,7 +308,10 @@ class primaryGUI extends JFrame {
 				useObjBtn.setVisible(true);
 				takeItemBtn.setVisible(true);
 				beginDialogueBtn.setVisible(true);
-			}
+
+                pauseMessage.setVisible(false);
+
+            }
 		});
 
 		// ---------- Open Object Button ------------ //
@@ -389,7 +412,9 @@ class primaryGUI extends JFrame {
 					loadBtn.setVisible(false);
 					optionBtn.setVisible(false);
 					secretBtn.setVisible(false);
-				}
+
+                    pauseMessage.setVisible(true);
+                }
 
 				// Performs the correct cancel button operations for game screen.
 				if (gameState == 1) {
@@ -400,6 +425,8 @@ class primaryGUI extends JFrame {
 					useObjBtn.setVisible(false);
 					takeItemBtn.setVisible(false);
 					beginDialogueBtn.setVisible(false);
+
+					pauseMessage.setVisible(true);
 				}
 			}
 		};
