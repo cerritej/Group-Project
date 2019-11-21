@@ -32,8 +32,8 @@ class primaryGUI extends JFrame {
 	private JButton beginDialogueBtn = new JButton("");
 
 	/* Buttons for the exiting */
-	private JButton confirmBtn = new JButton("");
-	private JButton cancelBtn = new JButton("");
+	private JButton confirmBtn = new JButton("Confirm");
+	private JButton cancelBtn = new JButton("Cancel");
 
 	private static final long serialVersionUID = 1L;
 
@@ -81,6 +81,7 @@ class primaryGUI extends JFrame {
 		startBtn.setContentAreaFilled(false);
 		startBtn.setBorderPainted(false);
 
+		// Adds the start button.
 		gameButtonsPane.add(startBtn);
 		startBtn.setBounds(10, 905, 620, 75);
 
@@ -168,6 +169,7 @@ class primaryGUI extends JFrame {
 		loadBtn.setContentAreaFilled(false);
 		loadBtn.setBorderPainted(false);
 
+		// Adds the load button.
 		gameButtonsPane.add(loadBtn);
 		loadBtn.setBounds(10, 1003, 570, 75);
 
@@ -178,6 +180,7 @@ class primaryGUI extends JFrame {
 		optionBtn.setContentAreaFilled(false);
 		optionBtn.setBorderPainted(false);
 
+		// Adds the option button.
 		gameButtonsPane.add(optionBtn);
 		optionBtn.setBounds(1500, 1003, 410, 75);
 
@@ -188,6 +191,7 @@ class primaryGUI extends JFrame {
 		secretBtn.setContentAreaFilled(false);
 		secretBtn.setBorderPainted(false);
 
+		// Adds the credits button.
 		gameButtonsPane.add(secretBtn);
 		secretBtn.setBounds(10, 10, 970, 75);
 
@@ -199,12 +203,57 @@ class primaryGUI extends JFrame {
 		exitBtn.setBorderPainted(false);
 		exitBtn.setVisible(false);
 
+		// Adds the exit button.
 		gameButtonsPane.add(exitBtn);
 		exitBtn.setBounds(28,950,80,80);
 
+		// ---------- Confirm Button ------------ //
+
+		// Creates and aligns the confirm button for the game screen.
+		confirmBtn.setOpaque(true);
+		confirmBtn.setContentAreaFilled(true);
+		confirmBtn.setBorderPainted(false);
+		confirmBtn.setVisible(false);
+
+		// Defines the style of confirm button for the game screen.
+		confirmBtn.setBackground(Color.black);
+		confirmBtn.setForeground(Color.white);
+		confirmBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		// Adds the confirm button.
+		gameButtonsPane.add(confirmBtn);
+		confirmBtn.setBounds(1400,925,175,100);
+
+		// ---------- Cancel Button ------------ //
+
+		// Creates and aligns the cancel button for the game screen.
+		cancelBtn.setOpaque(true);
+		cancelBtn.setContentAreaFilled(true);
+		cancelBtn.setBorderPainted(false);
+		cancelBtn.setVisible(false);
+
+		// Defines the style of cancel button for the game screen.
+		cancelBtn.setBackground(Color.black);
+		cancelBtn.setForeground(Color.white);
+		cancelBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		// Adds the cancel button.
+		gameButtonsPane.add(cancelBtn);
+		cancelBtn.setBounds(1630,925,175,100);
+
 		// The functionality of the exit button, closes the game.
-		exitBtn.addActionListener(event -> {
+		exitBtn.addActionListener(exitMenuDisplay -> {
+			confirmBtn.setVisible(true);
+			cancelBtn.setVisible(true);
+		});
+
+		confirmBtn.addActionListener(exitGame -> {
 			System.exit(0);
+		});
+
+		cancelBtn.addActionListener(exitMenuOff -> {
+			confirmBtn.setVisible(false);
+			cancelBtn.setVisible(false);
 		});
 
 		// ---------- Open Object Button ------------ //
@@ -214,9 +263,10 @@ class primaryGUI extends JFrame {
 		openObjBtn.setContentAreaFilled(false);
 		openObjBtn.setBorderPainted(true);
 		openObjBtn.setVisible(false);
-		
+
+		// Adds the open object button.
 		gameButtonsPane.add(openObjBtn);
-		openObjBtn.setBounds(130,925,176,130);
+		openObjBtn.setBounds(131,925,175,130);
 		
 		// ---------- Close Object Button ------------ //
 
@@ -225,7 +275,8 @@ class primaryGUI extends JFrame {
 		closeObjBtn.setContentAreaFilled(false);
 		closeObjBtn.setBorderPainted(true);
 		closeObjBtn.setVisible(false);
-		
+
+		// Adds the close object button.
 		gameButtonsPane.add(closeObjBtn);
 		closeObjBtn.setBounds(332,925,175,130);
 		
@@ -236,7 +287,8 @@ class primaryGUI extends JFrame {
 		inspectObjBtn.setContentAreaFilled(false);
 		inspectObjBtn.setBorderPainted(true);
 		inspectObjBtn.setVisible(false);
-		
+
+		// Adds the inspect object button.
 		gameButtonsPane.add(inspectObjBtn);
 		inspectObjBtn.setBounds(532,924,175,130);
 		
@@ -247,7 +299,8 @@ class primaryGUI extends JFrame {
 		useObjBtn.setContentAreaFilled(false);
 		useObjBtn.setBorderPainted(true);
 		useObjBtn.setVisible(false);
-		
+
+		// Adds the use item button.
 		gameButtonsPane.add(useObjBtn);
 		useObjBtn.setBounds(730,924,175,130);
 		
@@ -258,7 +311,8 @@ class primaryGUI extends JFrame {
 		takeItemBtn.setContentAreaFilled(false);
 		takeItemBtn.setBorderPainted(true);
 		takeItemBtn.setVisible(false);
-		
+
+		// Adds the take item button.
 		gameButtonsPane.add(takeItemBtn);
 		takeItemBtn.setBounds(927,923,175,130);
 		
@@ -269,7 +323,8 @@ class primaryGUI extends JFrame {
 		beginDialogueBtn.setContentAreaFilled(false);
 		beginDialogueBtn.setBorderPainted(true);
 		beginDialogueBtn.setVisible(false);
-		
+
+		// Adds the begin dialogue button.
 		gameButtonsPane.add(beginDialogueBtn);
 		beginDialogueBtn.setBounds(1124,923,175,130);
 
@@ -288,7 +343,8 @@ class primaryGUI extends JFrame {
 		KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
 		Action escapeAction = new AbstractAction() {
 			public void actionPerformed(ActionEvent event) {
-				System.exit(0);
+				confirmBtn.setVisible(true);
+				cancelBtn.setVisible(true);
 			}
 		};
 
