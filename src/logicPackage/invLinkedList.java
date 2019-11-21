@@ -1,4 +1,4 @@
-
+package logicPackage;
 
 /***********************************************************************
  * The invLinkedList class contains the overall structure of the
