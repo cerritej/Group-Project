@@ -13,6 +13,7 @@ import java.io.IOException;
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (10/25/18)
  ***********************************************************************/
+
 class primaryGUI extends JFrame {
 
 	/* Buttons for the main menu */
@@ -240,9 +241,7 @@ class primaryGUI extends JFrame {
 		confirmBtn.setBounds(1400,925,175,100);
 
 		// The functionality of the confirm button, closes the game.
-		confirmBtn.addActionListener(exitGame -> {
-			System.exit(0);
-		});
+		confirmBtn.addActionListener(exitGame -> System.exit(0));
 
 		// ---------- Cancel Button ------------ //
 
