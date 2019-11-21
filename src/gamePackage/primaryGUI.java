@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.security.Key;
 
 /***********************************************************************
  * The primaryGUI class creates the components and general functions
@@ -86,8 +85,8 @@ class primaryGUI extends JFrame {
 		startBtn.setBounds(10, 905, 620, 75);
 
 		// The functionality of the start button, changes all resources to the primary game screen.
-		startBtn.addActionListener(event -> {
-			if(event.getSource() == startBtn){
+		startBtn.addActionListener(beginGame -> {
+			if(beginGame.getSource() == startBtn){
 				// Hide the main menu buttons.
 				startBtn.setVisible(false);
 				loadBtn.setVisible(false);
@@ -138,7 +137,7 @@ class primaryGUI extends JFrame {
 				audioClip1.start();
 				audioClip1.loop(Clip.LOOP_CONTINUOUSLY);
 
-				// Performs an exit action when the escape key is pressed on the keyboard.
+				// Changes the intro sequence frame with each press of the enter key.
 				KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
 				Action enterAction = new AbstractAction() {
 					// Initializes the intro sequence frame count.
@@ -146,8 +145,10 @@ class primaryGUI extends JFrame {
 
 					public void actionPerformed(ActionEvent event) {
 						// Increments through each intro sequence frame.
-						counter++;
-						mainMenu.setIcon(new ImageIcon("resources\\ui\\introduction\\Intro Sequence " + counter + ".jpg"));
+						if(!confirmBtn.isVisible() && !cancelBtn.isVisible()) {
+							counter++;
+							mainMenu.setIcon(new ImageIcon("resources\\ui\\introduction\\Intro Sequence " + counter + ".jpg"));
+						}
 
 						// Stops incrementing and begins actual game with first location.
 						if(counter > 5){
@@ -207,6 +208,20 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(exitBtn);
 		exitBtn.setBounds(28,950,80,80);
 
+		// The functionality of the exit button, brings up exit choices.
+		exitBtn.addActionListener(exitMenuDisplay -> {
+			confirmBtn.setVisible(true);
+			cancelBtn.setVisible(true);
+
+			exitBtn.setVisible(false);
+			openObjBtn.setVisible(false);
+			closeObjBtn.setVisible(false);
+			inspectObjBtn.setVisible(false);
+			useObjBtn.setVisible(false);
+			takeItemBtn.setVisible(false);
+			beginDialogueBtn.setVisible(false);
+		});
+
 		// ---------- Confirm Button ------------ //
 
 		// Creates and aligns the confirm button for the game screen.
@@ -223,6 +238,11 @@ class primaryGUI extends JFrame {
 		// Adds the confirm button.
 		gameButtonsPane.add(confirmBtn);
 		confirmBtn.setBounds(1400,925,175,100);
+
+		// The functionality of the confirm button, closes the game.
+		confirmBtn.addActionListener(exitGame -> {
+			System.exit(0);
+		});
 
 		// ---------- Cancel Button ------------ //
 
@@ -241,19 +261,18 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(cancelBtn);
 		cancelBtn.setBounds(1630,925,175,100);
 
-		// The functionality of the exit button, closes the game.
-		exitBtn.addActionListener(exitMenuDisplay -> {
-			confirmBtn.setVisible(true);
-			cancelBtn.setVisible(true);
-		});
-
-		confirmBtn.addActionListener(exitGame -> {
-			System.exit(0);
-		});
-
-		cancelBtn.addActionListener(exitMenuOff -> {
+		// The functionality of the cancel button, resumes game.
+		cancelBtn.addActionListener(resumeGame -> {
 			confirmBtn.setVisible(false);
 			cancelBtn.setVisible(false);
+
+			exitBtn.setVisible(true);
+			openObjBtn.setVisible(true);
+			closeObjBtn.setVisible(true);
+			inspectObjBtn.setVisible(true);
+			useObjBtn.setVisible(true);
+			takeItemBtn.setVisible(true);
+			beginDialogueBtn.setVisible(true);
 		});
 
 		// ---------- Open Object Button ------------ //
@@ -339,12 +358,22 @@ class primaryGUI extends JFrame {
 		setUndecorated(true);
 		setVisible(true);
 
-		// Performs an exit action when the escape key is pressed on the keyboard.
+		// ---------- Keyboard Interactions ------------ //
+
+		// Displays the exit game button options.
 		KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
 		Action escapeAction = new AbstractAction() {
 			public void actionPerformed(ActionEvent event) {
 				confirmBtn.setVisible(true);
 				cancelBtn.setVisible(true);
+
+				exitBtn.setVisible(false);
+				openObjBtn.setVisible(false);
+				closeObjBtn.setVisible(false);
+				inspectObjBtn.setVisible(false);
+				useObjBtn.setVisible(false);
+				takeItemBtn.setVisible(false);
+				beginDialogueBtn.setVisible(false);
 			}
 		};
 
