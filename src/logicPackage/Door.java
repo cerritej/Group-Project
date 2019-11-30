@@ -9,11 +9,9 @@ public class Door {
 	public String key;
 	
 	public Door(int status, String name, String key) {
-		
 		this.status = status;
 		this.name = name;
 		this.key = key;
-		
 	}
 	
 	public void unlockDoor() {
@@ -29,6 +27,7 @@ public class Door {
 			unlockDoor();
 			//TO DO: print "door unlocked" in GUI terminal
 		}
+
 		else {
 			//TO DO: print "this door seems to be locked, I'll need a key to get past" in GUI terminal
 		}
