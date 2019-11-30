@@ -50,15 +50,15 @@ class primaryGUI extends JFrame {
 		super("Soul Survivor");
 
 		// Allows an audio clip to play in the background on the main menu.
-		AudioInputStream music = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
-		AudioFormat format = music.getFormat();
-		DataLine.Info info = new DataLine.Info(Clip.class, format);
-		Clip audioClip = (Clip) AudioSystem.getLine(info);
+		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
+		AudioFormat formatMusicMainMenu = musicMainMenu.getFormat();
+		DataLine.Info infoMusicMainMenu = new DataLine.Info(Clip.class, formatMusicMainMenu);
+		Clip audioClipMusicMainMenu = (Clip) AudioSystem.getLine(infoMusicMainMenu);
 
 		// Opens and plays the assigned main menu audio clip.
-		audioClip.open(music);
-		audioClip.start();
-		audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+		audioClipMusicMainMenu.open(musicMainMenu);
+		audioClipMusicMainMenu.start();
+		audioClipMusicMainMenu.loop(Clip.LOOP_CONTINUOUSLY);
 
 		// Instantiates panels for the mainMenu.
 		JLayeredPane backgroundPane = new JLayeredPane();
@@ -77,23 +77,23 @@ class primaryGUI extends JFrame {
 		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
 
-        // ---------- Pause Message ------------ //
+		// ---------- Pause Message ------------ //
 
-        // Creates and aligns the pause message.
-        JLabel pauseMessage = new JLabel();
-        pauseMessage.setOpaque(true);
+		// Creates and aligns the pause message.
+		JLabel pauseMessage = new JLabel();
+		pauseMessage.setOpaque(true);
 		pauseMessage.setFont(new Font("Dialog", Font.BOLD, 20));
 		pauseMessage.setText("WOULD YOU LIKE TO QUIT?");
 		pauseMessage.setBackground(Color.black);
-        pauseMessage.setForeground(Color.red);
+		pauseMessage.setForeground(Color.red);
 
-        gameButtonsPane.add(pauseMessage);
-        pauseMessage.setHorizontalAlignment(SwingConstants.CENTER);
-        pauseMessage.setVerticalAlignment(SwingConstants.CENTER);
-        pauseMessage.setBounds(1400,875,405,40);
-        pauseMessage.setVisible(false);
+		gameButtonsPane.add(pauseMessage);
+		pauseMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		pauseMessage.setVerticalAlignment(SwingConstants.CENTER);
+		pauseMessage.setBounds(1400,875,405,40);
+		pauseMessage.setVisible(false);
 
-        // ---------- Start Button ------------ //
+		// ---------- Start Button ------------ //
 
 		// Creates and aligns the start button for the main menu.
 		startBtn.setOpaque(true);
@@ -129,36 +129,45 @@ class primaryGUI extends JFrame {
 				mainMenu.setIcon(new ImageIcon("resources\\ui\\introduction\\Intro Sequence 1.jpg"));
 
 				// Ends the main menu music.
-				audioClip.stop();
+				audioClipMusicMainMenu.stop();
 
 				// Assigns an audio file to an AudioInputStream.
-				AudioInputStream music1 = null;
-				try {
-					music1 = AudioSystem.getAudioInputStream(new File("resources\\music\\Soul Survivor.wav"));
-				} catch (UnsupportedAudioFileException | IOException e) {
+				AudioInputStream musicMainGame = null;
+				try
+				{
+					musicMainGame = AudioSystem.getAudioInputStream(new File("resources\\music\\Soul Survivor.wav"));
+				}
+
+				catch (UnsupportedAudioFileException | IOException e) {
 					e.printStackTrace();
 				}
 
 				// Gets information about the music track that has been assigned.
-				AudioFormat format1 = music1.getFormat();
-				DataLine.Info info1 = new DataLine.Info(Clip.class, format1);
-				Clip audioClip1 = null;
-				try {
-					audioClip1 = (Clip) AudioSystem.getLine(info1);
-				} catch (LineUnavailableException e) {
+				AudioFormat formatMainGame = musicMainGame.getFormat();
+				DataLine.Info infoMainGame = new DataLine.Info(Clip.class, formatMainGame);
+				Clip audioClipMainGame = null;
+				try
+				{
+					audioClipMainGame = (Clip) AudioSystem.getLine(infoMainGame);
+				}
+
+				catch (LineUnavailableException e) {
 					e.printStackTrace();
 				}
 
 				// Opens the updated music track for the game screen.
-				try {
-					audioClip1.open(music1);
-				} catch (LineUnavailableException | IOException e) {
+				try
+				{
+					audioClipMainGame.open(musicMainGame);
+				}
+
+				catch (LineUnavailableException | IOException e) {
 					e.printStackTrace();
 				}
 
 				// Starts and loops the updated music track for the game screen.
-				audioClip1.start();
-				audioClip1.loop(Clip.LOOP_CONTINUOUSLY);
+				audioClipMainGame.start();
+				audioClipMainGame.loop(Clip.LOOP_CONTINUOUSLY);
 
 				// Changes the intro sequence frame with each press of the enter key.
 				KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
@@ -183,6 +192,9 @@ class primaryGUI extends JFrame {
 				// Searches for the enter key input that is pressed by the player.
 				getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "ENTER");
 				getRootPane().getActionMap().put("ENTER", enterAction);
+
+				// Plays a sound when clicked.
+				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -197,6 +209,13 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(loadBtn);
 		loadBtn.setBounds(10, 1003, 570, 75);
 
+		// Plays a sound effect when button is clicked.
+		loadBtn.addActionListener(loadGame -> {
+			if(loadGame.getSource() == loadBtn) {
+				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+			}
+		});
+
 		// ---------- Options Button ------------ //
 
 		// Creates and aligns the options button for the main menu.
@@ -208,6 +227,13 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(optionBtn);
 		optionBtn.setBounds(1500, 1003, 410, 75);
 
+		// Plays a sound effect when button is clicked.
+		optionBtn.addActionListener(optionMenu -> {
+			if(optionMenu.getSource() == optionBtn) {
+				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+			}
+		});
+
 		// ---------- Credits Button ------------ //
 
 		// Creates and aligns the credits button for the main menu.
@@ -218,6 +244,13 @@ class primaryGUI extends JFrame {
 		// Adds the credits button.
 		gameButtonsPane.add(secretBtn);
 		secretBtn.setBounds(10, 10, 970, 75);
+
+		// Plays a sound effect when button is clicked.
+		secretBtn.addActionListener(credits -> {
+			if(credits.getSource() == secretBtn) {
+				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+			}
+		});
 
 		// ---------- Exit Button ------------ //
 
@@ -235,6 +268,7 @@ class primaryGUI extends JFrame {
 		exitBtn.addActionListener(exitMenuDisplay -> {
 			confirmBtn.setVisible(true);
 			cancelBtn.setVisible(true);
+			pauseMessage.setVisible(true);
 
 			exitBtn.setVisible(false);
 			openObjBtn.setVisible(false);
@@ -244,7 +278,8 @@ class primaryGUI extends JFrame {
 			takeItemBtn.setVisible(false);
 			beginDialogueBtn.setVisible(false);
 
-			pauseMessage.setVisible(true);
+			// Plays a sound effect when button is clicked.
+			playSound("resources\\sounds\\Pause Menu.wav");
 		});
 
 		// ---------- Confirm Button ------------ //
@@ -288,6 +323,7 @@ class primaryGUI extends JFrame {
 		cancelBtn.addActionListener(resumeGame -> {
 			confirmBtn.setVisible(false);
 			cancelBtn.setVisible(false);
+			pauseMessage.setVisible(false);
 
 			// Performs the correct cancel button operations for main menu.
 			if(gameState == 0) {
@@ -295,8 +331,6 @@ class primaryGUI extends JFrame {
 				loadBtn.setVisible(true);
 				optionBtn.setVisible(true);
 				secretBtn.setVisible(true);
-				
-				pauseMessage.setVisible(false);
 			}
 
 			// Performs the correct cancel button operations for game screen.
@@ -308,10 +342,7 @@ class primaryGUI extends JFrame {
 				useObjBtn.setVisible(true);
 				takeItemBtn.setVisible(true);
 				beginDialogueBtn.setVisible(true);
-
-                pauseMessage.setVisible(false);
-
-            }
+			}
 		});
 
 		// ---------- Open Object Button ------------ //
@@ -326,6 +357,13 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(openObjBtn);
 		openObjBtn.setBounds(131,925,175,130);
 
+		// Plays a sound effect when button is clicked.
+		openObjBtn.addActionListener(openAction -> {
+			if(openAction.getSource() == openObjBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
 		// ---------- Close Object Button ------------ //
 
 		// Creates and aligns the close object button for the game screen.
@@ -337,6 +375,13 @@ class primaryGUI extends JFrame {
 		// Adds the close object button.
 		gameButtonsPane.add(closeObjBtn);
 		closeObjBtn.setBounds(332,925,175,130);
+
+		// Plays a sound effect when button is clicked.
+		closeObjBtn.addActionListener(closeAction -> {
+			if(closeAction.getSource() == closeObjBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
 
 		// ---------- Inspect Object Button ------------ //
 
@@ -350,6 +395,13 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(inspectObjBtn);
 		inspectObjBtn.setBounds(532,924,175,130);
 
+		// Plays a sound effect when button is clicked.
+		inspectObjBtn.addActionListener(inspectAction -> {
+			if(inspectAction.getSource() == inspectObjBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
 		// ---------- Use Item Button ------------ //
 
 		// Creates and aligns the use item button for the game screen.
@@ -361,6 +413,13 @@ class primaryGUI extends JFrame {
 		// Adds the use item button.
 		gameButtonsPane.add(useObjBtn);
 		useObjBtn.setBounds(730,924,175,130);
+
+		// Plays a sound effect when button is clicked.
+		useObjBtn.addActionListener(useAction -> {
+			if(useAction.getSource() == useObjBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
 
 		// ---------- Take Item Button ------------ //
 
@@ -374,6 +433,13 @@ class primaryGUI extends JFrame {
 		gameButtonsPane.add(takeItemBtn);
 		takeItemBtn.setBounds(927,923,175,130);
 
+		// Plays a sound effect when button is clicked.
+		takeItemBtn.addActionListener(takeAction -> {
+			if(takeAction.getSource() == takeItemBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
 		// ---------- Begin Dialogue Button ------------ //
 
 		// Creates and aligns the begin dialogue button for the game screen.
@@ -385,6 +451,13 @@ class primaryGUI extends JFrame {
 		// Adds the begin dialogue button.
 		gameButtonsPane.add(beginDialogueBtn);
 		beginDialogueBtn.setBounds(1124,923,175,130);
+
+		// Plays a sound effect when button is clicked.
+		beginDialogueBtn.addActionListener(dialogueAction -> {
+			if(dialogueAction.getSource() == beginDialogueBtn) {
+				playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
 
 		// Adds the primary JPanels of the GUI.
 		add(gameButtonsPane);
@@ -405,6 +478,7 @@ class primaryGUI extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				confirmBtn.setVisible(true);
 				cancelBtn.setVisible(true);
+				pauseMessage.setVisible(true);
 
 				// Performs the correct cancel button operations for main menu.
 				if (gameState == 0) {
@@ -412,9 +486,7 @@ class primaryGUI extends JFrame {
 					loadBtn.setVisible(false);
 					optionBtn.setVisible(false);
 					secretBtn.setVisible(false);
-
-                    pauseMessage.setVisible(true);
-                }
+				}
 
 				// Performs the correct cancel button operations for game screen.
 				if (gameState == 1) {
@@ -425,14 +497,33 @@ class primaryGUI extends JFrame {
 					useObjBtn.setVisible(false);
 					takeItemBtn.setVisible(false);
 					beginDialogueBtn.setVisible(false);
-
-					pauseMessage.setVisible(true);
 				}
+
+				// Plays a sound effect when clicked.
+				playSound("resources\\sounds\\Pause Menu.wav");
 			}
 		};
 
 		// Searches for the escape key input that is pressed by the player.
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKey, "ESCAPE");
 		getRootPane().getActionMap().put("ESCAPE", escapeAction);
+	}
+
+	// Play sound effects that do not require looping.
+	public void playSound(String soundName)
+	{
+		try
+		{
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+			Clip clip = AudioSystem.getClip( );
+			clip.open(audioInputStream);
+			clip.start();
+		}
+
+		catch(Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace( );
+		}
 	}
 }
