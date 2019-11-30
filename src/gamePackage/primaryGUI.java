@@ -193,7 +193,7 @@ class primaryGUI extends JFrame {
 				getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "ENTER");
 				getRootPane().getActionMap().put("ENTER", enterAction);
 
-				// Plays a sound when clicked.
+				// Plays a sound effect when button is clicked.
 				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
@@ -499,7 +499,7 @@ class primaryGUI extends JFrame {
 					beginDialogueBtn.setVisible(false);
 				}
 
-				// Plays a sound effect when clicked.
+				// Plays a sound effect when button is clicked.
 				playSound("resources\\sounds\\Pause Menu.wav");
 			}
 		};
@@ -510,7 +510,7 @@ class primaryGUI extends JFrame {
 	}
 
 	// Play sound effects that do not require looping.
-	public void playSound(String soundName)
+	private void playSound(String soundName)
 	{
 		try
 		{
