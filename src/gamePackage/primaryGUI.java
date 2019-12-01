@@ -235,6 +235,7 @@ class primaryGUI extends JFrame {
 								redArrowBackwards.setBounds(600, 700, 125, 125);
 								redArrowBackwards.setVisible(true);
 
+								// Player's current location is now the Passenger Corridor.
 								mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
 								currentLocation.setLocation("Passenger Corridor");
 
@@ -248,6 +249,7 @@ class primaryGUI extends JFrame {
 										redArrowForwards.setBounds(550, 700, 125, 125);
 										redArrowBackwards.setVisible(false);
 
+										// Player's current location is now the Passenger Quarters.
 										mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
 										currentLocation.setLocation("Passenger Quarters");
 									});
