@@ -1,4 +1,5 @@
 package gamePackage;
+import logicPackage.location;
 import logicPackage.soundPlayer;
 
 import javax.sound.sampled.*;
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 /***********************************************************************
  * The primaryGUI class creates the components and general functions
@@ -40,6 +42,10 @@ class primaryGUI extends JFrame {
 	private JButton confirmBtn = new JButton("Confirm");
 	private JButton cancelBtn = new JButton("Cancel");
 
+	/* Buttons for changing the location of the player */
+	private JButton redArrowForwards = new JButton("");
+	private JButton redArrowBackwards = new JButton("");
+
 	private static final long serialVersionUID = 1L;
 
 	/******************************************************************
@@ -51,11 +57,15 @@ class primaryGUI extends JFrame {
 	primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		super("Soul Survivor");
 
+		// location object helps with bundling buttons with current room.
+		location currentLocation = new location();
+		currentLocation.setLocation("Main Menu");
+
 		// soundPlayer object allows for sound effects and music to be played.
 		soundPlayer audio = new soundPlayer();
 
 		// Allows an audio clip to play in the background on the main menu.
-		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
+		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources/music/Atmospheric Lab.wav"));
 		AudioFormat formatMusicMainMenu = musicMainMenu.getFormat();
 		DataLine.Info infoMusicMainMenu = new DataLine.Info(Clip.class, formatMusicMainMenu);
 		Clip audioClipMusicMainMenu = (Clip) AudioSystem.getLine(infoMusicMainMenu);
@@ -79,8 +89,26 @@ class primaryGUI extends JFrame {
 		// Creates a background for the GUI using the assigned photo.
 		JLabel mainMenu = new JLabel("");
 		mainMenu.setMaximumSize(new Dimension(1920, 1080));
-		mainMenu.setIcon(new ImageIcon("resources\\ui\\Main Menu.jpg"));
+		mainMenu.setIcon(new ImageIcon("resources/ui/Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
+
+		// ---------- Arrow Buttons for Exploration ------------ //
+
+		// Creates and aligns the forwards arrow button.
+		redArrowForwards.setOpaque(true);
+		redArrowForwards.setContentAreaFilled(false);
+		redArrowForwards.setBorderPainted(false);
+
+		// Adds the forward arrow button.
+		gameButtonsPane.add(redArrowForwards);
+
+		// Creates and aligns the backward arrow button.
+		redArrowBackwards.setOpaque(true);
+		redArrowBackwards.setContentAreaFilled(false);
+		redArrowBackwards.setBorderPainted(false);
+
+		// Adds the backward arrow button.
+		gameButtonsPane.add(redArrowBackwards);
 
 		// ---------- Pause Message ------------ //
 
@@ -130,8 +158,10 @@ class primaryGUI extends JFrame {
 				takeItemBtn.setVisible(true);
 				beginDialogueBtn.setVisible(true);
 
+				redArrowForwards.setVisible(true);
+
 				// Changes the background image to the game screen.
-				mainMenu.setIcon(new ImageIcon("resources\\ui\\introduction\\Intro Sequence 1.jpg"));
+				mainMenu.setIcon(new ImageIcon("resources/ui/introduction/Intro Sequence 1.jpg"));
 
 				// Ends the main menu music.
 				audioClipMusicMainMenu.stop();
@@ -140,7 +170,7 @@ class primaryGUI extends JFrame {
 				AudioInputStream musicMainGame = null;
 				try
 				{
-					musicMainGame = AudioSystem.getAudioInputStream(new File("resources\\music\\Soul Survivor.wav"));
+					musicMainGame = AudioSystem.getAudioInputStream(new File("resources/music/Soul Survivor.wav"));
 				}
 
 				catch (UnsupportedAudioFileException | IOException e) {
@@ -184,12 +214,45 @@ class primaryGUI extends JFrame {
 						// Increments through each intro sequence frame.
 						if(!confirmBtn.isVisible() && !cancelBtn.isVisible()) {
 							counter++;
-							mainMenu.setIcon(new ImageIcon("resources\\ui\\introduction\\Intro Sequence " + counter + ".jpg"));
+							mainMenu.setIcon(new ImageIcon("resources/ui/introduction/Intro Sequence " + counter + ".jpg"));
 						}
 
 						// Stops incrementing and begins actual game with first location.
-						if(counter > 5){
-							mainMenu.setIcon(new ImageIcon("resources\\ui\\locations\\Passenger Quarters.jpg"));
+						if(counter > 5) {
+							mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
+							currentLocation.setLocation("Passenger Quarters");
+						}
+
+						// ---------- Locations ------------ //
+
+						// Traveling from Passenger Quarters to Passenger Corridor.
+						if(currentLocation.getLocation().equals("Passenger Quarters")) {
+							redArrowForwards.setBounds(550, 700, 125, 125);
+
+							// Action listener for allowing the player to proceed forward.
+							redArrowForwards.addActionListener(changeToPassengerCorridor -> {
+								redArrowForwards.setBounds(600, 520, 125, 125);
+								redArrowBackwards.setBounds(600, 700, 125, 125);
+								redArrowBackwards.setVisible(true);
+
+								mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
+								currentLocation.setLocation("Passenger Corridor");
+
+								// Traveling from Passenger Corridor to Passenger Quarters.
+								if(currentLocation.getLocation().equals("Passenger Corridor")) {
+									redArrowForwards.setBounds(600, 520, 125, 125);
+									redArrowBackwards.setBounds(600, 700, 125, 125);
+
+									// Action listener for allowing the player to proceed backward.
+									redArrowBackwards.addActionListener(changeToPassengerQuarters -> {
+										redArrowForwards.setBounds(550, 700, 125, 125);
+										redArrowBackwards.setVisible(false);
+
+										mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
+										currentLocation.setLocation("Passenger Quarters");
+									});
+								}
+							});
 						}
 					}
 				};
@@ -199,7 +262,7 @@ class primaryGUI extends JFrame {
 				getRootPane().getActionMap().put("ENTER", enterAction);
 
 				// Plays a sound effect when button is clicked.
-				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources/sounds/Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -217,7 +280,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		loadBtn.addActionListener(loadGame -> {
 			if(loadGame.getSource() == loadBtn) {
-				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources/sounds/Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -235,7 +298,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		optionBtn.addActionListener(optionMenu -> {
 			if(optionMenu.getSource() == optionBtn) {
-				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources/sounds/Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -253,7 +316,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		secretBtn.addActionListener(credits -> {
 			if(credits.getSource() == secretBtn) {
-				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources/sounds/Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -272,7 +335,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		openObjBtn.addActionListener(openAction -> {
 			if(openAction.getSource() == openObjBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
 
@@ -291,7 +354,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		closeObjBtn.addActionListener(closeAction -> {
 			if(closeAction.getSource() == closeObjBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
 
@@ -310,7 +373,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		inspectObjBtn.addActionListener(inspectAction -> {
 			if(inspectAction.getSource() == inspectObjBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
 
@@ -329,7 +392,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		useObjBtn.addActionListener(useAction -> {
 			if(useAction.getSource() == useObjBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
 
@@ -348,7 +411,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		takeItemBtn.addActionListener(takeAction -> {
 			if(takeAction.getSource() == takeItemBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
 
@@ -367,20 +430,9 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		beginDialogueBtn.addActionListener(dialogueAction -> {
 			if(dialogueAction.getSource() == beginDialogueBtn) {
-				audio.playSound("resources\\sounds\\Click Action Button.wav");
+				audio.playSound("resources/sounds/Click Action Button.wav");
 			}
 		});
-
-		// Adds the primary JPanels of the GUI.
-		add(gameButtonsPane);
-		add(backgroundPane);
-
-		// Defines the size and general appearance of the frame.
-		setSize(1920, 1080);
-		gameButtonsPane.setSize(1920, 1080);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setUndecorated(true);
-		setVisible(true);
 
 		// ---------- Exit Button ------------ //
 
@@ -408,8 +460,11 @@ class primaryGUI extends JFrame {
 			takeItemBtn.setVisible(false);
 			beginDialogueBtn.setVisible(false);
 
+			redArrowForwards.setVisible(false);
+			redArrowBackwards.setVisible(false);
+
 			// Plays a sound effect when button is clicked.
-			audio.playSound("resources\\sounds\\Pause Menu.wav");
+			audio.playSound("resources/sounds/Pause Menu.wav");
 		});
 
 		// ---------- Confirm Button ------------ //
@@ -472,6 +527,9 @@ class primaryGUI extends JFrame {
 				useObjBtn.setVisible(true);
 				takeItemBtn.setVisible(true);
 				beginDialogueBtn.setVisible(true);
+
+				redArrowForwards.setVisible(true);
+				redArrowBackwards.setVisible(true);
 			}
 		});
 
@@ -502,15 +560,29 @@ class primaryGUI extends JFrame {
 					useObjBtn.setVisible(false);
 					takeItemBtn.setVisible(false);
 					beginDialogueBtn.setVisible(false);
+
+					redArrowForwards.setVisible(false);
+					redArrowBackwards.setVisible(false);
 				}
 
 				// Plays a sound effect when button is clicked.
-				audio.playSound("resources\\sounds\\Pause Menu.wav");
+				audio.playSound("resources/sounds/Pause Menu.wav");
 			}
 		};
 
 		// Searches for the escape key input that is pressed by the player.
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKey, "ESCAPE");
 		getRootPane().getActionMap().put("ESCAPE", escapeAction);
+
+		// Adds the primary JPanels of the GUI.
+		add(gameButtonsPane);
+		add(backgroundPane);
+
+		// Defines the size and general appearance of the frame.
+		setSize(1920, 1080);
+		gameButtonsPane.setSize(1920, 1080);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setUndecorated(true);
+		setVisible(true);
 	}
 }
