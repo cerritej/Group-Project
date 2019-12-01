@@ -1,7 +1,13 @@
 package logicPackage;
 
+/***********************************************************************
+ * The door class is used when ope
+ *
+ * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @version (11/29/19)
+ ***********************************************************************/
 public class door {
-	
+
 	// For status, 0 is locked and 1 is unlocked.
 	public int status;
 	public String name;
@@ -34,6 +40,4 @@ public class door {
 			lockDoor();
 		}
 	}
-	
-
 }
