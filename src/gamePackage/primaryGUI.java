@@ -1,4 +1,6 @@
 package gamePackage;
+import logicPackage.soundPlayer;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +50,9 @@ class primaryGUI extends JFrame {
 	 ******************************************************************/
 	primaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		super("Soul Survivor");
+
+		// soundPlayer object allows for sound effects and music to be played.
+		soundPlayer audio = new soundPlayer();
 
 		// Allows an audio clip to play in the background on the main menu.
 		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources\\music\\Atmospheric Lab.wav"));
@@ -194,7 +199,7 @@ class primaryGUI extends JFrame {
 				getRootPane().getActionMap().put("ENTER", enterAction);
 
 				// Plays a sound effect when button is clicked.
-				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -212,7 +217,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		loadBtn.addActionListener(loadGame -> {
 			if(loadGame.getSource() == loadBtn) {
-				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -230,7 +235,7 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		optionBtn.addActionListener(optionMenu -> {
 			if(optionMenu.getSource() == optionBtn) {
-				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
 
@@ -248,9 +253,134 @@ class primaryGUI extends JFrame {
 		// Plays a sound effect when button is clicked.
 		secretBtn.addActionListener(credits -> {
 			if(credits.getSource() == secretBtn) {
-				playSound("resources\\sounds\\Click Choice on Main Menu.wav");
+				audio.playSound("resources\\sounds\\Click Choice on Main Menu.wav");
 			}
 		});
+
+		// ---------- Open Object Button ------------ //
+
+		// Creates and aligns the open object button for the game screen.
+		openObjBtn.setOpaque(true);
+		openObjBtn.setContentAreaFilled(false);
+		openObjBtn.setBorderPainted(true);
+		openObjBtn.setVisible(false);
+
+		// Adds the open object button.
+		gameButtonsPane.add(openObjBtn);
+		openObjBtn.setBounds(131,925,175,130);
+
+		// Plays a sound effect when button is clicked.
+		openObjBtn.addActionListener(openAction -> {
+			if(openAction.getSource() == openObjBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// ---------- Close Object Button ------------ //
+
+		// Creates and aligns the close object button for the game screen.
+		closeObjBtn.setOpaque(true);
+		closeObjBtn.setContentAreaFilled(false);
+		closeObjBtn.setBorderPainted(true);
+		closeObjBtn.setVisible(false);
+
+		// Adds the close object button.
+		gameButtonsPane.add(closeObjBtn);
+		closeObjBtn.setBounds(332,925,175,130);
+
+		// Plays a sound effect when button is clicked.
+		closeObjBtn.addActionListener(closeAction -> {
+			if(closeAction.getSource() == closeObjBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// ---------- Inspect Object Button ------------ //
+
+		// Creates and aligns the inspect object button for the game screen.
+		inspectObjBtn.setOpaque(true);
+		inspectObjBtn.setContentAreaFilled(false);
+		inspectObjBtn.setBorderPainted(true);
+		inspectObjBtn.setVisible(false);
+
+		// Adds the inspect object button.
+		gameButtonsPane.add(inspectObjBtn);
+		inspectObjBtn.setBounds(532,924,175,130);
+
+		// Plays a sound effect when button is clicked.
+		inspectObjBtn.addActionListener(inspectAction -> {
+			if(inspectAction.getSource() == inspectObjBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// ---------- Use Item Button ------------ //
+
+		// Creates and aligns the use item button for the game screen.
+		useObjBtn.setOpaque(true);
+		useObjBtn.setContentAreaFilled(false);
+		useObjBtn.setBorderPainted(true);
+		useObjBtn.setVisible(false);
+
+		// Adds the use item button.
+		gameButtonsPane.add(useObjBtn);
+		useObjBtn.setBounds(730,924,175,130);
+
+		// Plays a sound effect when button is clicked.
+		useObjBtn.addActionListener(useAction -> {
+			if(useAction.getSource() == useObjBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// ---------- Take Item Button ------------ //
+
+		// Creates and aligns the take item button for the game screen.
+		takeItemBtn.setOpaque(true);
+		takeItemBtn.setContentAreaFilled(false);
+		takeItemBtn.setBorderPainted(true);
+		takeItemBtn.setVisible(false);
+
+		// Adds the take item button.
+		gameButtonsPane.add(takeItemBtn);
+		takeItemBtn.setBounds(927,923,175,130);
+
+		// Plays a sound effect when button is clicked.
+		takeItemBtn.addActionListener(takeAction -> {
+			if(takeAction.getSource() == takeItemBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// ---------- Begin Dialogue Button ------------ //
+
+		// Creates and aligns the begin dialogue button for the game screen.
+		beginDialogueBtn.setOpaque(true);
+		beginDialogueBtn.setContentAreaFilled(false);
+		beginDialogueBtn.setBorderPainted(true);
+		beginDialogueBtn.setVisible(false);
+
+		// Adds the begin dialogue button.
+		gameButtonsPane.add(beginDialogueBtn);
+		beginDialogueBtn.setBounds(1124,923,175,130);
+
+		// Plays a sound effect when button is clicked.
+		beginDialogueBtn.addActionListener(dialogueAction -> {
+			if(dialogueAction.getSource() == beginDialogueBtn) {
+				audio.playSound("resources\\sounds\\Click Action Button.wav");
+			}
+		});
+
+		// Adds the primary JPanels of the GUI.
+		add(gameButtonsPane);
+		add(backgroundPane);
+
+		// Defines the size and general appearance of the frame.
+		setSize(1920, 1080);
+		gameButtonsPane.setSize(1920, 1080);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setUndecorated(true);
+		setVisible(true);
 
 		// ---------- Exit Button ------------ //
 
@@ -279,7 +409,7 @@ class primaryGUI extends JFrame {
 			beginDialogueBtn.setVisible(false);
 
 			// Plays a sound effect when button is clicked.
-			playSound("resources\\sounds\\Pause Menu.wav");
+			audio.playSound("resources\\sounds\\Pause Menu.wav");
 		});
 
 		// ---------- Confirm Button ------------ //
@@ -345,131 +475,6 @@ class primaryGUI extends JFrame {
 			}
 		});
 
-		// ---------- Open Object Button ------------ //
-
-		// Creates and aligns the open object button for the game screen.
-		openObjBtn.setOpaque(true);
-		openObjBtn.setContentAreaFilled(false);
-		openObjBtn.setBorderPainted(true);
-		openObjBtn.setVisible(false);
-
-		// Adds the open object button.
-		gameButtonsPane.add(openObjBtn);
-		openObjBtn.setBounds(131,925,175,130);
-
-		// Plays a sound effect when button is clicked.
-		openObjBtn.addActionListener(openAction -> {
-			if(openAction.getSource() == openObjBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// ---------- Close Object Button ------------ //
-
-		// Creates and aligns the close object button for the game screen.
-		closeObjBtn.setOpaque(true);
-		closeObjBtn.setContentAreaFilled(false);
-		closeObjBtn.setBorderPainted(true);
-		closeObjBtn.setVisible(false);
-
-		// Adds the close object button.
-		gameButtonsPane.add(closeObjBtn);
-		closeObjBtn.setBounds(332,925,175,130);
-
-		// Plays a sound effect when button is clicked.
-		closeObjBtn.addActionListener(closeAction -> {
-			if(closeAction.getSource() == closeObjBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// ---------- Inspect Object Button ------------ //
-
-		// Creates and aligns the inspect object button for the game screen.
-		inspectObjBtn.setOpaque(true);
-		inspectObjBtn.setContentAreaFilled(false);
-		inspectObjBtn.setBorderPainted(true);
-		inspectObjBtn.setVisible(false);
-
-		// Adds the inspect object button.
-		gameButtonsPane.add(inspectObjBtn);
-		inspectObjBtn.setBounds(532,924,175,130);
-
-		// Plays a sound effect when button is clicked.
-		inspectObjBtn.addActionListener(inspectAction -> {
-			if(inspectAction.getSource() == inspectObjBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// ---------- Use Item Button ------------ //
-
-		// Creates and aligns the use item button for the game screen.
-		useObjBtn.setOpaque(true);
-		useObjBtn.setContentAreaFilled(false);
-		useObjBtn.setBorderPainted(true);
-		useObjBtn.setVisible(false);
-
-		// Adds the use item button.
-		gameButtonsPane.add(useObjBtn);
-		useObjBtn.setBounds(730,924,175,130);
-
-		// Plays a sound effect when button is clicked.
-		useObjBtn.addActionListener(useAction -> {
-			if(useAction.getSource() == useObjBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// ---------- Take Item Button ------------ //
-
-		// Creates and aligns the take item button for the game screen.
-		takeItemBtn.setOpaque(true);
-		takeItemBtn.setContentAreaFilled(false);
-		takeItemBtn.setBorderPainted(true);
-		takeItemBtn.setVisible(false);
-
-		// Adds the take item button.
-		gameButtonsPane.add(takeItemBtn);
-		takeItemBtn.setBounds(927,923,175,130);
-
-		// Plays a sound effect when button is clicked.
-		takeItemBtn.addActionListener(takeAction -> {
-			if(takeAction.getSource() == takeItemBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// ---------- Begin Dialogue Button ------------ //
-
-		// Creates and aligns the begin dialogue button for the game screen.
-		beginDialogueBtn.setOpaque(true);
-		beginDialogueBtn.setContentAreaFilled(false);
-		beginDialogueBtn.setBorderPainted(true);
-		beginDialogueBtn.setVisible(false);
-
-		// Adds the begin dialogue button.
-		gameButtonsPane.add(beginDialogueBtn);
-		beginDialogueBtn.setBounds(1124,923,175,130);
-
-		// Plays a sound effect when button is clicked.
-		beginDialogueBtn.addActionListener(dialogueAction -> {
-			if(dialogueAction.getSource() == beginDialogueBtn) {
-				playSound("resources\\sounds\\Click Action Button.wav");
-			}
-		});
-
-		// Adds the primary JPanels of the GUI.
-		add(gameButtonsPane);
-		add(backgroundPane);
-
-		// Defines the size and general appearance of the frame.
-		setSize(1920, 1080);
-		gameButtonsPane.setSize(1920, 1080);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setUndecorated(true);
-		setVisible(true);
-
 		// ---------- Keyboard Interactions ------------ //
 
 		// Displays the exit game button options.
@@ -500,30 +505,12 @@ class primaryGUI extends JFrame {
 				}
 
 				// Plays a sound effect when button is clicked.
-				playSound("resources\\sounds\\Pause Menu.wav");
+				audio.playSound("resources\\sounds\\Pause Menu.wav");
 			}
 		};
 
 		// Searches for the escape key input that is pressed by the player.
 		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKey, "ESCAPE");
 		getRootPane().getActionMap().put("ESCAPE", escapeAction);
-	}
-
-	// Play sound effects that do not require looping.
-	private void playSound(String soundName)
-	{
-		try
-		{
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-			Clip clip = AudioSystem.getClip( );
-			clip.open(audioInputStream);
-			clip.start();
-		}
-
-		catch(Exception ex)
-		{
-			System.out.println("Error with playing sound.");
-			ex.printStackTrace( );
-		}
 	}
 }
