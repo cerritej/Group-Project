@@ -1,7 +1,7 @@
 package logicPackage;
 
 /***********************************************************************
- * The door class is used when ope
+ * The door class is used to give a door certain attributes and functionality.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (11/29/19)
@@ -12,6 +12,8 @@ public class door {
 	public int status;
 	public String name;
 	public String key;
+	String lockedMessage;
+	String unlockedMessage;
 	
 	public door(int status, String name, String key) {
 		this.status = status;

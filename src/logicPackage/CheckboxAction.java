@@ -7,6 +7,10 @@ import javax.swing.JCheckBox;
 
 
 public class CheckboxAction extends AbstractAction{
+	
+	private static final long serialVersionUID = 1L;
+
+
 	public CheckboxAction(String text) {
 		super(text);
 	}
@@ -15,10 +19,10 @@ public class CheckboxAction extends AbstractAction{
 	public void actionPerformed(ActionEvent event) {
 		JCheckBox checkBox = (JCheckBox) event.getSource();
 		if(checkBox.isSelected()) {
-			System.out.println("Checked");
+			System.out.println("Item is selected");
 		}
 		else {
-			System.out.println("Unchecked");
+			System.out.println("Item is unselected");
 		}
 	}
 
