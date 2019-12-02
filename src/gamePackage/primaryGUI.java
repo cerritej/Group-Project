@@ -1,4 +1,6 @@
 package gamePackage;
+import logicPackage.CheckboxAction;
+import logicPackage.door;
 import logicPackage.location;
 import logicPackage.soundPlayer;
 
@@ -45,6 +47,13 @@ class primaryGUI extends JFrame {
 	/* Buttons for changing the location of the player */
 	private JButton redArrowForwards = new JButton("");
 	private JButton redArrowBackwards = new JButton("");
+	
+	/* Check box for door1 */
+	JCheckBox door1CheckBox = new JCheckBox(new CheckboxAction("checkBox1"));
+	
+	/* The first door */ 
+	
+	door door1 = new door(0, "PassengerCorridorDoor", "door1key");
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,6 +100,16 @@ class primaryGUI extends JFrame {
 		mainMenu.setMaximumSize(new Dimension(1920, 1080));
 		mainMenu.setIcon(new ImageIcon("resources/ui/Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
+		
+		// ---------- Door 1 CheckBox ------------ //
+		
+		door1CheckBox.setOpaque(false);
+		door1CheckBox.setContentAreaFilled(false);
+		gameButtonsPane.add(door1CheckBox);
+		// Need to figure out where/when to make CheckBox visible, 
+		// cannot just be gamestate 1, since it is location specific
+		// and not functionality specifc.
+		
 
 		// ---------- Arrow Buttons for Exploration ------------ //
 
