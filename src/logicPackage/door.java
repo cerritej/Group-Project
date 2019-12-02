@@ -1,7 +1,8 @@
 package logicPackage;
 
 /***********************************************************************
- * The door class is used to give a door certain attributes and functionality.
+ * The door class is used to give a door certain attributes
+ * and functionality.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (11/29/19)

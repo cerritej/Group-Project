@@ -5,7 +5,7 @@ package logicPackage;
  * in-game inventory that will be present in the GUI.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
- * @version (10/25/`9`)
+ * @version (10/25/19)
  ***********************************************************************/
 public class invLinkedList {
     private Node head;
