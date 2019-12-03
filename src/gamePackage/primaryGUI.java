@@ -53,7 +53,6 @@ class primaryGUI extends JFrame {
 	JCheckBox door1CheckBox = new JCheckBox(new checkboxAction("checkBox1"));
 
 	/* The first door */
-
 	openable door1 = new openable(0, "PassengerCorridorDoor", "door1key");
 
 	private static final long serialVersionUID = 1L;
