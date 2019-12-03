@@ -250,6 +250,7 @@ class primaryGUI extends JFrame {
 						// Traveling from Passenger Quarters to Passenger Corridor.
 						if(currentLocation.getLocation().equals("Passenger Quarters")) {
 							redArrowForwards.setBounds(550, 700, 125, 125);
+							computer1CheckBox.setBounds(1000, 500, 125, 125);
 
 							// Action listener for allowing the player to proceed forward.
 							redArrowForwards.addActionListener(changeToPassengerCorridor -> {
