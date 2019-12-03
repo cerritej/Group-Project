@@ -488,6 +488,8 @@ class primaryGUI extends JFrame {
 			redArrowForwards.setVisible(false);
 			redArrowBackwards.setVisible(false);
 
+			computer1CheckBox.setVisible(false);
+
 			// Plays a sound effect when button is clicked.
 			audio.playSound("resources/sounds/Pause Menu.wav");
 		});
@@ -555,6 +557,8 @@ class primaryGUI extends JFrame {
 
 				redArrowForwards.setVisible(true);
 				redArrowBackwards.setVisible(true);
+
+				computer1CheckBox.setVisible(true);
 			}
 		});
 
@@ -588,6 +592,8 @@ class primaryGUI extends JFrame {
 
 					redArrowForwards.setVisible(false);
 					redArrowBackwards.setVisible(false);
+
+					computer1CheckBox.setVisible(false);
 				}
 
 				// Plays a sound effect when button is clicked.
