@@ -49,11 +49,8 @@ class primaryGUI extends JFrame {
 	private JButton redArrowForwards = new JButton("");
 	private JButton redArrowBackwards = new JButton("");
 
-	/* Checkbox for door1 */
-	JCheckBox computer1CheckBox = new JCheckBox(new checkBoxSelected("checkBox1"));
-
-	/* The first door */
-	openable door1 = new openable(0, "PassengerCorridorDoor", "door1key");
+	/* Checkbox for Passenger Quarters Computer */
+	private JCheckBox computer1CheckBox = new JCheckBox(new checkBoxSelected("checkBox1"));
 
 	private static final long serialVersionUID = 1L;
 
@@ -110,9 +107,6 @@ class primaryGUI extends JFrame {
 
 		// Adds the Passenger Quarters computer checkbox.
 		gameButtonsPane.add(computer1CheckBox);
-		// Need to figure out where/when to make CheckBox visible, 
-		// cannot just be gamestate 1, since it is location specific
-		// and not functionality specifc.
 
 		// ---------- Arrow Buttons for Exploration ------------ //
 
@@ -251,7 +245,9 @@ class primaryGUI extends JFrame {
 						if(currentLocation.getLocation().equals("Passenger Quarters")) {
 							redArrowForwards.setBounds(550, 700, 125, 125);
 							computer1CheckBox.setBounds(1000, 525, 250, 125);
-							
+
+							// Checkboxes that must appear in Passenger Quarters.
+							computer1CheckBox.setVisible(true);
 
 							// Action listener for allowing the player to proceed forward.
 							redArrowForwards.addActionListener(changeToPassengerCorridor -> {
@@ -267,6 +263,9 @@ class primaryGUI extends JFrame {
 								if(currentLocation.getLocation().equals("Passenger Corridor")) {
 									redArrowForwards.setBounds(600, 520, 125, 125);
 									redArrowBackwards.setBounds(600, 700, 125, 125);
+
+									// Checkboxes that must disappear in Passenger Corridor.
+									computer1CheckBox.setVisible(false);
 
 									// Action listener for allowing the player to proceed backward.
 									redArrowBackwards.addActionListener(changeToPassengerQuarters -> {
