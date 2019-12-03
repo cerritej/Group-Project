@@ -1,6 +1,6 @@
 package gamePackage;
 
-import logicPackage.checkboxAction;
+import logicPackage.checkBoxSelected;
 import logicPackage.location;
 import logicPackage.openable;
 import logicPackage.soundPlayer;
@@ -50,7 +50,7 @@ class primaryGUI extends JFrame {
 	private JButton redArrowBackwards = new JButton("");
 
 	/* Checkbox for door1 */
-	JCheckBox computer1CheckBox = new JCheckBox(new checkboxAction("checkBox1"));
+	JCheckBox computer1CheckBox = new JCheckBox(new checkBoxSelected("checkBox1"));
 
 	/* The first door */
 	openable door1 = new openable(0, "PassengerCorridorDoor", "door1key");
@@ -250,7 +250,8 @@ class primaryGUI extends JFrame {
 						// Traveling from Passenger Quarters to Passenger Corridor.
 						if(currentLocation.getLocation().equals("Passenger Quarters")) {
 							redArrowForwards.setBounds(550, 700, 125, 125);
-							computer1CheckBox.setBounds(1000, 500, 125, 125);
+							computer1CheckBox.setBounds(1000, 525, 250, 125);
+							
 
 							// Action listener for allowing the player to proceed forward.
 							redArrowForwards.addActionListener(changeToPassengerCorridor -> {

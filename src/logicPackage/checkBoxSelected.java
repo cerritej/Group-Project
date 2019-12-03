@@ -11,22 +11,27 @@ import javax.swing.JCheckBox;
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (11/29/19)
  ***********************************************************************/
-public class checkboxAction extends AbstractAction{
+public class checkBoxSelected extends AbstractAction{
 	
 	private static final long serialVersionUID = 1L;
+	public int status = 0;
 
-	public checkboxAction(String text) {
+	public checkBoxSelected(String text) {
 		super(text);
+	}
+	
+	public int getStatus() {
+		return status; 
 	}
 
 	public void actionPerformed(ActionEvent event) {
 		JCheckBox checkBox = (JCheckBox) event.getSource();
 		if(checkBox.isSelected()) {
-			System.out.println("Item is selected.");
+			status = 1;
 		}
 
 		else {
-			System.out.println("Item is unselected.");
+			status = 0;
 		}
 	}
 }
