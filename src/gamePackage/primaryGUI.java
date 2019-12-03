@@ -50,7 +50,7 @@ class primaryGUI extends JFrame {
 	private JButton redArrowBackwards = new JButton("");
 
 	/* Checkbox for door1 */
-	JCheckBox door1CheckBox = new JCheckBox(new checkboxAction("checkBox1"));
+	JCheckBox computer1CheckBox = new JCheckBox(new checkboxAction("checkBox1"));
 
 	/* The first door */
 	openable door1 = new openable(0, "PassengerCorridorDoor", "door1key");
@@ -103,9 +103,9 @@ class primaryGUI extends JFrame {
 		
 		// ---------- Door 1 CheckBox ------------ //
 
-		door1CheckBox.setOpaque(false);
-		door1CheckBox.setContentAreaFilled(false);
-		gameButtonsPane.add(door1CheckBox);
+		computer1CheckBox.setOpaque(false);
+		computer1CheckBox.setContentAreaFilled(false);
+		gameButtonsPane.add(computer1CheckBox);
 		// Need to figure out where/when to make CheckBox visible, 
 		// cannot just be gamestate 1, since it is location specific
 		// and not functionality specifc.
