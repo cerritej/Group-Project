@@ -101,15 +101,18 @@ class primaryGUI extends JFrame {
 		mainMenu.setIcon(new ImageIcon("resources/ui/Main Menu.jpg"));
 		backgroundPane.add(mainMenu);
 		
-		// ---------- Door 1 CheckBox ------------ //
+		// ---------- 1 CheckBox ------------ //
 
-		computer1CheckBox.setOpaque(false);
-		computer1CheckBox.setContentAreaFilled(false);
+		// Creates and aligns the Passenger Quarters computer checkbox.
+		computer1CheckBox.setOpaque(true);
+		computer1CheckBox.setContentAreaFilled(true);
+		computer1CheckBox.setBorderPainted(false);
+
+		// Adds the Passenger Quarters computer checkbox.
 		gameButtonsPane.add(computer1CheckBox);
 		// Need to figure out where/when to make CheckBox visible, 
 		// cannot just be gamestate 1, since it is location specific
 		// and not functionality specifc.
-
 
 		// ---------- Arrow Buttons for Exploration ------------ //
 
