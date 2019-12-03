@@ -73,7 +73,7 @@ class primaryGUI extends JFrame {
 		soundPlayer audio = new soundPlayer();
 
 		// Allows an audio clip to play in the background on the main menu.
-		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources/music/Atmospheric Lab.wav"));
+		AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources/music/Main Menu Theme.wav"));
 		AudioFormat formatMusicMainMenu = musicMainMenu.getFormat();
 		DataLine.Info infoMusicMainMenu = new DataLine.Info(Clip.class, formatMusicMainMenu);
 		Clip audioClipMusicMainMenu = (Clip) AudioSystem.getLine(infoMusicMainMenu);
