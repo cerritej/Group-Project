@@ -246,9 +246,6 @@ class primaryGUI extends JFrame {
 							redArrowForwards.setBounds(550, 700, 125, 125);
 							computer1CheckBox.setBounds(1000, 525, 250, 125);
 
-							// Checkboxes that must appear in Passenger Quarters.
-							computer1CheckBox.setVisible(true);
-
 							// Action listener for allowing the player to proceed forward.
 							redArrowForwards.addActionListener(changeToPassengerCorridor -> {
 								redArrowForwards.setBounds(600, 520, 125, 125);
@@ -271,6 +268,9 @@ class primaryGUI extends JFrame {
 									redArrowBackwards.addActionListener(changeToPassengerQuarters -> {
 										redArrowForwards.setBounds(550, 700, 125, 125);
 										redArrowBackwards.setVisible(false);
+
+										// Checkboxes that must appear in Passenger Quarters.
+										computer1CheckBox.setVisible(true);
 
 										// Player's current location is now the Passenger Quarters.
 										mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
