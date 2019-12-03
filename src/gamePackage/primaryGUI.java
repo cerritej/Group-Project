@@ -1,13 +1,15 @@
 package gamePackage;
+
 import logicPackage.checkboxAction;
-import logicPackage.door;
 import logicPackage.location;
+import logicPackage.openable;
 import logicPackage.soundPlayer;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -52,7 +54,7 @@ class primaryGUI extends JFrame {
 
 	/* The first door */
 
-	door door1 = new door(0, "PassengerCorridorDoor", "door1key");
+	openable door1 = new openable(0, "PassengerCorridorDoor", "door1key");
 
 	private static final long serialVersionUID = 1L;
 
