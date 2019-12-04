@@ -23,8 +23,8 @@ class PrimaryGUI extends JFrame {
     /* A dynamic value to help specify gameState conditions. */
     private int gameState = 0;
 
+    /* JLabel for displaying game messages for the player. */
     private JLabel notification = new JLabel();
-
 
     /* Buttons for the main menu */
     private JButton startBtn = new JButton("");
@@ -256,7 +256,7 @@ class PrimaryGUI extends JFrame {
                             redArrowForwards.addMouseListener(new MouseAdapter() {
                                 @Override
                                 public void mouseEntered(MouseEvent e) {
-                                    if (!redArrowForwards.isSelected() && currentLocation.getLocation().equals("Passenger Quarters")) {
+                                    if (currentLocation.getLocation().equals("Passenger Quarters")) {
                                         notification.setText("TRAVEL TO PASSENGER CORRIDOR");
                                         notification.setVisible(true);
                                     }
@@ -274,7 +274,8 @@ class PrimaryGUI extends JFrame {
                                 @Override
                                 public void mouseEntered(MouseEvent e) {
                                     if (!passengerQuartersComputerCB.isSelected()) {
-                                        notification.setText("SELECT THE COMPUTER");
+                                        notification.setText("DO YOU WANT TO SELECT THE COMPUTER?");
+                                        notification.setForeground(Color.black);
                                         notification.setVisible(true);
                                     }
                                 }
@@ -289,15 +290,21 @@ class PrimaryGUI extends JFrame {
 
                             passengerQuartersComputerCB.addActionListener(message -> {
                                 if (passengerQuartersComputerCB.isSelected()) {
-                                    notification.setText("COMPUTER IS SELECTED");
+                                    notification.setText("THE COMPUTER IS SELECTED");
+                                    notification.setForeground(Color.black);
                                     notification.setVisible(true);
+
+                                    redArrowForwards.setVisible(false);
+
+
                                 } else {
                                     notification.setVisible(false);
+                                    redArrowForwards.setVisible(true);
                                 }
                             });
 
                             // Action listener for allowing the player to proceed forward.
-                            redArrowForwards.addActionListener(changeToPassengerCorridor -> {
+                            redArrowForwards.addActionListener(changeLocationForwards -> {
                                 redArrowForwards.setBounds(600, 520, 125, 125);
                                 redArrowBackwards.setBounds(600, 700, 125, 125);
                                 redArrowBackwards.setVisible(true);
@@ -310,6 +317,9 @@ class PrimaryGUI extends JFrame {
                                 mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
                                 currentLocation.setLocation("Passenger Corridor");
 
+                                notification.setText("THE DOOR IS LOCKED");
+                                notification.setForeground(Color.red);
+
                                 // Traveling from Passenger Corridor to Passenger Quarters.
                                 if (currentLocation.getLocation().equals("Passenger Corridor")) {
                                     redArrowForwards.setBounds(600, 520, 125, 125);
@@ -321,8 +331,9 @@ class PrimaryGUI extends JFrame {
                                     redArrowForwards.addMouseListener(new MouseAdapter() {
                                         @Override
                                         public void mouseEntered(MouseEvent e) {
-                                            if (!redArrowForwards.isSelected() && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                            if (currentLocation.getLocation().equals("Passenger Corridor")) {
                                                 notification.setText("TRAVEL TO USS CALIGULA LOBBY");
+                                                notification.setForeground(Color.black);
                                                 notification.setVisible(true);
                                             }
                                         }
@@ -338,8 +349,9 @@ class PrimaryGUI extends JFrame {
                                     redArrowBackwards.addMouseListener(new MouseAdapter() {
                                         @Override
                                         public void mouseEntered(MouseEvent e) {
-                                            if (!redArrowBackwards.isSelected()) {
+                                            if (currentLocation.getLocation().equals("Passenger Corridor")) {
                                                 notification.setText("TRAVEL TO PASSENGER QUARTERS");
+                                                notification.setForeground(Color.black);
                                                 notification.setVisible(true);
                                             }
                                         }
@@ -353,7 +365,7 @@ class PrimaryGUI extends JFrame {
                                     });
 
                                     // Action listener for allowing the player to proceed backward.
-                                    redArrowBackwards.addActionListener(changeToPassengerQuarters -> {
+                                    redArrowBackwards.addActionListener(changeLocationBackwards -> {
                                         redArrowForwards.setBounds(550, 700, 125, 125);
                                         redArrowBackwards.setVisible(false);
 
