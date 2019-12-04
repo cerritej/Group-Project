@@ -7,8 +7,7 @@ import logicPackage.Soundplayer;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,6 +22,9 @@ import java.io.IOException;
 class PrimaryGUI extends JFrame {
     /* A dynamic value to help specify gameState conditions. */
     private int gameState = 0;
+
+    private JLabel notification = new JLabel();
+
 
     /* Buttons for the main menu */
     private JButton startBtn = new JButton("");
@@ -48,7 +50,7 @@ class PrimaryGUI extends JFrame {
     private JButton redArrowBackwards = new JButton("");
 
     /* Checkbox for Passenger Quarters Computer */
-    private JCheckBox computer1CheckBox = new JCheckBox(new CheckboxSelected("checkBox1"));
+    private JCheckBox passengerQuartersComputerCB = new JCheckBox(new CheckboxSelected(""));
 
     private static final long serialVersionUID = 1L;
 
@@ -96,15 +98,15 @@ class PrimaryGUI extends JFrame {
         mainMenu.setIcon(new ImageIcon("resources/ui/Main Menu.jpg"));
         backgroundPane.add(mainMenu);
 
-        // ---------- 1 CheckBox ------------ //
+        // ---------- Passenger Quarters Computer CheckBox ------------ //
 
         // Creates and aligns the Passenger Quarters computer checkbox.
-        computer1CheckBox.setOpaque(true);
-        computer1CheckBox.setContentAreaFilled(true);
-        computer1CheckBox.setBorderPainted(false);
+        passengerQuartersComputerCB.setOpaque(true);
+        passengerQuartersComputerCB.setContentAreaFilled(false);
+        passengerQuartersComputerCB.setBorderPainted(false);
 
         // Adds the Passenger Quarters computer checkbox.
-        gameButtonsPane.add(computer1CheckBox);
+        gameButtonsPane.add(passengerQuartersComputerCB);
 
         // ---------- Arrow Buttons for Exploration ------------ //
 
@@ -124,7 +126,20 @@ class PrimaryGUI extends JFrame {
         // Adds the backward arrow button.
         gameButtonsPane.add(redArrowBackwards);
 
-        // ---------- Pause Message ------------ //
+        // ---------- Main Game Message ------------ //
+
+        // Creates and aligns the game message.
+        notification.setOpaque(false);
+        notification.setFont(new Font("Dialog", Font.BOLD, 20));
+        notification.setForeground(Color.black);
+
+        gameButtonsPane.add(notification);
+        notification.setHorizontalAlignment(SwingConstants.CENTER);
+        notification.setVerticalAlignment(SwingConstants.CENTER);
+        notification.setBounds(131, 867, 1169, 40);
+        notification.setVisible(true);
+
+        // ---------- Pause Menu Message ------------ //
 
         // Creates and aligns the pause message.
         JLabel pauseMessage = new JLabel();
@@ -236,13 +251,60 @@ class PrimaryGUI extends JFrame {
                         // Traveling from Passenger Quarters to Passenger Corridor.
                         if (currentLocation.getLocation().equals("Passenger Quarters")) {
                             redArrowForwards.setBounds(550, 700, 125, 125);
-                            computer1CheckBox.setBounds(1000, 525, 250, 125);
+                            passengerQuartersComputerCB.setBounds(1000, 525, 250, 125);
+
+                            redArrowForwards.addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mouseEntered(MouseEvent e) {
+                                    if (!redArrowForwards.isSelected() && currentLocation.getLocation().equals("Passenger Quarters")) {
+                                        notification.setText("TRAVEL TO PASSENGER CORRIDOR");
+                                        notification.setVisible(true);
+                                    }
+                                }
+
+                                @Override
+                                public void mouseExited(MouseEvent e) {
+                                    if (!redArrowForwards.isSelected()) {
+                                        notification.setVisible(false);
+                                    }
+                                }
+                            });
+
+                            passengerQuartersComputerCB.addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mouseEntered(MouseEvent e) {
+                                    if (!passengerQuartersComputerCB.isSelected()) {
+                                        notification.setText("SELECT THE COMPUTER");
+                                        notification.setVisible(true);
+                                    }
+                                }
+
+                                @Override
+                                public void mouseExited(MouseEvent e) {
+                                    if (!passengerQuartersComputerCB.isSelected()) {
+                                        notification.setVisible(false);
+                                    }
+                                }
+                            });
+
+                            passengerQuartersComputerCB.addActionListener(message -> {
+                                if (passengerQuartersComputerCB.isSelected()) {
+                                    notification.setText("COMPUTER IS SELECTED");
+                                    notification.setVisible(true);
+                                } else {
+                                    notification.setVisible(false);
+                                }
+                            });
 
                             // Action listener for allowing the player to proceed forward.
                             redArrowForwards.addActionListener(changeToPassengerCorridor -> {
                                 redArrowForwards.setBounds(600, 520, 125, 125);
                                 redArrowBackwards.setBounds(600, 700, 125, 125);
                                 redArrowBackwards.setVisible(true);
+
+                                // Resets the selected object that the player chose.
+                                passengerQuartersComputerCB.setSelected(false);
+                                notification.setText("");
 
                                 // Player's current location is now the Passenger Corridor.
                                 mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
@@ -254,7 +316,41 @@ class PrimaryGUI extends JFrame {
                                     redArrowBackwards.setBounds(600, 700, 125, 125);
 
                                     // Checkboxes that must disappear in Passenger Corridor.
-                                    computer1CheckBox.setVisible(false);
+                                    passengerQuartersComputerCB.setVisible(false);
+
+                                    redArrowForwards.addMouseListener(new MouseAdapter() {
+                                        @Override
+                                        public void mouseEntered(MouseEvent e) {
+                                            if (!redArrowForwards.isSelected() && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                                notification.setText("TRAVEL TO USS CALIGULA LOBBY");
+                                                notification.setVisible(true);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void mouseExited(MouseEvent e) {
+                                            if (!redArrowForwards.isSelected()) {
+                                                notification.setVisible(false);
+                                            }
+                                        }
+                                    });
+
+                                    redArrowBackwards.addMouseListener(new MouseAdapter() {
+                                        @Override
+                                        public void mouseEntered(MouseEvent e) {
+                                            if (!redArrowBackwards.isSelected()) {
+                                                notification.setText("TRAVEL TO PASSENGER QUARTERS");
+                                                notification.setVisible(true);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void mouseExited(MouseEvent e) {
+                                            if (!redArrowBackwards.isSelected()) {
+                                                notification.setVisible(false);
+                                            }
+                                        }
+                                    });
 
                                     // Action listener for allowing the player to proceed backward.
                                     redArrowBackwards.addActionListener(changeToPassengerQuarters -> {
@@ -262,7 +358,11 @@ class PrimaryGUI extends JFrame {
                                         redArrowBackwards.setVisible(false);
 
                                         // Checkboxes that must appear in Passenger Quarters.
-                                        computer1CheckBox.setVisible(true);
+                                        passengerQuartersComputerCB.setVisible(true);
+
+                                        // Resets the selected object that the player chose.
+                                        passengerQuartersComputerCB.setSelected(false);
+                                        notification.setText("");
 
                                         // Player's current location is now the Passenger Quarters.
                                         mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
@@ -480,7 +580,7 @@ class PrimaryGUI extends JFrame {
             redArrowForwards.setVisible(false);
             redArrowBackwards.setVisible(false);
 
-            computer1CheckBox.setVisible(false);
+            passengerQuartersComputerCB.setVisible(false);
 
             // Plays a sound effect when button is clicked.
             audio.playSound("resources/sounds/Pause Menu.wav");
@@ -550,7 +650,7 @@ class PrimaryGUI extends JFrame {
                 redArrowForwards.setVisible(true);
                 redArrowBackwards.setVisible(true);
 
-                computer1CheckBox.setVisible(true);
+                passengerQuartersComputerCB.setVisible(true);
             }
         });
 
@@ -585,7 +685,7 @@ class PrimaryGUI extends JFrame {
                     redArrowForwards.setVisible(false);
                     redArrowBackwards.setVisible(false);
 
-                    computer1CheckBox.setVisible(false);
+                    passengerQuartersComputerCB.setVisible(false);
                 }
 
                 // Plays a sound effect when button is clicked.
