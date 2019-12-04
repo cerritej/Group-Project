@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /***********************************************************************
  * The PrimaryGUI class creates the components and general functions
@@ -24,6 +25,7 @@ class PrimaryGUI extends JFrame {
 
     /* JLabel for displaying game messages for the player. */
     private JLabel notification = new JLabel();
+    private JLabel selection = new JLabel();
 
     /* Buttons for the main menu */
     private JButton startBtn = new JButton("");
@@ -61,6 +63,9 @@ class PrimaryGUI extends JFrame {
      ******************************************************************/
     PrimaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         super("Soul Survivor");
+
+        // An ArrayList for storing the items in the inventory.
+        ArrayList<String> inventory = new ArrayList<String>(10);
 
         // location object helps with bundling buttons with current room.
         Location currentLocation = new Location();
@@ -137,6 +142,19 @@ class PrimaryGUI extends JFrame {
         notification.setVerticalAlignment(SwingConstants.CENTER);
         notification.setBounds(131, 867, 1169, 40);
         notification.setVisible(true);
+
+        // ---------- Object Selection Message ------------ //
+
+        // Creates and aligns the object selection message.
+        selection.setOpaque(false);
+        selection.setFont(new Font("Dialog", Font.BOLD, 20));
+        selection.setForeground(Color.red);
+        selection.setBackground(Color.black);
+
+        gameButtonsPane.add(selection);
+        selection.setHorizontalAlignment(SwingConstants.CENTER);
+        selection.setVerticalAlignment(SwingConstants.CENTER);
+        selection.setBounds(42, 40, 300, 40);
 
         // ---------- Pause Menu Message ------------ //
 
@@ -292,6 +310,10 @@ class PrimaryGUI extends JFrame {
                                 if (passengerQuartersComputerCB.isSelected()) {
                                     gameState = 2;
 
+                                    selection.setText("COMPUTER");
+                                    selection.setOpaque(true);
+                                    selection.setVisible(true);
+
                                     notification.setText("THE COMPUTER IS SELECTED");
                                     notification.setForeground(Color.black);
                                     notification.setVisible(true);
@@ -300,7 +322,7 @@ class PrimaryGUI extends JFrame {
 
                                     openObjBtn.addActionListener(openComputer -> {
                                         if(passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
-                                            notification.setText("A COMPUTER CANNOT BE OPENED");
+                                            notification.setText("THE COMPUTER CANNOT BE OPENED");
                                             notification.setForeground(Color.red);
                                             notification.setVisible(true);
 
@@ -310,7 +332,7 @@ class PrimaryGUI extends JFrame {
 
                                     closeObjBtn.addActionListener(openComputer -> {
                                         if(passengerQuartersComputerCB.isSelected() && closeObjBtn == openComputer.getSource()) {
-                                            notification.setText("A COMPUTER CANNOT BE CLOSED");
+                                            notification.setText("THE COMPUTER CANNOT BE CLOSED");
                                             notification.setForeground(Color.red);
                                             notification.setVisible(true);
 
@@ -327,13 +349,23 @@ class PrimaryGUI extends JFrame {
                                     });
 
                                     useObjBtn.addActionListener(openComputer -> {
+                                        int clickCount = 0;
                                         if(passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
                                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                                             notification.setForeground(Color.green);
                                             notification.setVisible(true);
 
+                                            inventory.add("Access Code");
+                                            clickCount++;
+
                                             audio.playSound("resources/sounds/Selection is Approved.wav");
                                         }
+
+//                                        if(clickCount >= 1 && inventory.get(0).equals("Access Code")) {
+//                                            notification.setText("YOU ALREADY HAVE WHAT YOU NEEDED");
+//                                            notification.setForeground(Color.BLACK);
+//                                            notification.setVisible(true);
+//                                        }
                                     });
 
                                     takeItemBtn.addActionListener(openComputer -> {
@@ -348,7 +380,7 @@ class PrimaryGUI extends JFrame {
 
                                     beginDialogueBtn.addActionListener(openComputer -> {
                                         if(passengerQuartersComputerCB.isSelected() && beginDialogueBtn == openComputer.getSource()) {
-                                            notification.setText("YOU MUST BE BORED IF YOUR TRYING TO TALK TO A COMPUTER");
+                                            notification.setText("YOU MUST BE BORED IF YOU ARE TRYING TO TALK TO A COMPUTER");
                                             notification.setForeground(Color.red);
                                             notification.setVisible(true);
 
@@ -357,6 +389,9 @@ class PrimaryGUI extends JFrame {
                                     });
                                 } else {
                                     notification.setVisible(false);
+                                    selection.setOpaque(false);
+                                    selection.setVisible(false);
+
                                     redArrowForwards.setVisible(true);
                                 }
                             });
@@ -394,7 +429,7 @@ class PrimaryGUI extends JFrame {
                                         @Override
                                         public void mouseEntered(MouseEvent e) {
                                             if (currentLocation.getLocation().equals("Passenger Corridor")) {
-                                                notification.setText("TRAVEL TO USS CALIGULA LOBBY");
+                                                notification.setText("TRAVEL TO MAIN LOBBY");
                                                 notification.setForeground(Color.black);
                                                 notification.setVisible(true);
                                             }
