@@ -1,6 +1,5 @@
 package gamePackage;
 
-import logicPackage.CheckboxSelected;
 import logicPackage.Location;
 import logicPackage.Soundplayer;
 
@@ -50,7 +49,7 @@ class PrimaryGUI extends JFrame {
     private JButton redArrowBackwards = new JButton("");
 
     /* Checkbox for Passenger Quarters Computer */
-    private JCheckBox passengerQuartersComputerCB = new JCheckBox(new CheckboxSelected(""));
+    private JCheckBox passengerQuartersComputerCB = new JCheckBox();
 
     private static final long serialVersionUID = 1L;
 
@@ -258,6 +257,7 @@ class PrimaryGUI extends JFrame {
                                 public void mouseEntered(MouseEvent e) {
                                     if (currentLocation.getLocation().equals("Passenger Quarters")) {
                                         notification.setText("TRAVEL TO PASSENGER CORRIDOR");
+                                        notification.setForeground(Color.black);
                                         notification.setVisible(true);
                                     }
                                 }
@@ -290,13 +290,71 @@ class PrimaryGUI extends JFrame {
 
                             passengerQuartersComputerCB.addActionListener(message -> {
                                 if (passengerQuartersComputerCB.isSelected()) {
+                                    gameState = 2;
+
                                     notification.setText("THE COMPUTER IS SELECTED");
                                     notification.setForeground(Color.black);
                                     notification.setVisible(true);
 
                                     redArrowForwards.setVisible(false);
 
+                                    openObjBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
+                                            notification.setText("A COMPUTER CANNOT BE OPENED");
+                                            notification.setForeground(Color.red);
+                                            notification.setVisible(true);
 
+                                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                                        }
+                                    });
+
+                                    closeObjBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && closeObjBtn == openComputer.getSource()) {
+                                            notification.setText("A COMPUTER CANNOT BE CLOSED");
+                                            notification.setForeground(Color.red);
+                                            notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                                        }
+                                    });
+
+                                    inspectObjBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && inspectObjBtn == openComputer.getSource()) {
+                                            notification.setText("PLAYER: THE GOVERNMENT WAS NICE ENOUGH TO PROVIDE EACH PASSENGER THEIR OWN COMPUTER");
+                                            notification.setForeground(Color.black);
+                                            notification.setVisible(true);
+                                        }
+                                    });
+
+                                    useObjBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
+                                            notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
+                                            notification.setForeground(Color.green);
+                                            notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Approved.wav");
+                                        }
+                                    });
+
+                                    takeItemBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && takeItemBtn == openComputer.getSource()) {
+                                            notification.setText("THE COMPUTER IS CONNECTED TO THE DESK AND CANNOT BE PICKED UP");
+                                            notification.setForeground(Color.red);
+                                            notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                                        }
+                                    });
+
+                                    beginDialogueBtn.addActionListener(openComputer -> {
+                                        if(passengerQuartersComputerCB.isSelected() && beginDialogueBtn == openComputer.getSource()) {
+                                            notification.setText("YOU MUST BE BORED IF YOUR TRYING TO TALK TO A COMPUTER");
+                                            notification.setForeground(Color.red);
+                                            notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                                        }
+                                    });
                                 } else {
                                     notification.setVisible(false);
                                     redArrowForwards.setVisible(true);
@@ -313,12 +371,16 @@ class PrimaryGUI extends JFrame {
                                 passengerQuartersComputerCB.setSelected(false);
                                 notification.setText("");
 
+                                notification.setText("THE DOOR IS LOCKED");
+                                notification.setForeground(Color.red);
+
+                                if(currentLocation.getLocation().equals("Passenger Corridor")) {
+                                    audio.playSound("resources/sounds/Selection is Denied.wav");
+                                }
+
                                 // Player's current location is now the Passenger Corridor.
                                 mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
                                 currentLocation.setLocation("Passenger Corridor");
-
-                                notification.setText("THE DOOR IS LOCKED");
-                                notification.setForeground(Color.red);
 
                                 // Traveling from Passenger Corridor to Passenger Quarters.
                                 if (currentLocation.getLocation().equals("Passenger Corridor")) {
@@ -463,7 +525,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         openObjBtn.addActionListener(openAction -> {
-            if (openAction.getSource() == openObjBtn) {
+            if (!(gameState == 2) && openAction.getSource() == openObjBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
@@ -482,7 +544,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         closeObjBtn.addActionListener(closeAction -> {
-            if (closeAction.getSource() == closeObjBtn) {
+            if (!(gameState == 2) && closeAction.getSource() == closeObjBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
@@ -501,7 +563,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         inspectObjBtn.addActionListener(inspectAction -> {
-            if (inspectAction.getSource() == inspectObjBtn) {
+            if (!(gameState == 2) && inspectAction.getSource() == inspectObjBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
@@ -520,7 +582,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         useObjBtn.addActionListener(useAction -> {
-            if (useAction.getSource() == useObjBtn) {
+            if (!(gameState == 2) && useAction.getSource() == useObjBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
@@ -539,7 +601,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         takeItemBtn.addActionListener(takeAction -> {
-            if (takeAction.getSource() == takeItemBtn) {
+            if (!(gameState == 2) && takeAction.getSource() == takeItemBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
@@ -558,7 +620,7 @@ class PrimaryGUI extends JFrame {
 
         // Plays a sound effect when button is clicked.
         beginDialogueBtn.addActionListener(dialogueAction -> {
-            if (dialogueAction.getSource() == beginDialogueBtn) {
+            if (!(gameState == 2) && dialogueAction.getSource() == beginDialogueBtn) {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
         });
