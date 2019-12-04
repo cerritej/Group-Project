@@ -10,23 +10,18 @@ import java.io.File;
  * user interacts with the GUI.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
- * @version (11/29/19)
+ * @version (11 / 29 / 19)
  ***********************************************************************/
-public class soundPlayer {
-    public void playSound(String soundName)
-    {
-        try
-        {
+public class Soundplayer {
+    public void playSound(String soundName) {
+        try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip( );
+            Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        }
-
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Error with playing sound.");
-            ex.printStackTrace( );
+            ex.printStackTrace();
         }
     }
 }

@@ -5,9 +5,10 @@ package logicPackage;
  * located while playing the game.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
- * @version (11/29/19)
+ * @version (11 / 29 / 19)
  ***********************************************************************/
-public class location {
+public class Location {
+    /* A dynamic value to help specify the player's location. */
     private String location;
 
     public String getLocation() {
