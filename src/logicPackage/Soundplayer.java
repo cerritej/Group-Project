@@ -13,11 +13,11 @@ import java.io.File;
  * @version (11 / 29 / 19)
  ***********************************************************************/
 public class Soundplayer {
-    public void playSound(String soundName) {
+    public void playSound(String sound) {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(sound).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+            clip.open(audio);
             clip.start();
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
