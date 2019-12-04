@@ -1,7 +1,7 @@
 package logicPackage;
 
 /***********************************************************************
- * The invLinkedList class contains the overall structure of the
+ * The InventoryLL class contains the overall structure of the
  * in-game inventory that will be present in the GUI.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)

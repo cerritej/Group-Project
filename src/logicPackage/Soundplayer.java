@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 /***********************************************************************
- * The soundPlayer class allows sound effects to be played while the
+ * The Soundplayer class allows sound effects to be played while the
  * user interacts with the GUI.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)

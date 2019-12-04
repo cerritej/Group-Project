@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 /***********************************************************************
- * The executable class contains the main method which allows the
+ * The Executable class contains the main method which allows the
  * application to be executed.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)

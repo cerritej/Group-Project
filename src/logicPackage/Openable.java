@@ -1,8 +1,8 @@
 package logicPackage;
 
 /***********************************************************************
- * The door class is used to give a door certain attributes
- * and functionality.
+ * The Openable class is used to help define certain attributes
+ * and functionality for the open action.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (11 / 29 / 19)

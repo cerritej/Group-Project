@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 /***********************************************************************
- * The primaryGUI class creates the components and general functions
+ * The PrimaryGUI class creates the components and general functions
  * that can be displayed when the GUI is executed.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
