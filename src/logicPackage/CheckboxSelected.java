@@ -11,12 +11,12 @@ import javax.swing.JCheckBox;
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
  * @version (11/29/19)
  ***********************************************************************/
-public class CheckboxSelected extends AbstractAction{
+public class CheckboxSelected extends AbstractAction {
 	/* A string to help identify what the interactive object is. */
 	private String objectName;
 
 	/* A dynamic value to help specify if the object is selected. */
-	public int status = 0;
+	private int status = 0;
 
 	private static final long serialVersionUID = 1L;
 
