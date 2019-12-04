@@ -22,6 +22,7 @@ public class Executable {
             try {
                 new PrimaryGUI();
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                System.out.println("Error with playing sound file.");
                 e.printStackTrace();
             }
         });

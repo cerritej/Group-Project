@@ -185,6 +185,7 @@ class PrimaryGUI extends JFrame {
                 try {
                     musicMainGame = AudioSystem.getAudioInputStream(new File("resources/music/Soul Survivor.wav"));
                 } catch (UnsupportedAudioFileException | IOException e) {
+                    System.out.println("Error with AudioInputStream file.");
                     e.printStackTrace();
                 }
 
@@ -195,6 +196,7 @@ class PrimaryGUI extends JFrame {
                 try {
                     audioClipMainGame = (Clip) AudioSystem.getLine(infoMainGame);
                 } catch (LineUnavailableException e) {
+                    System.out.println("Error with getting DataLine information of file.");
                     e.printStackTrace();
                 }
 
@@ -202,6 +204,7 @@ class PrimaryGUI extends JFrame {
                 try {
                     audioClipMainGame.open(musicMainGame);
                 } catch (LineUnavailableException | IOException e) {
+                    System.out.println("Error with opening the file.");
                     e.printStackTrace();
                 }
 

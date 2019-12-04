@@ -20,7 +20,7 @@ public class Soundplayer {
             clip.open(audioInputStream);
             clip.start();
         } catch (Exception ex) {
-            System.out.println("Error with playing sound.");
+            System.out.println("Error with playing sound file.");
             ex.printStackTrace();
         }
     }
