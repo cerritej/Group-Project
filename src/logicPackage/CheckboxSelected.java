@@ -5,7 +5,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 
 /***********************************************************************
- * The CheckboxAction class helps with tracking when a checkbox
+ * The CheckboxSelected class helps with tracking when a checkbox
  * on the location image is selected.
  *
  * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
