@@ -1021,7 +1021,7 @@ class PrimaryGUI extends JFrame {
                                 audio.playSound("resources/sounds/Selection is Denied.wav");
                             }
                         }
-                        if(inventory.size() > 0) {
+                        if (inventory.size() > 0) {
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("Access Code")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                                 notification.setForeground(Color.black);
