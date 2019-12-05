@@ -98,12 +98,12 @@ class PrimaryGUI extends JFrame {
     /***********************************************************************
      * Exits the game.
      ***********************************************************************/
-    private final JButton confirmBtn = new JButton("Confirm");
+    private final JButton confirmBtn = new JButton("CONFIRM");
 
     /***********************************************************************
      * Unpauses the game.
      ***********************************************************************/
-    private final JButton cancelBtn = new JButton("Cancel");
+    private final JButton cancelBtn = new JButton("CANCEL");
 
     /***********************************************************************
      * Transfers to the player to the next location.
@@ -969,7 +969,7 @@ class PrimaryGUI extends JFrame {
                     }
 
                     if (inventory.size() >= 1) {
-                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("Access Code")) {
+                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
                             notification.setForeground(Color.black);
                             notification.setVisible(true);
@@ -1000,7 +1000,7 @@ class PrimaryGUI extends JFrame {
                             notification.setForeground(new Color(0, 153, 0));
                             notification.setVisible(true);
 
-                            inventory.add(0, "Access Code");
+                            inventory.add(0, "ACCESS CODE");
 
                             usableItem.setBounds(1400, 100, 410, 40);
                             usableItem.setText(inventory.get(0));
@@ -1022,7 +1022,7 @@ class PrimaryGUI extends JFrame {
                             }
                         }
                         if (inventory.size() > 0) {
-                            if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("Access Code")) {
+                            if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                                 notification.setForeground(Color.black);
                                 notification.setVisible(true);
@@ -1032,7 +1032,7 @@ class PrimaryGUI extends JFrame {
                                 audio.playSound("resources/sounds/Click Action Button.wav");
 
                                 usableItem.addActionListener(denyKeycard -> {
-                                    if (currentLocation.getLocation().equals("Passenger Quarters") && usableItem.getText().equals("Access Code")) {
+                                    if (currentLocation.getLocation().equals("Passenger Quarters") && usableItem.getText().equals("ACCESS CODE")) {
                                         gameState = 1;
 
                                         notification.setText("THE KEYCARD DOES NOTHING");
@@ -1166,7 +1166,7 @@ class PrimaryGUI extends JFrame {
 
 
                     if (inventory.size() >= 1) {
-                        if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.get(0).equals("Access Code")) {
+                        if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
                             notification.setForeground(Color.black);
                             notification.setVisible(true);
@@ -1188,7 +1188,7 @@ class PrimaryGUI extends JFrame {
                     }
 
                     if (inventory.size() >= 1) {
-                        if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource() && inventory.get(0).equals("Access Code")) {
+                        if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                             notification.setForeground(Color.black);
                             notification.setVisible(true);
@@ -1198,7 +1198,7 @@ class PrimaryGUI extends JFrame {
                             audio.playSound("resources/sounds/Click Action Button.wav");
 
                             usableItem.addActionListener(unlockDoor -> {
-                                if (currentLocation.getLocation().equals("Passenger Corridor") && usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
+                                if (currentLocation.getLocation().equals("Passenger Corridor") && usableItem.getText().equals("ACCESS CODE") && useHistory.size() == 0) {
                                     inventory.remove(0);
 
                                     gameState = 1;
