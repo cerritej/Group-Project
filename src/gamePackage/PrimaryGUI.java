@@ -74,6 +74,9 @@ class PrimaryGUI extends JFrame {
         // An ArrayList for storing the items in the inventory.
         ArrayList<String> inventory = new ArrayList<>(10);
 
+        // An ArrayList for storing the inventory use history of the player.
+        ArrayList<String> useHistory = new ArrayList<>(10);
+
         // location object helps with bundling buttons with current room.
         Location currentLocation = new Location();
         currentLocation.setLocation("Main Menu");
@@ -113,8 +116,12 @@ class PrimaryGUI extends JFrame {
 
         // Creates and aligns the Passenger Quarters computer checkbox.
         usableItem.setOpaque(true);
-        usableItem.setContentAreaFilled(false);
+        usableItem.setContentAreaFilled(true);
         usableItem.setBorderPainted(false);
+
+        usableItem.setFont(new Font("Dialog", Font.BOLD, 20));
+        usableItem.setForeground(Color.white);
+        usableItem.setBackground(Color.black);
 
         // Adds the Passenger Quarters computer checkbox.
         gameButtonsPane.add(usableItem);
@@ -399,24 +406,24 @@ class PrimaryGUI extends JFrame {
                                             clickCount++;
                                         }
 
-                                        if (clickCount == 1) {
+                                        if (clickCount == 1 && currentLocation.getLocation().equals("Passenger Quarters")) {
                                             audio.playSound("resources/sounds/Selection is Approved.wav");
                                         }
 
-                                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
+                                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource() && useHistory.size() == 0) {
                                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                                             notification.setForeground(Color.green);
                                             notification.setVisible(true);
 
                                             inventory.add(0, "Access Code");
+                                        }
 
-                                            if (clickCount >= 2 && passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
-                                                notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
-                                                notification.setForeground(Color.BLACK);
-                                                notification.setVisible(true);
+                                        if (clickCount >= 2 && passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
+                                            notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
+                                            notification.setForeground(Color.BLACK);
+                                            notification.setVisible(true);
 
-                                                audio.playSound("resources/sounds/Click Action Button.wav");
-                                            }
+                                            audio.playSound("resources/sounds/Click Action Button.wav");
                                         }
                                     });
 
@@ -460,10 +467,15 @@ class PrimaryGUI extends JFrame {
                                 passengerQuartersComputerCB.setSelected(false);
                                 notification.setText("");
 
-                                notification.setText("THE DOOR IS LOCKED");
-                                notification.setForeground(Color.red);
+                                if(useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                    notification.setText("THE DOOR IS UNLOCKED");
+                                    notification.setForeground(Color.green);
+                                }
 
-                                if (currentLocation.getLocation().equals("Passenger Corridor")) {
+                                if (useHistory.size() == 0 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                    notification.setText("THE DOOR IS LOCKED");
+                                    notification.setForeground(Color.red);
+
                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                 }
 
@@ -602,6 +614,14 @@ class PrimaryGUI extends JFrame {
 
                                                         audio.playSound("resources/sounds/Click Action Button.wav");
                                                     }
+
+                                                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && useHistory.size() >= 1) {
+                                                        notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
+                                                        notification.setForeground(Color.black);
+                                                        notification.setVisible(true);
+
+                                                        audio.playSound("resources/sounds/Click Action Button.wav");
+                                                    }
                                                 }
 
                                                 if (inventory.size() >= 1) {
@@ -609,6 +629,8 @@ class PrimaryGUI extends JFrame {
                                                         notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
                                                         notification.setForeground(Color.black);
                                                         notification.setVisible(true);
+
+                                                        audio.playSound("resources/sounds/Click Action Button.wav");
                                                     }
                                                 }
                                             });
@@ -629,6 +651,33 @@ class PrimaryGUI extends JFrame {
                                                         notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                                                         notification.setForeground(Color.black);
                                                         notification.setVisible(true);
+
+                                                        usableItem.setBounds(1400, 100, 410, 40);
+                                                        usableItem.setText(inventory.get(0));
+                                                        usableItem.setVisible(true);
+
+                                                        audio.playSound("resources/sounds/Click Action Button.wav");
+
+                                                        usableItem.addActionListener(unlockDoor -> {
+                                                            gameState = 1;
+
+                                                            notification.setText("THE DOOR IS UNLOCKED");
+                                                            notification.setForeground(Color.green);
+                                                            notification.setVisible(true);
+
+                                                            inventory.remove(0);
+                                                            useHistory.add("THE DOOR IS UNLOCKED");
+
+                                                            redArrowForwards.setEnabled(true);
+                                                            redArrowBackwards.setEnabled(true);
+
+                                                            passengerCorridorKeypadCB.setSelected(false);
+                                                            selection.setOpaque(false);
+                                                            selection.setVisible(false);
+                                                            usableItem.setVisible(false);
+
+                                                            audio.playSound("resources/sounds/Selection is Approved.wav");
+                                                        });
                                                     }
                                                 }
                                             });
@@ -922,6 +971,8 @@ class PrimaryGUI extends JFrame {
             passengerQuartersComputerCB.setVisible(false);
             passengerCorridorKeypadCB.setVisible(false);
 
+            usableItem.setEnabled(false);
+
             // Plays a sound effect when button is clicked.
             audio.playSound("resources/sounds/Pause Menu.wav");
         });
@@ -990,6 +1041,8 @@ class PrimaryGUI extends JFrame {
                 redArrowForwards.setVisible(true);
                 redArrowBackwards.setVisible(true);
 
+                usableItem.setEnabled(true);
+
                 if (currentLocation.getLocation().equals("Passenger Quarters")) {
                     passengerQuartersComputerCB.setVisible(true);
                 }
@@ -1033,6 +1086,8 @@ class PrimaryGUI extends JFrame {
 
                     passengerQuartersComputerCB.setVisible(false);
                     passengerCorridorKeypadCB.setVisible(false);
+
+                    usableItem.setEnabled(false);
                 }
 
                 // Plays a sound effect when button is clicked.
