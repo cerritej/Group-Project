@@ -3,13 +3,35 @@ package gamePackage;
 import logicPackage.Location;
 import logicPackage.Soundplayer;
 
-import javax.sound.sampled.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.KeyStroke;
+import javax.swing.OverlayLayout;
+import javax.swing.SwingConstants;
 
 /***********************************************************************
  * The PrimaryGUI class creates the components and general functions
@@ -101,7 +123,7 @@ class PrimaryGUI extends JFrame {
     private final JButton confirmBtn = new JButton("CONFIRM");
 
     /***********************************************************************
-     * Unpauses the game.
+     * Resumes the game.
      ***********************************************************************/
     private final JButton cancelBtn = new JButton("CANCEL");
 
@@ -134,10 +156,11 @@ class PrimaryGUI extends JFrame {
 
     /******************************************************************
      * Main method that runs the primaryGUI class.
-     * @throws IOException
-     * @throws UnsupportedAudioFileException
-     * @throws LineUnavailableException
+     * @throws IOException Throws an error when input/output does not work.
+     * @throws UnsupportedAudioFileException Throws an error when audio file is incorrect.
+     * @throws LineUnavailableException Throws an error when line information is incorrect.
      ******************************************************************/
+    @SuppressWarnings("checkstyle:MagicNumber")
     PrimaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         super("Soul Survivor");
 
@@ -334,9 +357,9 @@ class PrimaryGUI extends JFrame {
                 KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
                 Action enterAction = new AbstractAction() {
                     // Initializes the intro sequence frame count.
-                    int counter = 1;
+                    private int counter = 1;
 
-                    public void actionPerformed(ActionEvent event) {
+                    public void actionPerformed(final ActionEvent event) {
                         // Increments through each intro sequence frame.
                         if (!confirmBtn.isVisible() && !cancelBtn.isVisible()) {
                             counter++;
@@ -356,6 +379,7 @@ class PrimaryGUI extends JFrame {
                         // ---------- Traveling Between Locations ------------ //
 
                         switch (currentLocation.getLocation()) {
+                            default:
                             case "Passenger Quarters":
                                 redArrowForwards.setBounds(550, 700, 125, 125);
 
@@ -367,7 +391,7 @@ class PrimaryGUI extends JFrame {
 
                                 redArrowForwards.addMouseListener(new MouseAdapter() {
                                     @Override
-                                    public void mouseEntered(MouseEvent e) {
+                                    public void mouseEntered(final MouseEvent e) {
                                         if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 1) {
                                             notification.setText("TRAVEL TO PASSENGER CORRIDOR");
                                             notification.setForeground(Color.black);
@@ -376,7 +400,7 @@ class PrimaryGUI extends JFrame {
                                     }
 
                                     @Override
-                                    public void mousePressed(MouseEvent e) {
+                                    public void mousePressed(final MouseEvent e) {
                                         if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 2) {
                                             notification.setText("UNSELECT THE OBJECT TO PROCEED");
                                             notification.setForeground(Color.red);
@@ -387,7 +411,7 @@ class PrimaryGUI extends JFrame {
                                     }
 
                                     @Override
-                                    public void mouseExited(MouseEvent e) {
+                                    public void mouseExited(final MouseEvent e) {
                                         if (!redArrowForwards.isSelected()) {
                                             notification.setVisible(false);
                                         }
@@ -436,7 +460,7 @@ class PrimaryGUI extends JFrame {
 
                                         redArrowForwards.addMouseListener(new MouseAdapter() {
                                             @Override
-                                            public void mouseEntered(MouseEvent e) {
+                                            public void mouseEntered(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
                                                     notification.setText("TRAVEL TO MAIN LOBBY");
                                                     notification.setForeground(Color.black);
@@ -445,7 +469,7 @@ class PrimaryGUI extends JFrame {
                                             }
 
                                             @Override
-                                            public void mousePressed(MouseEvent e) {
+                                            public void mousePressed(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
                                                     notification.setText("UNSELECT THE OBJECT TO PROCEED");
                                                     notification.setForeground(Color.red);
@@ -456,7 +480,7 @@ class PrimaryGUI extends JFrame {
                                             }
 
                                             @Override
-                                            public void mouseExited(MouseEvent e) {
+                                            public void mouseExited(final MouseEvent e) {
                                                 if (!redArrowForwards.isSelected()) {
                                                     notification.setVisible(false);
                                                 }
@@ -465,7 +489,7 @@ class PrimaryGUI extends JFrame {
 
                                         redArrowBackwards.addMouseListener(new MouseAdapter() {
                                             @Override
-                                            public void mouseEntered(MouseEvent e) {
+                                            public void mouseEntered(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
                                                     notification.setText("TRAVEL TO PASSENGER QUARTERS");
                                                     notification.setForeground(Color.black);
@@ -474,7 +498,7 @@ class PrimaryGUI extends JFrame {
                                             }
 
                                             @Override
-                                            public void mousePressed(MouseEvent e) {
+                                            public void mousePressed(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
                                                     notification.setText("UNSELECT THE OBJECT TO PROCEED");
                                                     notification.setForeground(Color.red);
@@ -485,7 +509,7 @@ class PrimaryGUI extends JFrame {
                                             }
 
                                             @Override
-                                            public void mouseExited(MouseEvent e) {
+                                            public void mouseExited(final MouseEvent e) {
                                                 if (!redArrowBackwards.isSelected()) {
                                                     notification.setVisible(false);
                                                 }
@@ -841,7 +865,7 @@ class PrimaryGUI extends JFrame {
         // Displays the exit game button options.
         KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         Action escapeAction = new AbstractAction() {
-            public void actionPerformed(ActionEvent event) {
+            public void actionPerformed(final ActionEvent event) {
                 confirmBtn.setVisible(true);
                 cancelBtn.setVisible(true);
                 pauseMessage.setVisible(true);
@@ -907,7 +931,7 @@ class PrimaryGUI extends JFrame {
         // MouseListener interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 if (!passengerQuartersComputerCB.isSelected()) {
                     notification.setText("DO YOU WANT TO SELECT THE COMPUTER?");
                     notification.setForeground(Color.black);
@@ -916,14 +940,14 @@ class PrimaryGUI extends JFrame {
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 if (!passengerQuartersComputerCB.isSelected()) {
                     notification.setVisible(false);
                 }
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 gameState = 2;
 
                 selection.setText("COMPUTER");
@@ -1074,6 +1098,7 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
+                clickCount = 0;
                 gameState = 1;
 
                 notification.setVisible(false);
@@ -1089,7 +1114,7 @@ class PrimaryGUI extends JFrame {
         // MouseListener interactions with the Passenger Corridor Keypad.
         passengerCorridorKeypadCB.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 if (!passengerCorridorKeypadCB.isSelected()) {
                     notification.setText("DO YOU WANT TO SELECT THE KEYPAD?");
                     notification.setForeground(Color.black);
@@ -1098,14 +1123,14 @@ class PrimaryGUI extends JFrame {
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 if (!passengerCorridorKeypadCB.isSelected()) {
                     notification.setVisible(false);
                 }
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
                 gameState = 2;
 
                 selection.setText("KEYPAD");
@@ -1241,6 +1266,7 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
+                clickCount = 0;
                 gameState = 1;
 
                 notification.setVisible(false);
