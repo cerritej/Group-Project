@@ -20,44 +20,114 @@ import java.util.ArrayList;
  ***********************************************************************/
 
 class PrimaryGUI extends JFrame {
-    /* A dynamic value to help specify gameState conditions. */
+    /***********************************************************************
+     * Specifies what section of the game the player is at.
+     ***********************************************************************/
     private int gameState = 0;
 
-    /* A dynamic value to help record amount of times an action button is clicked. */
+    /***********************************************************************
+     * Records the amount of times an action button is clicked.
+     ***********************************************************************/
     private int clickCount = 0;
 
-    /* JLabel for displaying game messages for the player. */
+    /***********************************************************************
+     * Displays game messages for the player.
+     ***********************************************************************/
     private final JLabel notification = new JLabel();
+
+    /***********************************************************************
+     * Displays object selection for the player.
+     ***********************************************************************/
     private final JLabel selection = new JLabel();
 
-    /* Buttons for the main menu. */
+    /***********************************************************************
+     * Starts the game.
+     ***********************************************************************/
     private final JButton startBtn = new JButton("");
+
+    /***********************************************************************
+     * Loads the game.
+     ***********************************************************************/
     private final JButton loadBtn = new JButton("");
+
+    /***********************************************************************
+     * Takes player to options menu.
+     ***********************************************************************/
     private final JButton optionBtn = new JButton("");
+
+    /***********************************************************************
+     * Takes player to credits screen.
+     ***********************************************************************/
     private final JButton secretBtn = new JButton("");
 
-    /* Buttons for the game screen. */
+    /***********************************************************************
+     * Displays the pause menu.
+     ***********************************************************************/
     private final JButton exitBtn = new JButton("");
+
+    /***********************************************************************
+     * Opens the selected object.
+     ***********************************************************************/
     private final JButton openObjBtn = new JButton("");
+
+    /***********************************************************************
+     * Closes the selected object.
+     ***********************************************************************/
     private final JButton closeObjBtn = new JButton("");
+
+    /***********************************************************************
+     * Inspects the selected object.
+     ***********************************************************************/
     private final JButton inspectObjBtn = new JButton("");
+
+    /***********************************************************************
+     * Use the selected object or pulls up inventory.
+     ***********************************************************************/
     private final JButton useObjBtn = new JButton("");
+
+    /***********************************************************************
+     * Takes the selected object.
+     ***********************************************************************/
     private final JButton takeItemBtn = new JButton("");
+
+    /***********************************************************************
+     * Talks to the selected object.
+     ***********************************************************************/
     private final JButton beginDialogueBtn = new JButton("");
 
-    /* Buttons for the pause menu. */
+    /***********************************************************************
+     * Exits the game.
+     ***********************************************************************/
     private final JButton confirmBtn = new JButton("Confirm");
+
+    /***********************************************************************
+     * Unpauses the game.
+     ***********************************************************************/
     private final JButton cancelBtn = new JButton("Cancel");
 
-    /* Buttons for changing the location of the player. */
+    /***********************************************************************
+     * Transfers to the player to the next location.
+     ***********************************************************************/
     private final JButton redArrowForwards = new JButton("");
+
+    /***********************************************************************
+     * Transfers to the player to the previous location.
+     ***********************************************************************/
     private final JButton redArrowBackwards = new JButton("");
 
-    /* Button for inventory item the player can use. */
+    /***********************************************************************
+     * Uses the chosen item in the inventory.
+     ***********************************************************************/
     private final JButton usableItem = new JButton("");
 
-    /* Checkboxes for interactive objects. */
+    /***********************************************************************
+     * Selects the passenger quarters computer object.
+     ***********************************************************************/
     private final JCheckBox passengerQuartersComputerCB = new JCheckBox();
+
+    /***********************************************************************
+     * Selects the passenger corridor keypad object.
+     ***********************************************************************/
     private final JCheckBox passengerCorridorKeypadCB = new JCheckBox();
 
     private static final long serialVersionUID = 1L;
@@ -106,7 +176,7 @@ class PrimaryGUI extends JFrame {
         backgroundPane.setLayout(overlayBackgroundPanel);
         gameButtonsPane.setLayout(null);
 
-        // Creates a background for the GUI using the assigned photo.
+        // Creates an initial background for the GUI using the assigned photo.
         JLabel mainMenu = new JLabel("");
         mainMenu.setMaximumSize(new Dimension(1920, 1080));
         mainMenu.setIcon(new ImageIcon("resources/ui/Main Menu.jpg"));
@@ -125,26 +195,6 @@ class PrimaryGUI extends JFrame {
 
         // Adds the Passenger Quarters computer checkbox.
         gameButtonsPane.add(usableItem);
-
-        // ---------- Passenger Quarters Computer CheckBox ------------ //
-
-        // Creates and aligns the Passenger Quarters computer checkbox.
-        passengerQuartersComputerCB.setOpaque(true);
-        passengerQuartersComputerCB.setContentAreaFilled(false);
-        passengerQuartersComputerCB.setBorderPainted(false);
-
-        // Adds the Passenger Quarters computer checkbox.
-        gameButtonsPane.add(passengerQuartersComputerCB);
-
-        // ---------- Passenger Corridor Keypad CheckBox ------------ //
-
-        // Creates and aligns the Passenger Quarters computer checkbox.
-        passengerCorridorKeypadCB.setOpaque(true);
-        passengerCorridorKeypadCB.setContentAreaFilled(false);
-        passengerCorridorKeypadCB.setBorderPainted(false);
-
-        // Adds the Passenger Quarters computer checkbox.
-        gameButtonsPane.add(passengerCorridorKeypadCB);
 
         // ---------- Arrow Buttons for Exploration ------------ //
 
@@ -219,7 +269,7 @@ class PrimaryGUI extends JFrame {
 
         // The functionality of the start button, changes all resources to the primary game screen.
         startBtn.addActionListener(beginGame -> {
-            if (beginGame.getSource() == startBtn) {
+            if (startBtn == beginGame.getSource()) {
                 // Acknowledges the gameState has changed to the game screen.
                 gameState = 1;
 
@@ -299,454 +349,170 @@ class PrimaryGUI extends JFrame {
 
                             mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
                             currentLocation.setLocation("Passenger Quarters");
+
+                            passengerQuartersComputerCB.setVisible(true);
                         }
 
-                        // ---------- Locations ------------ //
+                        // ---------- Traveling Between Locations ------------ //
 
-                        // Traveling from Passenger Quarters to Passenger Corridor.
-                        if (currentLocation.getLocation().equals("Passenger Quarters")) {
-                            redArrowForwards.setBounds(550, 700, 125, 125);
+                        switch (currentLocation.getLocation()) {
+                            case "Passenger Quarters":
+                                redArrowForwards.setBounds(550, 700, 125, 125);
 
-                            passengerQuartersComputerCB.setBounds(1000, 525, 250, 125);
-                            passengerCorridorKeypadCB.setVisible(false);
+                                // Checkboxes that must appear in Passenger Quarters.
+                                passengerQuartersComputerCB.setBounds(1000, 525, 250, 125);
 
-                            redArrowForwards.addMouseListener(new MouseAdapter() {
-                                @Override
-                                public void mouseEntered(MouseEvent e) {
-                                    if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 1) {
-                                        notification.setText("TRAVEL TO PASSENGER CORRIDOR");
-                                        notification.setForeground(Color.black);
-                                        notification.setVisible(true);
+                                // Checkboxes that must disappear in Passenger Quarters.
+                                passengerCorridorKeypadCB.setVisible(false);
+
+                                redArrowForwards.addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
+                                        if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 1) {
+                                            notification.setText("TRAVEL TO PASSENGER CORRIDOR");
+                                            notification.setForeground(Color.black);
+                                            notification.setVisible(true);
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void mousePressed(MouseEvent e) {
-                                    if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 2) {
-                                        notification.setText("UNSELECT THE OBJECT TO PROCEED");
+                                    @Override
+                                    public void mousePressed(MouseEvent e) {
+                                        if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 2) {
+                                            notification.setText("UNSELECT THE OBJECT TO PROCEED");
+                                            notification.setForeground(Color.red);
+                                            notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
+                                        if (!redArrowForwards.isSelected()) {
+                                            notification.setVisible(false);
+                                        }
+                                    }
+                                });
+
+                            case "Passenger Corridor":
+                                // Action listener for allowing the player to proceed forward.
+                                redArrowForwards.addActionListener(changeLocationForwards -> {
+                                    redArrowForwards.setBounds(600, 520, 125, 125);
+                                    redArrowBackwards.setBounds(600, 700, 125, 125);
+                                    redArrowBackwards.setVisible(true);
+
+                                    // Resets the selected object that the player chose.
+                                    passengerQuartersComputerCB.setSelected(false);
+                                    notification.setText("");
+                                    clickCount = 0;
+
+                                    if (useHistory.size() == 0 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                        notification.setText("THE DOOR IS LOCKED");
                                         notification.setForeground(Color.red);
-                                        notification.setVisible(true);
 
                                         audio.playSound("resources/sounds/Selection is Denied.wav");
                                     }
-                                }
 
-                                @Override
-                                public void mouseExited(MouseEvent e) {
-                                    if (!redArrowForwards.isSelected()) {
-                                        notification.setVisible(false);
+                                    if (useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                        notification.setText("THE DOOR IS UNLOCKED");
+                                        notification.setForeground(new Color(0, 153, 0));
                                     }
-                                }
-                            });
 
-                            passengerQuartersComputerCB.addMouseListener(new MouseAdapter() {
-                                @Override
-                                public void mouseEntered(MouseEvent e) {
-                                    if (!passengerQuartersComputerCB.isSelected()) {
-                                        notification.setText("DO YOU WANT TO SELECT THE COMPUTER?");
-                                        notification.setForeground(Color.black);
-                                        notification.setVisible(true);
-                                    }
-                                }
+                                    // Player's current location is now the Passenger Corridor.
+                                    mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
+                                    currentLocation.setLocation("Passenger Corridor");
 
-                                @Override
-                                public void mouseExited(MouseEvent e) {
-                                    if (!passengerQuartersComputerCB.isSelected()) {
-                                        notification.setVisible(false);
-                                    }
-                                }
-                            });
+                                    // Traveling from Passenger Corridor to Passenger Quarters.
+                                    if (currentLocation.getLocation().equals("Passenger Corridor")) {
+                                        redArrowForwards.setBounds(600, 520, 125, 125);
+                                        redArrowBackwards.setBounds(600, 700, 125, 125);
 
-                            passengerQuartersComputerCB.addActionListener(message -> {
-                                if (passengerQuartersComputerCB.isSelected()) {
-                                    gameState = 2;
+                                        // Checkbox that must appear in Passenger Corridor.
+                                        passengerCorridorKeypadCB.setBounds(750, 382, 20, 30);
+                                        passengerCorridorKeypadCB.setVisible(true);
 
-                                    selection.setText("COMPUTER");
-                                    selection.setOpaque(true);
-                                    selection.setVisible(true);
+                                        // Checkbox that must disappear in Passenger Corridor.
+                                        passengerQuartersComputerCB.setVisible(false);
 
-                                    notification.setText("THE COMPUTER IS SELECTED");
-                                    notification.setForeground(Color.black);
-                                    notification.setVisible(true);
-
-                                    redArrowForwards.setEnabled(false);
-
-                                    openObjBtn.addActionListener(openComputer -> {
-                                        if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
-                                            notification.setText("THE COMPUTER CANNOT BE OPENED");
-                                            notification.setForeground(Color.red);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Selection is Denied.wav");
-                                        }
-                                    });
-
-                                    closeObjBtn.addActionListener(openComputer -> {
-                                        if (passengerQuartersComputerCB.isSelected() && closeObjBtn == openComputer.getSource()) {
-                                            notification.setText("THE COMPUTER CANNOT BE CLOSED");
-                                            notification.setForeground(Color.red);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Selection is Denied.wav");
-                                        }
-                                    });
-
-                                    inspectObjBtn.addActionListener(openComputer -> {
-                                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == openComputer.getSource()) {
-                                            notification.setText("PLAYER: THE GOVERNMENT WAS NICE ENOUGH TO PROVIDE EACH PASSENGER THEIR OWN COMPUTER");
-                                            notification.setForeground(Color.black);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Click Action Button.wav");
-                                        }
-                                    });
-
-                                    useObjBtn.addActionListener(openComputer -> {
-                                        if (gameState == 2) {
-                                            clickCount++;
-                                        }
-
-                                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
-                                            notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
-                                            notification.setForeground(new Color(0, 153, 0));
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Selection is Approved.wav");
-
-                                            inventory.add(0, "Access Code");
-                                        }
-
-                                        if (clickCount >= 2 && passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
-                                            notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
-                                            notification.setForeground(Color.black);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Click Action Button.wav");
-                                        }
-                                    });
-
-                                    takeItemBtn.addActionListener(openComputer -> {
-                                        if (passengerQuartersComputerCB.isSelected() && takeItemBtn == openComputer.getSource()) {
-                                            notification.setText("THE COMPUTER IS CONNECTED TO THE DESK AND CANNOT BE PICKED UP");
-                                            notification.setForeground(Color.red);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Selection is Denied.wav");
-                                        }
-                                    });
-
-                                    beginDialogueBtn.addActionListener(openComputer -> {
-                                        if (passengerQuartersComputerCB.isSelected() && beginDialogueBtn == openComputer.getSource()) {
-                                            notification.setText("YOU MUST BE BORED IF YOU ARE TRYING TO TALK TO A COMPUTER");
-                                            notification.setForeground(Color.red);
-                                            notification.setVisible(true);
-
-                                            audio.playSound("resources/sounds/Selection is Denied.wav");
-                                        }
-                                    });
-                                } else {
-                                    gameState = 1;
-
-                                    notification.setVisible(false);
-                                    selection.setOpaque(false);
-                                    selection.setVisible(false);
-
-                                    redArrowForwards.setEnabled(true);
-                                }
-                            });
-
-                            // Action listener for allowing the player to proceed forward.
-                            redArrowForwards.addActionListener(changeLocationForwards -> {
-                                redArrowForwards.setBounds(600, 520, 125, 125);
-                                redArrowBackwards.setBounds(600, 700, 125, 125);
-                                redArrowBackwards.setVisible(true);
-
-                                // Resets the selected object that the player chose.
-                                passengerQuartersComputerCB.setSelected(false);
-                                notification.setText("");
-
-                                if (useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
-                                    notification.setText("THE DOOR IS UNLOCKED");
-                                    notification.setForeground(new Color(0, 153, 0));
-                                }
-
-                                if (useHistory.size() == 0 && currentLocation.getLocation().equals("Passenger Corridor")) {
-                                    notification.setText("THE DOOR IS LOCKED");
-                                    notification.setForeground(Color.red);
-
-                                    audio.playSound("resources/sounds/Selection is Denied.wav");
-                                }
-
-                                // Player's current location is now the Passenger Corridor.
-                                mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Corridor.jpg"));
-                                currentLocation.setLocation("Passenger Corridor");
-
-                                // Traveling from Passenger Corridor to Passenger Quarters.
-                                if (currentLocation.getLocation().equals("Passenger Corridor")) {
-                                    redArrowForwards.setBounds(600, 520, 125, 125);
-                                    redArrowBackwards.setBounds(600, 700, 125, 125);
-
-                                    passengerCorridorKeypadCB.setBounds(750, 382, 20, 30);
-                                    passengerCorridorKeypadCB.setVisible(true);
-
-                                    // Checkboxes that must disappear in Passenger Corridor.
-                                    passengerQuartersComputerCB.setVisible(false);
-
-                                    redArrowForwards.addMouseListener(new MouseAdapter() {
-                                        @Override
-                                        public void mouseEntered(MouseEvent e) {
-                                            if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
-                                                notification.setText("TRAVEL TO MAIN LOBBY");
-                                                notification.setForeground(Color.black);
-                                                notification.setVisible(true);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void mousePressed(MouseEvent e) {
-                                            if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
-                                                notification.setText("UNSELECT THE OBJECT TO PROCEED");
-                                                notification.setForeground(Color.red);
-                                                notification.setVisible(true);
-
-                                                audio.playSound("resources/sounds/Selection is Denied.wav");
-                                            }
-                                        }
-
-                                        @Override
-                                        public void mouseExited(MouseEvent e) {
-                                            if (!redArrowForwards.isSelected()) {
-                                                notification.setVisible(false);
-                                            }
-                                        }
-                                    });
-
-                                    redArrowBackwards.addMouseListener(new MouseAdapter() {
-                                        @Override
-                                        public void mouseEntered(MouseEvent e) {
-                                            if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
-                                                notification.setText("TRAVEL TO PASSENGER QUARTERS");
-                                                notification.setForeground(Color.black);
-                                                notification.setVisible(true);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void mousePressed(MouseEvent e) {
-                                            if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
-                                                notification.setText("UNSELECT THE OBJECT TO PROCEED");
-                                                notification.setForeground(Color.red);
-                                                notification.setVisible(true);
-
-                                                audio.playSound("resources/sounds/Selection is Denied.wav");
-                                            }
-                                        }
-
-                                        @Override
-                                        public void mouseExited(MouseEvent e) {
-                                            if (!redArrowBackwards.isSelected()) {
-                                                notification.setVisible(false);
-                                            }
-                                        }
-                                    });
-
-                                    passengerCorridorKeypadCB.addMouseListener(new MouseAdapter() {
-                                        @Override
-                                        public void mouseEntered(MouseEvent e) {
-                                            if (!passengerCorridorKeypadCB.isSelected()) {
-                                                notification.setText("DO YOU WANT TO SELECT THE KEYPAD?");
-                                                notification.setForeground(Color.black);
-                                                notification.setVisible(true);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void mouseExited(MouseEvent e) {
-                                            if (!passengerCorridorKeypadCB.isSelected()) {
-                                                notification.setVisible(false);
-                                            }
-                                        }
-                                    });
-
-                                    passengerCorridorKeypadCB.addActionListener(message -> {
-                                        if (passengerCorridorKeypadCB.isSelected()) {
-                                            gameState = 2;
-
-                                            selection.setText("KEYPAD");
-                                            selection.setOpaque(true);
-                                            selection.setVisible(true);
-
-                                            notification.setText("THE KEYPAD IS SELECTED");
-                                            notification.setForeground(Color.black);
-                                            notification.setVisible(true);
-
-                                            redArrowForwards.setEnabled(false);
-                                            redArrowBackwards.setEnabled(false);
-
-                                            openObjBtn.addActionListener(openComputer -> {
-                                                if (passengerCorridorKeypadCB.isSelected() && openObjBtn == openComputer.getSource()) {
-                                                    notification.setText("THE KEYPAD CANNOT BE OPENED");
-                                                    notification.setForeground(Color.red);
-                                                    notification.setVisible(true);
-
-                                                    usableItem.setVisible(false);
-
-                                                    audio.playSound("resources/sounds/Selection is Denied.wav");
-                                                }
-                                            });
-
-                                            closeObjBtn.addActionListener(openComputer -> {
-                                                if (passengerCorridorKeypadCB.isSelected() && closeObjBtn == openComputer.getSource()) {
-                                                    notification.setText("THE KEYPAD CANNOT BE CLOSED");
-                                                    notification.setForeground(Color.red);
-                                                    notification.setVisible(true);
-
-                                                    usableItem.setVisible(false);
-
-                                                    audio.playSound("resources/sounds/Selection is Denied.wav");
-                                                }
-                                            });
-
-                                            inspectObjBtn.addActionListener(openComputer -> {
-                                                if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
-                                                    notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
+                                        redArrowForwards.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseEntered(MouseEvent e) {
+                                                if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
+                                                    notification.setText("TRAVEL TO MAIN LOBBY");
                                                     notification.setForeground(Color.black);
                                                     notification.setVisible(true);
-
-                                                    usableItem.setVisible(false);
-
-                                                    audio.playSound("resources/sounds/Click Action Button.wav");
                                                 }
+                                            }
 
-                                                if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() >= 1) {
-                                                    notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
+                                            @Override
+                                            public void mousePressed(MouseEvent e) {
+                                                if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
+                                                    notification.setText("UNSELECT THE OBJECT TO PROCEED");
+                                                    notification.setForeground(Color.red);
+                                                    notification.setVisible(true);
+
+                                                    audio.playSound("resources/sounds/Selection is Denied.wav");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void mouseExited(MouseEvent e) {
+                                                if (!redArrowForwards.isSelected()) {
+                                                    notification.setVisible(false);
+                                                }
+                                            }
+                                        });
+
+                                        redArrowBackwards.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseEntered(MouseEvent e) {
+                                                if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
+                                                    notification.setText("TRAVEL TO PASSENGER QUARTERS");
                                                     notification.setForeground(Color.black);
                                                     notification.setVisible(true);
-
-                                                    audio.playSound("resources/sounds/Click Action Button.wav");
                                                 }
+                                            }
 
-
-                                                if (inventory.size() >= 1) {
-                                                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.get(0).equals("Access Code")) {
-                                                        notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
-                                                        notification.setForeground(Color.black);
-                                                        notification.setVisible(true);
-
-                                                        usableItem.setVisible(false);
-
-                                                        audio.playSound("resources/sounds/Click Action Button.wav");
-                                                    }
-                                                }
-                                            });
-
-                                            useObjBtn.addActionListener(openComputer -> {
-                                                if (inventory.size() == 0) {
-                                                    if (passengerCorridorKeypadCB.isSelected() && useObjBtn == openComputer.getSource()) {
-                                                        notification.setText("YOUR INVENTORY IS EMPTY");
-                                                        notification.setForeground(Color.red);
-                                                        notification.setVisible(true);
-
-                                                        audio.playSound("resources/sounds/Selection is Denied.wav");
-                                                    }
-                                                }
-
-                                                if (inventory.size() >= 1) {
-                                                    if (passengerCorridorKeypadCB.isSelected() && useObjBtn == openComputer.getSource() && inventory.get(0).equals("Access Code")) {
-                                                        notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
-                                                        notification.setForeground(Color.black);
-                                                        notification.setVisible(true);
-
-                                                        usableItem.setBounds(1400, 100, 410, 40);
-                                                        usableItem.setText(inventory.get(0));
-                                                        usableItem.setVisible(true);
-
-                                                        audio.playSound("resources/sounds/Click Action Button.wav");
-
-                                                        usableItem.addActionListener(unlockDoor -> {
-                                                            if(usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
-                                                                inventory.remove(0);
-
-                                                                gameState = 1;
-
-                                                                notification.setText("THE DOOR IS UNLOCKED");
-                                                                notification.setForeground(new Color(0, 153, 0));
-                                                                notification.setVisible(true);
-
-                                                                useHistory.add("THE DOOR IS UNLOCKED");
-
-                                                                redArrowForwards.setEnabled(true);
-                                                                redArrowBackwards.setEnabled(true);
-
-                                                                passengerCorridorKeypadCB.setSelected(false);
-                                                                selection.setOpaque(false);
-                                                                selection.setVisible(false);
-                                                                usableItem.setVisible(false);
-
-                                                                audio.playSound("resources/sounds/Selection is Approved.wav");
-                                                            }
-                                                        });
-                                                    }
-                                                }
-                                            });
-
-                                            takeItemBtn.addActionListener(openComputer -> {
-                                                if (passengerCorridorKeypadCB.isSelected() && takeItemBtn == openComputer.getSource()) {
-                                                    notification.setText("THE KEYPAD IS ATTACHED TO THE WALL AND CANNOT BE PICKED UP");
+                                            @Override
+                                            public void mousePressed(MouseEvent e) {
+                                                if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
+                                                    notification.setText("UNSELECT THE OBJECT TO PROCEED");
                                                     notification.setForeground(Color.red);
                                                     notification.setVisible(true);
 
-                                                    usableItem.setVisible(false);
-
                                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                                 }
-                                            });
+                                            }
 
-                                            beginDialogueBtn.addActionListener(openComputer -> {
-                                                if (passengerCorridorKeypadCB.isSelected() && beginDialogueBtn == openComputer.getSource()) {
-                                                    notification.setText("SERIOUSLY, YOU ARE TRYING TO TALK TO A KEYPAD?");
-                                                    notification.setForeground(Color.red);
-                                                    notification.setVisible(true);
-
-                                                    usableItem.setVisible(false);
-
-                                                    audio.playSound("resources/sounds/Selection is Denied.wav");
+                                            @Override
+                                            public void mouseExited(MouseEvent e) {
+                                                if (!redArrowBackwards.isSelected()) {
+                                                    notification.setVisible(false);
                                                 }
-                                            });
-                                        } else {
-                                            gameState = 1;
+                                            }
+                                        });
 
-                                            usableItem.setVisible(false);
-                                            notification.setVisible(false);
-                                            selection.setOpaque(false);
-                                            selection.setVisible(false);
+                                        // Action listener for allowing the player to proceed backward.
+                                        redArrowBackwards.addActionListener(changeLocationBackwards -> {
+                                            redArrowForwards.setBounds(550, 700, 125, 125);
+                                            redArrowBackwards.setVisible(false);
 
-                                            redArrowForwards.setEnabled(true);
-                                            redArrowBackwards.setEnabled(true);
-                                        }
-                                    });
+                                            // Checkboxes that must appear in Passenger Quarters.
+                                            passengerQuartersComputerCB.setVisible(true);
 
-                                    // Action listener for allowing the player to proceed backward.
-                                    redArrowBackwards.addActionListener(changeLocationBackwards -> {
-                                        redArrowForwards.setBounds(550, 700, 125, 125);
-                                        redArrowBackwards.setVisible(false);
+                                            // Checkboxes that must disappear in Passenger Quarters.
+                                            passengerCorridorKeypadCB.setVisible(false);
 
-                                        // Checkboxes that must appear in Passenger Quarters.
-                                        passengerQuartersComputerCB.setVisible(true);
+                                            // Resets the selected object that the player chose.
+                                            passengerQuartersComputerCB.setSelected(false);
+                                            notification.setText("");
 
-                                        // Checkboxes that must disappear in Passenger Quarters.
-                                        passengerCorridorKeypadCB.setVisible(false);
-
-                                        // Resets the selected object that the player chose.
-                                        passengerQuartersComputerCB.setSelected(false);
-                                        notification.setText("");
-
-                                        // Player's current location is now the Passenger Quarters.
-                                        mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
-                                        currentLocation.setLocation("Passenger Quarters");
-                                    });
-                                }
-                            });
+                                            // Player's current location is now the Passenger Quarters.
+                                            mainMenu.setIcon(new ImageIcon("resources/ui/locations/Passenger Quarters.jpg"));
+                                            currentLocation.setLocation("Passenger Quarters");
+                                        });
+                                    }
+                                });
                         }
                     }
                 };
@@ -1111,6 +877,332 @@ class PrimaryGUI extends JFrame {
         // Searches for the escape key input that is pressed by the player.
         getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKey, "ESCAPE");
         getRootPane().getActionMap().put("ESCAPE", escapeAction);
+
+        // ---------- Passenger Quarters Computer CheckBox ------------ //
+
+        // Creates and aligns the Passenger Quarters computer checkbox.
+        passengerQuartersComputerCB.setOpaque(true);
+        passengerQuartersComputerCB.setContentAreaFilled(false);
+        passengerQuartersComputerCB.setBorderPainted(false);
+
+        // Adds the Passenger Quarters computer checkbox.
+        gameButtonsPane.add(passengerQuartersComputerCB);
+
+        // ---------- Passenger Corridor Keypad CheckBox ------------ //
+
+        // Creates and aligns the Passenger Quarters computer checkbox.
+        passengerCorridorKeypadCB.setOpaque(true);
+        passengerCorridorKeypadCB.setContentAreaFilled(false);
+        passengerCorridorKeypadCB.setBorderPainted(false);
+
+        // Adds the Passenger Quarters computer checkbox.
+        gameButtonsPane.add(passengerCorridorKeypadCB);
+
+        // ---------- Action Button Functions for Interactive Objects ------------ //
+
+        // MouseListener interactions with the Passenger Quarters Computer.
+        passengerQuartersComputerCB.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!passengerQuartersComputerCB.isSelected()) {
+                    notification.setText("DO YOU WANT TO SELECT THE COMPUTER?");
+                    notification.setForeground(Color.black);
+                    notification.setVisible(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (!passengerQuartersComputerCB.isSelected()) {
+                    notification.setVisible(false);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                gameState = 2;
+
+                selection.setText("COMPUTER");
+                selection.setOpaque(true);
+                selection.setVisible(true);
+
+                notification.setText("THE COMPUTER IS SELECTED");
+                notification.setForeground(Color.black);
+                notification.setVisible(true);
+
+                redArrowForwards.setEnabled(false);
+            }
+        });
+
+        // Action Button interactions with the Passenger Quarters Computer.
+        passengerQuartersComputerCB.addActionListener(message -> {
+            clickCount = 0;
+
+            if (passengerQuartersComputerCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Quarters")) {
+                openObjBtn.addActionListener(openComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
+                        notification.setText("THE COMPUTER CANNOT BE OPENED");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                closeObjBtn.addActionListener(closeComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && closeObjBtn == closeComputer.getSource()) {
+                        notification.setText("THE COMPUTER CANNOT BE CLOSED");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                inspectObjBtn.addActionListener(openComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == openComputer.getSource()) {
+                        notification.setText("PLAYER: THE GOVERNMENT WAS NICE ENOUGH TO PROVIDE EACH PASSENGER THEIR OWN COMPUTER");
+                        notification.setForeground(Color.black);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Click Action Button.wav");
+                    }
+                });
+
+                useObjBtn.addActionListener(openComputer -> {
+                    if (useObjBtn == openComputer.getSource() && gameState == 2) {
+                        clickCount++;
+                        System.out.println(clickCount);
+                    }
+
+                    if (clickCount == 1) {
+                        if (passengerQuartersComputerCB.isSelected() && inventory.size() == 0 && useHistory.size() == 0) {
+                            notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
+                            notification.setForeground(new Color(0, 153, 0));
+                            notification.setVisible(true);
+
+                            inventory.add(0, "Access Code");
+
+                            usableItem.setBounds(1400, 100, 410, 40);
+                            usableItem.setText(inventory.get(0));
+                            usableItem.setVisible(true);
+                            usableItem.setEnabled(false);
+
+                            audio.playSound("resources/sounds/Selection is Approved.wav");
+                        }
+                    }
+
+                    if (clickCount >= 2) {
+                        if (passengerQuartersComputerCB.isSelected() && inventory.size() > 0 || passengerQuartersComputerCB.isSelected() && useHistory.size() >= 1) {
+                            notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
+                            notification.setForeground(Color.black);
+                            notification.setVisible(true);
+
+                            audio.playSound("resources/sounds/Click Action Button.wav");
+                        }
+                    }
+                });
+
+                takeItemBtn.addActionListener(takeComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && takeItemBtn == takeComputer.getSource()) {
+                        notification.setText("THE COMPUTER IS CONNECTED TO THE DESK AND CANNOT BE PICKED UP");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                beginDialogueBtn.addActionListener(talkToComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && beginDialogueBtn == talkToComputer.getSource()) {
+                        notification.setText("YOU MUST BE BORED IF YOU ARE TRYING TO TALK TO A COMPUTER");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+            } else {
+                gameState = 1;
+
+                notification.setVisible(false);
+                selection.setOpaque(false);
+                selection.setVisible(false);
+
+                redArrowForwards.setEnabled(true);
+            }
+        });
+
+        // ---------- Actions for Passenger Corridor Keypad ------------ //
+
+        // MouseListener interactions with the Passenger Corridor Keypad.
+        passengerCorridorKeypadCB.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!passengerCorridorKeypadCB.isSelected()) {
+                    notification.setText("DO YOU WANT TO SELECT THE KEYPAD?");
+                    notification.setForeground(Color.black);
+                    notification.setVisible(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (!passengerCorridorKeypadCB.isSelected()) {
+                    notification.setVisible(false);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                gameState = 2;
+
+                selection.setText("KEYPAD");
+                selection.setOpaque(true);
+                selection.setVisible(true);
+
+                notification.setText("THE KEYPAD IS SELECTED");
+                notification.setForeground(Color.black);
+                notification.setVisible(true);
+
+                redArrowForwards.setEnabled(false);
+                redArrowBackwards.setEnabled(false);
+            }
+        });
+
+        // Action Button interactions with the Passenger Corridor Keypad.
+        passengerCorridorKeypadCB.addActionListener(message -> {
+            clickCount = 0;
+
+            if (passengerCorridorKeypadCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                openObjBtn.addActionListener(openKeypad -> {
+                    if (passengerCorridorKeypadCB.isSelected() && openObjBtn == openKeypad.getSource()) {
+                        notification.setText("THE KEYPAD CANNOT BE OPENED");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                closeObjBtn.addActionListener(closeKeypad -> {
+                    if (passengerCorridorKeypadCB.isSelected() && closeObjBtn == closeKeypad.getSource()) {
+                        notification.setText("THE KEYPAD CANNOT BE CLOSED");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                inspectObjBtn.addActionListener(inspectKeypad -> {
+                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
+                        notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
+                        notification.setForeground(Color.black);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Click Action Button.wav");
+                    }
+
+                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.size() == 0 && useHistory.size() >= 1) {
+                        notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
+                        notification.setForeground(Color.black);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Click Action Button.wav");
+                    }
+
+
+                    if (inventory.size() >= 1) {
+                        if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.get(0).equals("Access Code")) {
+                            notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
+                            notification.setForeground(Color.black);
+                            notification.setVisible(true);
+
+                            audio.playSound("resources/sounds/Click Action Button.wav");
+                        }
+                    }
+                });
+
+                useObjBtn.addActionListener(useKeypad -> {
+                    if (inventory.size() == 0) {
+                        if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource()) {
+                            notification.setText("YOUR INVENTORY IS EMPTY");
+                            notification.setForeground(Color.red);
+                            notification.setVisible(true);
+
+                            audio.playSound("resources/sounds/Selection is Denied.wav");
+                        }
+                    }
+
+                    if (inventory.size() >= 1) {
+                        if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource() && inventory.get(0).equals("Access Code")) {
+                            notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
+                            notification.setForeground(Color.black);
+                            notification.setVisible(true);
+
+                            usableItem.setEnabled(true);
+
+                            audio.playSound("resources/sounds/Click Action Button.wav");
+
+                            usableItem.addActionListener(unlockDoor -> {
+                                if (usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
+                                    inventory.remove(0);
+
+                                    gameState = 1;
+
+                                    notification.setText("THE DOOR IS UNLOCKED");
+                                    notification.setForeground(new Color(0, 153, 0));
+                                    notification.setVisible(true);
+
+                                    useHistory.add("THE DOOR IS UNLOCKED");
+
+                                    redArrowForwards.setEnabled(true);
+                                    redArrowBackwards.setEnabled(true);
+
+                                    passengerCorridorKeypadCB.setSelected(false);
+                                    selection.setOpaque(false);
+                                    selection.setVisible(false);
+                                    usableItem.setVisible(false);
+
+                                    audio.playSound("resources/sounds/Selection is Approved.wav");
+                                }
+                            });
+                        }
+                    }
+                });
+
+                takeItemBtn.addActionListener(takeKeypad -> {
+                    if (passengerCorridorKeypadCB.isSelected() && takeItemBtn == takeKeypad.getSource()) {
+                        notification.setText("THE KEYPAD IS ATTACHED TO THE WALL AND CANNOT BE PICKED UP");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+
+                beginDialogueBtn.addActionListener(talkToKeypad -> {
+                    if (passengerCorridorKeypadCB.isSelected() && beginDialogueBtn == talkToKeypad.getSource()) {
+                        notification.setText("SERIOUSLY, YOU ARE TRYING TO TALK TO A KEYPAD?");
+                        notification.setForeground(Color.red);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                    }
+                });
+            } else {
+                gameState = 1;
+
+                notification.setVisible(false);
+                selection.setOpaque(false);
+                selection.setVisible(false);
+                usableItem.setEnabled(false);
+
+                redArrowForwards.setEnabled(true);
+                redArrowBackwards.setEnabled(true);
+            }
+        });
 
         // Adds the primary JPanels of the GUI.
         add(gameButtonsPane);

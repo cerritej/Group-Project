@@ -8,7 +8,7 @@ package logicPackage;
  * @version (11 / 29 / 19)
  ***********************************************************************/
 public class Location {
-    /* A dynamic value to help specify the player's location. */
+    /** The name of the current location. */
     private String location;
 
     public String getLocation() {
