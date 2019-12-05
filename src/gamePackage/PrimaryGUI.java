@@ -664,7 +664,7 @@ class PrimaryGUI extends JFrame {
                                                         audio.playSound("resources/sounds/Click Action Button.wav");
 
                                                         usableItem.addActionListener(unlockDoor -> {
-                                                            if(usableItem.getText().equals("Access Code")) {
+                                                            if(usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
                                                                 inventory.remove(0);
 
                                                                 gameState = 1;
