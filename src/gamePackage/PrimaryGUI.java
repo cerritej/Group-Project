@@ -670,6 +670,10 @@ class PrimaryGUI extends JFrame {
 
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
+
+            if (useObjBtn == useAction.getSource() && gameState == 2) {
+                clickCount++;
+            }
         });
 
         // ---------- Take Item Button ------------ //
@@ -936,8 +940,6 @@ class PrimaryGUI extends JFrame {
 
         // Action Button interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addActionListener(message -> {
-            clickCount = 0;
-
             if (passengerQuartersComputerCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Quarters")) {
                 openObjBtn.addActionListener(openComputer -> {
                     if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
@@ -990,11 +992,7 @@ class PrimaryGUI extends JFrame {
                 });
 
                 useObjBtn.addActionListener(useComputer -> {
-                    if (useObjBtn == useComputer.getSource() && gameState == 2) {
-                        clickCount++;
-                    }
-
-                    if (clickCount == 1) {
+                    if (clickCount == 0) {
                         if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                             notification.setForeground(new Color(0, 153, 0));
@@ -1011,7 +1009,7 @@ class PrimaryGUI extends JFrame {
                         }
                     }
 
-                    if (clickCount >= 2) {
+                    if (clickCount >= 1) {
                         if (inventory.size() == 0) {
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource()) {
                                 notification.setText("YOUR INVENTORY IS EMPTY");
@@ -1021,6 +1019,7 @@ class PrimaryGUI extends JFrame {
                                 audio.playSound("resources/sounds/Selection is Denied.wav");
                             }
                         }
+
                         if (inventory.size() > 0) {
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("Access Code")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
@@ -1124,8 +1123,6 @@ class PrimaryGUI extends JFrame {
 
         // Action Button interactions with the Passenger Corridor Keypad.
         passengerCorridorKeypadCB.addActionListener(message -> {
-            clickCount = 0;
-
             if (passengerCorridorKeypadCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Corridor")) {
                 openObjBtn.addActionListener(openKeypad -> {
                     if (passengerCorridorKeypadCB.isSelected() && openObjBtn == openKeypad.getSource()) {
