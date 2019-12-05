@@ -959,24 +959,43 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
-                inspectObjBtn.addActionListener(openComputer -> {
-                    if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == openComputer.getSource()) {
-                        notification.setText("PLAYER: THE GOVERNMENT WAS NICE ENOUGH TO PROVIDE EACH PASSENGER THEIR OWN COMPUTER");
+                inspectObjBtn.addActionListener(inspectComputer -> {
+                    if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource()) {
+                        notification.setText("PLAYER: THE COMPUTER SYSTEM HAS IMPORTANT INFORMATION ON IT");
                         notification.setForeground(Color.black);
                         notification.setVisible(true);
 
                         audio.playSound("resources/sounds/Click Action Button.wav");
                     }
+
+                    if (inventory.size() >= 1) {
+                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("Access Code")) {
+                            notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
+                            notification.setForeground(Color.black);
+                            notification.setVisible(true);
+
+                            audio.playSound("resources/sounds/Click Action Button.wav");
+                        }
+                    }
+
+                    if (useHistory.size() >= 1) {
+                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource()) {
+                            notification.setText("PLAYER: THERE IS NOTHING ELSE HERE FOR ME");
+                            notification.setForeground(Color.black);
+                            notification.setVisible(true);
+
+                            audio.playSound("resources/sounds/Click Action Button.wav");
+                        }
+                    }
                 });
 
-                useObjBtn.addActionListener(openComputer -> {
-                    if (useObjBtn == openComputer.getSource() && gameState == 2) {
+                useObjBtn.addActionListener(useComputer -> {
+                    if (useObjBtn == useComputer.getSource() && gameState == 2) {
                         clickCount++;
-                        System.out.println(clickCount);
                     }
 
                     if (clickCount == 1) {
-                        if (passengerQuartersComputerCB.isSelected() && inventory.size() == 0 && useHistory.size() == 0) {
+                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                             notification.setForeground(new Color(0, 153, 0));
                             notification.setVisible(true);
@@ -993,12 +1012,45 @@ class PrimaryGUI extends JFrame {
                     }
 
                     if (clickCount >= 2) {
-                        if (passengerQuartersComputerCB.isSelected() && inventory.size() > 0 || passengerQuartersComputerCB.isSelected() && useHistory.size() >= 1) {
-                            notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
-                            notification.setForeground(Color.black);
-                            notification.setVisible(true);
+                        if (inventory.size() == 0) {
+                            if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource()) {
+                                notification.setText("YOUR INVENTORY IS EMPTY");
+                                notification.setForeground(Color.red);
+                                notification.setVisible(true);
 
-                            audio.playSound("resources/sounds/Click Action Button.wav");
+                                audio.playSound("resources/sounds/Selection is Denied.wav");
+                            }
+                        }
+                        if(inventory.size() > 0) {
+                            if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("Access Code")) {
+                                notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
+                                notification.setForeground(Color.black);
+                                notification.setVisible(true);
+
+                                usableItem.setEnabled(true);
+
+                                audio.playSound("resources/sounds/Click Action Button.wav");
+
+                                usableItem.addActionListener(denyKeycard -> {
+                                    if (currentLocation.getLocation().equals("Passenger Quarters") && usableItem.getText().equals("Access Code")) {
+                                        gameState = 1;
+
+                                        notification.setText("THE KEYCARD DOES NOTHING");
+                                        notification.setForeground(Color.red);
+                                        notification.setVisible(true);
+
+                                        redArrowForwards.setEnabled(true);
+                                        redArrowBackwards.setEnabled(true);
+
+                                        passengerQuartersComputerCB.setSelected(false);
+                                        selection.setOpaque(false);
+                                        selection.setVisible(false);
+                                        usableItem.setEnabled(false);
+
+                                        audio.playSound("resources/sounds/Selection is Denied.wav");
+                                    }
+                                });
+                            }
                         }
                     }
                 });
@@ -1146,7 +1198,7 @@ class PrimaryGUI extends JFrame {
                             audio.playSound("resources/sounds/Click Action Button.wav");
 
                             usableItem.addActionListener(unlockDoor -> {
-                                if (usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
+                                if (currentLocation.getLocation().equals("Passenger Corridor") && usableItem.getText().equals("Access Code") && useHistory.size() == 0) {
                                     inventory.remove(0);
 
                                     gameState = 1;
