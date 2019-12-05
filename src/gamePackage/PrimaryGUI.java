@@ -406,14 +406,12 @@ class PrimaryGUI extends JFrame {
                                             clickCount++;
                                         }
 
-                                        if (clickCount == 1 && currentLocation.getLocation().equals("Passenger Quarters")) {
-                                            audio.playSound("resources/sounds/Selection is Approved.wav");
-                                        }
-
-                                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource() && useHistory.size() == 0) {
+                                        if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                                             notification.setForeground(Color.green);
                                             notification.setVisible(true);
+
+                                            audio.playSound("resources/sounds/Selection is Approved.wav");
 
                                             inventory.add(0, "Access Code");
                                         }
@@ -591,6 +589,8 @@ class PrimaryGUI extends JFrame {
                                                     notification.setForeground(Color.red);
                                                     notification.setVisible(true);
 
+                                                    usableItem.setVisible(false);
+
                                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                                 }
                                             });
@@ -600,6 +600,8 @@ class PrimaryGUI extends JFrame {
                                                     notification.setText("THE KEYPAD CANNOT BE CLOSED");
                                                     notification.setForeground(Color.red);
                                                     notification.setVisible(true);
+
+                                                    usableItem.setVisible(false);
 
                                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                                 }
@@ -611,6 +613,8 @@ class PrimaryGUI extends JFrame {
                                                         notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
                                                         notification.setForeground(Color.black);
                                                         notification.setVisible(true);
+
+                                                        usableItem.setVisible(false);
 
                                                         audio.playSound("resources/sounds/Click Action Button.wav");
                                                     }
@@ -629,6 +633,8 @@ class PrimaryGUI extends JFrame {
                                                         notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
                                                         notification.setForeground(Color.black);
                                                         notification.setVisible(true);
+
+                                                        usableItem.setVisible(false);
 
                                                         audio.playSound("resources/sounds/Click Action Button.wav");
                                                     }
@@ -688,6 +694,8 @@ class PrimaryGUI extends JFrame {
                                                     notification.setForeground(Color.red);
                                                     notification.setVisible(true);
 
+                                                    usableItem.setVisible(false);
+
                                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                                 }
                                             });
@@ -698,12 +706,15 @@ class PrimaryGUI extends JFrame {
                                                     notification.setForeground(Color.red);
                                                     notification.setVisible(true);
 
+                                                    usableItem.setVisible(false);
+
                                                     audio.playSound("resources/sounds/Selection is Denied.wav");
                                                 }
                                             });
                                         } else {
                                             gameState = 1;
 
+                                            usableItem.setVisible(false);
                                             notification.setVisible(false);
                                             selection.setOpaque(false);
                                             selection.setVisible(false);
