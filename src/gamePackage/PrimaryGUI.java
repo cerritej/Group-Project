@@ -971,7 +971,7 @@ class PrimaryGUI extends JFrame {
                     }
 
                     if (inventory.size() >= 1) {
-                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("ACCESS CODEA")) {
+                        if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
                             notification.setForeground(Color.black);
                             notification.setVisible(true);
