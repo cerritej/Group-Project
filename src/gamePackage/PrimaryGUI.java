@@ -408,7 +408,7 @@ class PrimaryGUI extends JFrame {
 
                                         if (passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
-                                            notification.setForeground(Color.green);
+                                            notification.setForeground(new Color(0, 153, 0));
                                             notification.setVisible(true);
 
                                             audio.playSound("resources/sounds/Selection is Approved.wav");
@@ -418,7 +418,7 @@ class PrimaryGUI extends JFrame {
 
                                         if (clickCount >= 2 && passengerQuartersComputerCB.isSelected() && useObjBtn == openComputer.getSource()) {
                                             notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
-                                            notification.setForeground(Color.BLACK);
+                                            notification.setForeground(Color.black);
                                             notification.setVisible(true);
 
                                             audio.playSound("resources/sounds/Click Action Button.wav");
@@ -465,9 +465,9 @@ class PrimaryGUI extends JFrame {
                                 passengerQuartersComputerCB.setSelected(false);
                                 notification.setText("");
 
-                                if(useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
+                                if (useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
                                     notification.setText("THE DOOR IS UNLOCKED");
-                                    notification.setForeground(Color.green);
+                                    notification.setForeground(new Color(0, 153, 0));
                                 }
 
                                 if (useHistory.size() == 0 && currentLocation.getLocation().equals("Passenger Corridor")) {
@@ -608,25 +608,24 @@ class PrimaryGUI extends JFrame {
                                             });
 
                                             inspectObjBtn.addActionListener(openComputer -> {
-                                                if(inventory.size() == 0) {
-                                                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource()) {
-                                                        notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
-                                                        notification.setForeground(Color.black);
-                                                        notification.setVisible(true);
+                                                if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
+                                                    notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
+                                                    notification.setForeground(Color.black);
+                                                    notification.setVisible(true);
 
-                                                        usableItem.setVisible(false);
+                                                    usableItem.setVisible(false);
 
-                                                        audio.playSound("resources/sounds/Click Action Button.wav");
-                                                    }
-
-                                                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && useHistory.size() >= 1) {
-                                                        notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
-                                                        notification.setForeground(Color.black);
-                                                        notification.setVisible(true);
-
-                                                        audio.playSound("resources/sounds/Click Action Button.wav");
-                                                    }
+                                                    audio.playSound("resources/sounds/Click Action Button.wav");
                                                 }
+
+                                                if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.size() == 0 && useHistory.size() >= 1) {
+                                                    notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
+                                                    notification.setForeground(Color.black);
+                                                    notification.setVisible(true);
+
+                                                    audio.playSound("resources/sounds/Click Action Button.wav");
+                                                }
+
 
                                                 if (inventory.size() >= 1) {
                                                     if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == openComputer.getSource() && inventory.get(0).equals("Access Code")) {
@@ -665,24 +664,27 @@ class PrimaryGUI extends JFrame {
                                                         audio.playSound("resources/sounds/Click Action Button.wav");
 
                                                         usableItem.addActionListener(unlockDoor -> {
-                                                            gameState = 1;
+                                                            if(usableItem.getText().equals("Access Code")) {
+                                                                inventory.remove(0);
 
-                                                            notification.setText("THE DOOR IS UNLOCKED");
-                                                            notification.setForeground(Color.green);
-                                                            notification.setVisible(true);
+                                                                gameState = 1;
 
-                                                            inventory.remove(0);
-                                                            useHistory.add("THE DOOR IS UNLOCKED");
+                                                                notification.setText("THE DOOR IS UNLOCKED");
+                                                                notification.setForeground(new Color(0, 153, 0));
+                                                                notification.setVisible(true);
 
-                                                            redArrowForwards.setEnabled(true);
-                                                            redArrowBackwards.setEnabled(true);
+                                                                useHistory.add("THE DOOR IS UNLOCKED");
 
-                                                            passengerCorridorKeypadCB.setSelected(false);
-                                                            selection.setOpaque(false);
-                                                            selection.setVisible(false);
-                                                            usableItem.setVisible(false);
+                                                                redArrowForwards.setEnabled(true);
+                                                                redArrowBackwards.setEnabled(true);
 
-                                                            audio.playSound("resources/sounds/Selection is Approved.wav");
+                                                                passengerCorridorKeypadCB.setSelected(false);
+                                                                selection.setOpaque(false);
+                                                                selection.setVisible(false);
+                                                                usableItem.setVisible(false);
+
+                                                                audio.playSound("resources/sounds/Selection is Approved.wav");
+                                                            }
                                                         });
                                                     }
                                                 }
