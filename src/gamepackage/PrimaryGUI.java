@@ -852,14 +852,14 @@ class PrimaryGUI extends JFrame {
 
             // If on the main menu, the main menu song will resume.
             if (gameState == 0) {
-                // Resumes the background music.
+                // Resumes the main menu music.
                 audioClipMusicMainMenu.setMicrosecondPosition(clipTimeMainMenu);
                 audioClipMusicMainMenu.start();
             }
 
             // If in the main game, the main game song will resume.
             if (gameState > 0) {
-                // Resumes the background music.
+                // Resumes the main game music.
                 audioClipMusicMainGame.setMicrosecondPosition(clipTimeMainGame);
                 audioClipMusicMainGame.start();
             }
@@ -917,7 +917,7 @@ class PrimaryGUI extends JFrame {
                 clipTimeMainMenu = audioClipMusicMainMenu.getMicrosecondPosition();
                 audioClipMusicMainMenu.stop();
 
-                // Pauses the background music.
+                // Pauses the main game music.
                 clipTimeMainGame = audioClipMusicMainGame.getMicrosecondPosition();
                 audioClipMusicMainGame.stop();
 
