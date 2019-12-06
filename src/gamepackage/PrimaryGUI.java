@@ -53,6 +53,16 @@ class PrimaryGUI extends JFrame {
     private int clickCount = 0;
 
     /***********************************************************************
+     * Tracks the timestamp of the main menu music track.
+     ***********************************************************************/
+    private long clipTimeMainMenu = 0;
+
+    /***********************************************************************
+     * Tracks the timestamp of the main game music track.
+     ***********************************************************************/
+    private long clipTimeMainGame = 0;
+
+    /***********************************************************************
      * Displays game messages for the player.
      ***********************************************************************/
     private final JLabel notification = new JLabel();
@@ -173,7 +183,7 @@ class PrimaryGUI extends JFrame {
         Location currentLocation = new Location();
         currentLocation.setLocation("Main Menu");
 
-        // soundPlayer object allows for sound effects and music to be played.
+        // soundPlayer object allows for non-looping sound effects to be played.
         Soundplayer audio = new Soundplayer();
 
         // Allows an audio clip to play in the background on the main menu.
@@ -186,6 +196,12 @@ class PrimaryGUI extends JFrame {
         audioClipMusicMainMenu.open(musicMainMenu);
         audioClipMusicMainMenu.start();
         audioClipMusicMainMenu.loop(Clip.LOOP_CONTINUOUSLY);
+
+        // Allows an audio clip to play in the background in the main game.
+        AudioInputStream musicMainGame = AudioSystem.getAudioInputStream(new File("resources/music/Soul Survivor.wav"));
+        AudioFormat formatMusicMainGame = musicMainGame.getFormat();
+        DataLine.Info infoMusicMainGame = new DataLine.Info(Clip.class, formatMusicMainGame);
+        Clip audioClipMusicMainGame = (Clip) AudioSystem.getLine(infoMusicMainGame);
 
         // Instantiates panels for the mainMenu.
         JLayeredPane backgroundPane = new JLayeredPane();
@@ -292,7 +308,7 @@ class PrimaryGUI extends JFrame {
         // The functionality of the start button, changes all resources to the primary game screen.
         startBtn.addActionListener(beginGame -> {
             if (startBtn == beginGame.getSource()) {
-                // Acknowledges the gameState has changed to the game screen.
+                // Main Game Mode is activated.
                 gameState = 1;
 
                 // Hide the main menu buttons.
@@ -318,39 +334,15 @@ class PrimaryGUI extends JFrame {
                 // Ends the main menu music.
                 audioClipMusicMainMenu.stop();
 
-                // Assigns an audio file to an AudioInputStream.
-                AudioInputStream musicMainGame = null;
+                // Opens and plays the assigned main menu audio clip.
                 try {
-                    musicMainGame = AudioSystem.getAudioInputStream(new File("resources/music/Soul Survivor.wav"));
-                } catch (UnsupportedAudioFileException | IOException e) {
-                    System.out.println("Error with AudioInputStream file.");
-                    e.printStackTrace();
-                }
-
-                // Gets information about the music track that has been assigned.
-                assert musicMainGame != null;
-                AudioFormat formatMainGame = musicMainGame.getFormat();
-                DataLine.Info infoMainGame = new DataLine.Info(Clip.class, formatMainGame);
-                Clip audioClipMainGame = null;
-                try {
-                    audioClipMainGame = (Clip) AudioSystem.getLine(infoMainGame);
-                } catch (LineUnavailableException e) {
-                    System.out.println("Error with getting DataLine information of file.");
-                    e.printStackTrace();
-                }
-
-                // Opens the updated music track for the game screen.
-                try {
-                    assert audioClipMainGame != null;
-                    audioClipMainGame.open(musicMainGame);
+                    audioClipMusicMainGame.open(musicMainGame);
                 } catch (LineUnavailableException | IOException e) {
-                    System.out.println("Error with opening the file.");
                     e.printStackTrace();
                 }
 
-                // Starts and loops the updated music track for the game screen.
-                audioClipMainGame.start();
-                audioClipMainGame.loop(Clip.LOOP_CONTINUOUSLY);
+                audioClipMusicMainGame.start();
+                audioClipMusicMainGame.loop(Clip.LOOP_CONTINUOUSLY);
 
                 // Changes the intro sequence frame with each press of the enter key.
                 KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
@@ -377,9 +369,9 @@ class PrimaryGUI extends JFrame {
 
                         // ---------- Traveling Between Locations ------------ //
 
-
                         switch (currentLocation.getLocation()) {
                             case "Passenger Quarters":
+                                // Places the redArrowForwards on the Passenger Quarters screen.
                                 redArrowForwards.setBounds(550, 700, 125, 125);
 
                                 // Checkboxes that must appear in Passenger Quarters.
@@ -388,7 +380,9 @@ class PrimaryGUI extends JFrame {
                                 // Checkboxes that must disappear in Passenger Quarters.
                                 passengerCorridorKeypadCB.setVisible(false);
 
+                                // Creates a mouseListener on the redArrowForwards at the Passenger Quarters.
                                 redArrowForwards.addMouseListener(new MouseAdapter() {
+                                    // If mouseEntered, display the Passenger Corridor location.
                                     @Override
                                     public void mouseEntered(final MouseEvent e) {
                                         if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 1) {
@@ -398,6 +392,7 @@ class PrimaryGUI extends JFrame {
                                         }
                                     }
 
+                                    // If mousePressed while object is selected, deny the player's move.
                                     @Override
                                     public void mousePressed(final MouseEvent e) {
                                         if (currentLocation.getLocation().equals("Passenger Quarters") && gameState == 2) {
@@ -409,6 +404,7 @@ class PrimaryGUI extends JFrame {
                                         }
                                     }
 
+                                    // If mouseExited, set the game message to disappear.
                                     @Override
                                     public void mouseExited(final MouseEvent e) {
                                         if (!redArrowForwards.isSelected()) {
@@ -420,6 +416,7 @@ class PrimaryGUI extends JFrame {
                             case "Passenger Corridor":
                                 // Action listener for allowing the player to proceed forward.
                                 redArrowForwards.addActionListener(changeLocationForwards -> {
+                                    // Places the traversal arrows on the Passenger Corridor screen.
                                     redArrowForwards.setBounds(600, 520, 125, 125);
                                     redArrowBackwards.setBounds(600, 700, 125, 125);
                                     redArrowBackwards.setVisible(true);
@@ -429,6 +426,7 @@ class PrimaryGUI extends JFrame {
                                     notification.setText("");
                                     clickCount = 0;
 
+                                    // If the player has not used their keycard, notify the door is locked.
                                     if (useHistory.size() == 0 && currentLocation.getLocation().equals("Passenger Corridor")) {
                                         notification.setText("THE DOOR IS LOCKED");
                                         notification.setForeground(Color.red);
@@ -436,6 +434,7 @@ class PrimaryGUI extends JFrame {
                                         audio.playSound("resources/sounds/Selection is Denied.wav");
                                     }
 
+                                    // If the player has used their keycard, notify the door is unlocked.
                                     if (useHistory.size() >= 1 && currentLocation.getLocation().equals("Passenger Corridor")) {
                                         notification.setText("THE DOOR IS UNLOCKED");
                                         notification.setForeground(new Color(0, 153, 0));
@@ -457,7 +456,9 @@ class PrimaryGUI extends JFrame {
                                         // Checkbox that must disappear in Passenger Corridor.
                                         passengerQuartersComputerCB.setVisible(false);
 
+                                        // Creates a mouseListener on the redArrowForwards at the Passenger Corridor.
                                         redArrowForwards.addMouseListener(new MouseAdapter() {
+                                            // If mouseEntered, display the Main Lobby location.
                                             @Override
                                             public void mouseEntered(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
@@ -467,6 +468,7 @@ class PrimaryGUI extends JFrame {
                                                 }
                                             }
 
+                                            // If mousePressed while object is selected, deny the player's move.
                                             @Override
                                             public void mousePressed(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
@@ -478,6 +480,7 @@ class PrimaryGUI extends JFrame {
                                                 }
                                             }
 
+                                            // If mouseExited, set the game message to disappear.
                                             @Override
                                             public void mouseExited(final MouseEvent e) {
                                                 if (!redArrowForwards.isSelected()) {
@@ -486,7 +489,9 @@ class PrimaryGUI extends JFrame {
                                             }
                                         });
 
+                                        // Creates a mouseListener on the redArrowBackwards at the Passenger Corridor.
                                         redArrowBackwards.addMouseListener(new MouseAdapter() {
+                                            // If mouseEntered, display the Passenger Quarters location.
                                             @Override
                                             public void mouseEntered(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 1) {
@@ -496,6 +501,7 @@ class PrimaryGUI extends JFrame {
                                                 }
                                             }
 
+                                            // If mousePressed while object is selected, deny the player's move.
                                             @Override
                                             public void mousePressed(final MouseEvent e) {
                                                 if (currentLocation.getLocation().equals("Passenger Corridor") && gameState == 2) {
@@ -507,6 +513,7 @@ class PrimaryGUI extends JFrame {
                                                 }
                                             }
 
+                                            // If mouseExited, set the game message to disappear.
                                             @Override
                                             public void mouseExited(final MouseEvent e) {
                                                 if (!redArrowBackwards.isSelected()) {
@@ -697,9 +704,9 @@ class PrimaryGUI extends JFrame {
                 audio.playSound("resources/sounds/Click Action Button.wav");
             }
 
-            if (useObjBtn == useAction.getSource() && gameState == 2) {
+            // Counts when the use button is clicked when an object is selected.
+            if (gameState == 2 && useObjBtn == useAction.getSource()) {
                 clickCount++;
-                System.out.println(clickCount);
             }
         });
 
@@ -761,12 +768,14 @@ class PrimaryGUI extends JFrame {
         gameButtonsPane.add(exitBtn);
         exitBtn.setBounds(28, 950, 80, 80);
 
-        // The functionality of the exit button, brings up exit choices.
+        // The functionality of the exit button, brings up pause menu.
         exitBtn.addActionListener(exitMenuDisplay -> {
+            // Pause menu will appear.
             confirmBtn.setVisible(true);
             cancelBtn.setVisible(true);
             pauseMessage.setVisible(true);
 
+            // Action buttons will disappear.
             exitBtn.setVisible(false);
             openObjBtn.setVisible(false);
             closeObjBtn.setVisible(false);
@@ -775,13 +784,24 @@ class PrimaryGUI extends JFrame {
             takeItemBtn.setVisible(false);
             beginDialogueBtn.setVisible(false);
 
+            // Traversal arrows will disappear.
             redArrowForwards.setVisible(false);
             redArrowBackwards.setVisible(false);
 
+            // Selectable objects will disappear.
             passengerQuartersComputerCB.setVisible(false);
             passengerCorridorKeypadCB.setVisible(false);
 
+            // Inventory will deactivate.
             usableItem.setEnabled(false);
+
+            // Pauses the main menu music.
+            clipTimeMainMenu = audioClipMusicMainMenu.getMicrosecondPosition();
+            audioClipMusicMainMenu.stop();
+
+            // Pauses the main game music.
+            clipTimeMainGame = audioClipMusicMainGame.getMicrosecondPosition();
+            audioClipMusicMainGame.stop();
 
             // Plays a sound effect when button is clicked.
             audio.playSound("resources/sounds/Pause Menu.wav");
@@ -830,7 +850,21 @@ class PrimaryGUI extends JFrame {
             cancelBtn.setVisible(false);
             pauseMessage.setVisible(false);
 
-            // Performs the correct cancel button operations for main menu.
+            // If on the main menu, the main menu song will resume.
+            if(gameState == 0) {
+                // Resumes the background music.
+                audioClipMusicMainMenu.setMicrosecondPosition(clipTimeMainMenu);
+                audioClipMusicMainMenu.start();
+            }
+
+            // If in the main game, the main game song will resume.
+            if(gameState > 0) {
+                // Resumes the background music.
+                audioClipMusicMainGame.setMicrosecondPosition(clipTimeMainGame);
+                audioClipMusicMainGame.start();
+            }
+
+            // Main menu buttons will reappear.
             if (gameState == 0) {
                 startBtn.setVisible(true);
                 loadBtn.setVisible(true);
@@ -838,7 +872,7 @@ class PrimaryGUI extends JFrame {
                 secretBtn.setVisible(true);
             }
 
-            // Performs the correct cancel button operations for game screen.
+            // Action buttons, traversal arrows and inventory will reactivate.
             if (gameState == 1 || gameState == 2) {
                 exitBtn.setVisible(true);
                 openObjBtn.setVisible(true);
@@ -851,12 +885,17 @@ class PrimaryGUI extends JFrame {
                 redArrowForwards.setVisible(true);
                 redArrowBackwards.setVisible(true);
 
-                usableItem.setEnabled(true);
+                // If the use button was last used before pausing, keep inventory active.
+                if (notification.getText().equals("WHAT ITEM WOULD YOU LIKE TO USE?")) {
+                    usableItem.setEnabled(true);
+                }
 
+                // If the Passenger Quarters Computer was last selected, keep selected.
                 if (currentLocation.getLocation().equals("Passenger Quarters")) {
                     passengerQuartersComputerCB.setVisible(true);
                 }
 
+                // If the Passenger Corridor Keypad was last selected, keep selected.
                 if (currentLocation.getLocation().equals("Passenger Corridor")) {
                     passengerCorridorKeypadCB.setVisible(true);
                 }
@@ -869,11 +908,20 @@ class PrimaryGUI extends JFrame {
         KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         Action escapeAction = new AbstractAction() {
             public void actionPerformed(final ActionEvent event) {
+                // Pause menu will appear.
                 confirmBtn.setVisible(true);
                 cancelBtn.setVisible(true);
                 pauseMessage.setVisible(true);
 
-                // Performs the correct cancel button operations for main menu.
+                // Pauses the main menu music.
+                clipTimeMainMenu = audioClipMusicMainMenu.getMicrosecondPosition();
+                audioClipMusicMainMenu.stop();
+
+                // Pauses the background music.
+                clipTimeMainGame = audioClipMusicMainGame.getMicrosecondPosition();
+                audioClipMusicMainGame.stop();
+
+                // Main menu buttons will disappear.
                 if (gameState == 0) {
                     startBtn.setVisible(false);
                     loadBtn.setVisible(false);
@@ -881,8 +929,9 @@ class PrimaryGUI extends JFrame {
                     secretBtn.setVisible(false);
                 }
 
-                // Performs the correct cancel button operations for game screen.
+                // Main game features will disappear.
                 if (gameState == 1 || gameState == 2) {
+                    // Action buttons will disappear.
                     exitBtn.setVisible(false);
                     openObjBtn.setVisible(false);
                     closeObjBtn.setVisible(false);
@@ -891,12 +940,15 @@ class PrimaryGUI extends JFrame {
                     takeItemBtn.setVisible(false);
                     beginDialogueBtn.setVisible(false);
 
+                    // Traversal arrows will disappear.
                     redArrowForwards.setVisible(false);
                     redArrowBackwards.setVisible(false);
 
+                    // Selectable objects will disappear.
                     passengerQuartersComputerCB.setVisible(false);
                     passengerCorridorKeypadCB.setVisible(false);
 
+                    // Inventory will deactivate.
                     usableItem.setEnabled(false);
                 }
 
@@ -933,6 +985,7 @@ class PrimaryGUI extends JFrame {
 
         // MouseListener interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addMouseListener(new MouseAdapter() {
+            // If mouseEntered, display the selection message.
             @Override
             public void mouseEntered(final MouseEvent e) {
                 if (!passengerQuartersComputerCB.isSelected()) {
@@ -942,6 +995,7 @@ class PrimaryGUI extends JFrame {
                 }
             }
 
+            // If mouseExited, set the game message to disappear.
             @Override
             public void mouseExited(final MouseEvent e) {
                 if (!passengerQuartersComputerCB.isSelected()) {
@@ -949,18 +1003,23 @@ class PrimaryGUI extends JFrame {
                 }
             }
 
+            // If mousePressed, Selection Mode is activated.
             @Override
             public void mousePressed(final MouseEvent e) {
+                // Selection Mode is activated.
                 gameState = 2;
 
+                // Selection labels appear.
                 selection.setText("COMPUTER");
                 selection.setOpaque(true);
                 selection.setVisible(true);
 
+                // Selected Computer game message appears.
                 notification.setText("THE COMPUTER IS SELECTED");
                 notification.setForeground(Color.black);
                 notification.setVisible(true);
 
+                // Deactivates traversal between rooms.
                 redArrowForwards.setEnabled(false);
             }
         });
@@ -968,7 +1027,13 @@ class PrimaryGUI extends JFrame {
         // Action Button interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addActionListener(message -> {
             if (passengerQuartersComputerCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Quarters")) {
+
+                // Open action button when Passenger Quarters Computer is selected.
                 openObjBtn.addActionListener(openComputer -> {
+                    // Inventory deactivates.
+                    usableItem.setEnabled(false);
+
+                    // Prevents the player from opening the computer.
                     if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
                         notification.setText("THE COMPUTER CANNOT BE OPENED");
                         notification.setForeground(Color.red);
@@ -978,7 +1043,12 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Close action button when Passenger Quarters Computer is selected.
                 closeObjBtn.addActionListener(closeComputer -> {
+                    // Inventory deactivates.
+                    usableItem.setEnabled(false);
+
+                    // Prevents the player from closing the computer.
                     if (passengerQuartersComputerCB.isSelected() && closeObjBtn == closeComputer.getSource()) {
                         notification.setText("THE COMPUTER CANNOT BE CLOSED");
                         notification.setForeground(Color.red);
@@ -988,7 +1058,12 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Inspect action button when Passenger Quarters Computer is selected.
                 inspectObjBtn.addActionListener(inspectComputer -> {
+                    // Inventory deactivates.
+                    usableItem.setEnabled(false);
+
+                    // Displays the main character's current thoughts initially.
                     if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource()) {
                         notification.setText("PLAYER: THE COMPUTER SYSTEM HAS IMPORTANT INFORMATION ON IT");
                         notification.setForeground(Color.black);
@@ -997,6 +1072,7 @@ class PrimaryGUI extends JFrame {
                         audio.playSound("resources/sounds/Click Action Button.wav");
                     }
 
+                    // Displays the main character's current thoughts after acquiring the keycard.
                     if (inventory.size() >= 1) {
                         if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("PLAYER: I ALREADY HAVE WHAT I NEED");
@@ -1007,6 +1083,7 @@ class PrimaryGUI extends JFrame {
                         }
                     }
 
+                    // Displays the main character's current thoughts after using the keycard.
                     if (useHistory.size() >= 1) {
                         if (passengerQuartersComputerCB.isSelected() && inspectObjBtn == inspectComputer.getSource()) {
                             notification.setText("PLAYER: THERE IS NOTHING ELSE HERE FOR ME");
@@ -1018,15 +1095,19 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Use action button when Passenger Quarters Computer is selected.
                 useObjBtn.addActionListener(useComputer -> {
                     if (clickCount == 0) {
+                        // Using the computer for the first time grants the player a keycard.
                         if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                             notification.setText("YOU USE THE COMPUTER AND FIND AN ACCESS CODE FOR THE HALLWAY");
                             notification.setForeground(new Color(0, 153, 0));
                             notification.setVisible(true);
 
+                            // Keycard is added to the inventory.
                             inventory.add(0, "ACCESS CODE");
 
+                            // Inventory button is added to the main game.
                             usableItem.setBounds(1400, 100, 410, 40);
                             usableItem.setText(inventory.get(0));
                             usableItem.setVisible(true);
@@ -1038,6 +1119,7 @@ class PrimaryGUI extends JFrame {
 
                     if (clickCount >= 1) {
                         if (inventory.size() == 0) {
+                            // Using the computer with an empty inventory will be denied.
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource()) {
                                 notification.setText("YOUR INVENTORY IS EMPTY");
                                 notification.setForeground(Color.red);
@@ -1047,27 +1129,34 @@ class PrimaryGUI extends JFrame {
                             }
                         }
 
-                        if (inventory.size() > 0) {
+                        if (inventory.size() >= 1) {
+                            // Using the computer with a usable inventory.
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                                 notification.setForeground(Color.black);
                                 notification.setVisible(true);
 
+                                // Inventory activates.
                                 usableItem.setEnabled(true);
 
                                 audio.playSound("resources/sounds/Click Action Button.wav");
 
                                 usableItem.addActionListener(denyKeycard -> {
+                                    // Using the keycard on the computer.
                                     if (currentLocation.getLocation().equals("Passenger Quarters") && usableItem.getText().equals("ACCESS CODE")) {
+                                        // Main Game Mode is activated.
                                         gameState = 1;
 
+                                        // Player's action is denied.
                                         notification.setText("THE KEYCARD DOES NOTHING");
                                         notification.setForeground(Color.red);
                                         notification.setVisible(true);
 
+                                        // Traversal arrows are reactivated.
                                         redArrowForwards.setEnabled(true);
                                         redArrowBackwards.setEnabled(true);
 
+                                        // Selection Mode is deactivated.
                                         passengerQuartersComputerCB.setSelected(false);
                                         selection.setOpaque(false);
                                         selection.setVisible(false);
@@ -1081,7 +1170,12 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Take action button when Passenger Quarters Computer is selected.
                 takeItemBtn.addActionListener(takeComputer -> {
+                    // Inventory deactivates.
+                    usableItem.setEnabled(false);
+
+                    // Prevents the player from taking the computer.
                     if (passengerQuartersComputerCB.isSelected() && takeItemBtn == takeComputer.getSource()) {
                         notification.setText("THE COMPUTER IS CONNECTED TO THE DESK AND CANNOT BE PICKED UP");
                         notification.setForeground(Color.red);
@@ -1091,7 +1185,12 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Talk action button when Passenger Quarters Computer is selected.
                 beginDialogueBtn.addActionListener(talkToComputer -> {
+                    // Inventory deactivates.
+                    usableItem.setEnabled(false);
+
+                    // Notifies the player that talking to the computer is pointless.
                     if (passengerQuartersComputerCB.isSelected() && beginDialogueBtn == talkToComputer.getSource()) {
                         notification.setText("YOU MUST BE BORED IF YOU ARE TRYING TO TALK TO A COMPUTER");
                         notification.setForeground(Color.red);
@@ -1101,13 +1200,16 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
+                // Main Game Mode is activated.
                 gameState = 1;
 
+                // Selection Mode is deactivated.
                 notification.setVisible(false);
                 selection.setOpaque(false);
                 selection.setVisible(false);
                 usableItem.setEnabled(false);
 
+                // Traversal arrows are activated.
                 redArrowForwards.setEnabled(true);
             }
         });
@@ -1116,6 +1218,7 @@ class PrimaryGUI extends JFrame {
 
         // MouseListener interactions with the Passenger Corridor Keypad.
         passengerCorridorKeypadCB.addMouseListener(new MouseAdapter() {
+            // If mouseEntered, display the selection message.
             @Override
             public void mouseEntered(final MouseEvent e) {
                 if (!passengerCorridorKeypadCB.isSelected()) {
@@ -1125,6 +1228,7 @@ class PrimaryGUI extends JFrame {
                 }
             }
 
+            // If mouseExited, set the game message to disappear.
             @Override
             public void mouseExited(final MouseEvent e) {
                 if (!passengerCorridorKeypadCB.isSelected()) {
@@ -1132,18 +1236,23 @@ class PrimaryGUI extends JFrame {
                 }
             }
 
+            // If mousePressed, Selection Mode is Activated.
             @Override
             public void mousePressed(final MouseEvent e) {
+                // Selection Mode is activated.
                 gameState = 2;
 
+                // Selection labels appear.
                 selection.setText("KEYPAD");
                 selection.setOpaque(true);
                 selection.setVisible(true);
 
+                // Selected Keypad game message appears.
                 notification.setText("THE KEYPAD IS SELECTED");
                 notification.setForeground(Color.black);
                 notification.setVisible(true);
 
+                // Deactivates traversal between rooms.
                 redArrowForwards.setEnabled(false);
                 redArrowBackwards.setEnabled(false);
             }
@@ -1152,7 +1261,10 @@ class PrimaryGUI extends JFrame {
         // Action Button interactions with the Passenger Corridor Keypad.
         passengerCorridorKeypadCB.addActionListener(message -> {
             if (passengerCorridorKeypadCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Corridor")) {
+
+                // Open action button when Passenger Corridor Keypad is selected.
                 openObjBtn.addActionListener(openKeypad -> {
+                    // Prevents the player from opening the keypad.
                     if (passengerCorridorKeypadCB.isSelected() && openObjBtn == openKeypad.getSource()) {
                         notification.setText("THE KEYPAD CANNOT BE OPENED");
                         notification.setForeground(Color.red);
@@ -1162,7 +1274,9 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Close action button when Passenger Corridor Keypad is selected.
                 closeObjBtn.addActionListener(closeKeypad -> {
+                    // Prevents the player from closing the keypad.
                     if (passengerCorridorKeypadCB.isSelected() && closeObjBtn == closeKeypad.getSource()) {
                         notification.setText("THE KEYPAD CANNOT BE CLOSED");
                         notification.setForeground(Color.red);
@@ -1172,7 +1286,9 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Inspect action button when Passenger Corridor Keypad is selected.
                 inspectObjBtn.addActionListener(inspectKeypad -> {
+                    // Displays the main character's current thoughts initially.
                     if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.size() == 0 && useHistory.size() == 0) {
                         notification.setText("PLAYER: I NEED TO FIND THE ACCESS CODE TO OPEN THIS DOOR");
                         notification.setForeground(Color.black);
@@ -1181,15 +1297,7 @@ class PrimaryGUI extends JFrame {
                         audio.playSound("resources/sounds/Click Action Button.wav");
                     }
 
-                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.size() == 0 && useHistory.size() >= 1) {
-                        notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
-                        notification.setForeground(Color.black);
-                        notification.setVisible(true);
-
-                        audio.playSound("resources/sounds/Click Action Button.wav");
-                    }
-
-
+                    // Displays the main character's current thoughts while the keycard is in the inventory.
                     if (inventory.size() >= 1) {
                         if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("PLAYER: MAYBE I SHOULD USE THE ACCESS CODE?");
@@ -1199,10 +1307,21 @@ class PrimaryGUI extends JFrame {
                             audio.playSound("resources/sounds/Click Action Button.wav");
                         }
                     }
+
+                    // Displays the main character's current thoughts after using the keycard on the door.
+                    if (passengerCorridorKeypadCB.isSelected() && inspectObjBtn == inspectKeypad.getSource() && inventory.size() == 0 && useHistory.size() >= 1) {
+                        notification.setText("PLAYER: I'VE ALREADY UNLOCKED THE DOOR");
+                        notification.setForeground(Color.black);
+                        notification.setVisible(true);
+
+                        audio.playSound("resources/sounds/Click Action Button.wav");
+                    }
                 });
 
+                // Use action button when Passenger Corridor Keypad is selected.
                 useObjBtn.addActionListener(useKeypad -> {
                     if (inventory.size() == 0) {
+                        // Using the keypad with an empty inventory will be denied.
                         if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource()) {
                             notification.setText("YOUR INVENTORY IS EMPTY");
                             notification.setForeground(Color.red);
@@ -1213,30 +1332,39 @@ class PrimaryGUI extends JFrame {
                     }
 
                     if (inventory.size() >= 1) {
+                        // Using the computer with a usable inventory.
                         if (passengerCorridorKeypadCB.isSelected() && useObjBtn == useKeypad.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                             notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
                             notification.setForeground(Color.black);
                             notification.setVisible(true);
 
+                            // Inventory activates.
                             usableItem.setEnabled(true);
 
                             audio.playSound("resources/sounds/Click Action Button.wav");
 
                             usableItem.addActionListener(unlockDoor -> {
+                                // Using the keycard on the computer.
                                 if (currentLocation.getLocation().equals("Passenger Corridor") && usableItem.getText().equals("ACCESS CODE") && useHistory.size() == 0) {
+                                    // Keycard is removed from the inventory.
                                     inventory.remove(0);
 
+                                    // Main Game Mode is activated.
                                     gameState = 1;
 
+                                    // Approves the player's actions.
                                     notification.setText("THE DOOR IS UNLOCKED");
                                     notification.setForeground(new Color(0, 153, 0));
                                     notification.setVisible(true);
 
+                                    // Unlocking the door with the keycard is added to the record.
                                     useHistory.add("THE DOOR IS UNLOCKED");
 
+                                    // Traversals arrows are reactivated.
                                     redArrowForwards.setEnabled(true);
                                     redArrowBackwards.setEnabled(true);
 
+                                    // Selection Mode is deactivated.
                                     passengerCorridorKeypadCB.setSelected(false);
                                     selection.setOpaque(false);
                                     selection.setVisible(false);
@@ -1249,7 +1377,9 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Take action button when Passenger Corridor Keypad is selected.
                 takeItemBtn.addActionListener(takeKeypad -> {
+                    // Prevents the player from taking the keypad.
                     if (passengerCorridorKeypadCB.isSelected() && takeItemBtn == takeKeypad.getSource()) {
                         notification.setText("THE KEYPAD IS ATTACHED TO THE WALL AND CANNOT BE PICKED UP");
                         notification.setForeground(Color.red);
@@ -1259,7 +1389,9 @@ class PrimaryGUI extends JFrame {
                     }
                 });
 
+                // Talk action button when Passenger Corridor Keypad is selected.
                 beginDialogueBtn.addActionListener(talkToKeypad -> {
+                    // Notifies the player that talking to the keypad is pointless.
                     if (passengerCorridorKeypadCB.isSelected() && beginDialogueBtn == talkToKeypad.getSource()) {
                         notification.setText("SERIOUSLY, YOU ARE TRYING TO TALK TO A KEYPAD?");
                         notification.setForeground(Color.red);
@@ -1269,14 +1401,17 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
+                // Main Game Mode is activated.
                 clickCount = 0;
                 gameState = 1;
 
+                // Selection Mode is deactivated.
                 notification.setVisible(false);
                 selection.setOpaque(false);
                 selection.setVisible(false);
                 usableItem.setEnabled(false);
 
+                // Traversal arrows are reactivated.
                 redArrowForwards.setEnabled(true);
                 redArrowBackwards.setEnabled(true);
             }
