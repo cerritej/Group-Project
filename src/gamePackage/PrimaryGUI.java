@@ -123,7 +123,7 @@ class PrimaryGUI extends JFrame {
     private final JButton confirmBtn = new JButton("CONFIRM");
 
     /***********************************************************************
-     * Resumes the game.
+     * Unpauses the game.
      ***********************************************************************/
     private final JButton cancelBtn = new JButton("CANCEL");
 
@@ -156,11 +156,10 @@ class PrimaryGUI extends JFrame {
 
     /******************************************************************
      * Main method that runs the primaryGUI class.
-     * @throws IOException Throws an error when input/output does not work.
-     * @throws UnsupportedAudioFileException Throws an error when audio file is incorrect.
-     * @throws LineUnavailableException Throws an error when line information is incorrect.
+     * @throws IOException Error for input/output violations.
+     * @throws UnsupportedAudioFileException Error for wrong audio file.
+     * @throws LineUnavailableException Error for unavailable dataline.
      ******************************************************************/
-    @SuppressWarnings("checkstyle:MagicNumber")
     PrimaryGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         super("Soul Survivor");
 
@@ -378,8 +377,8 @@ class PrimaryGUI extends JFrame {
 
                         // ---------- Traveling Between Locations ------------ //
 
+
                         switch (currentLocation.getLocation()) {
-                            default:
                             case "Passenger Quarters":
                                 redArrowForwards.setBounds(550, 700, 125, 125);
 
@@ -685,6 +684,7 @@ class PrimaryGUI extends JFrame {
         gameButtonsPane.add(useObjBtn);
         useObjBtn.setBounds(730, 924, 175, 130);
 
+
         // Plays a sound effect when button is clicked.
         useObjBtn.addActionListener(useAction -> {
             if (gameState == 1 && useAction.getSource() == useObjBtn) {
@@ -697,7 +697,9 @@ class PrimaryGUI extends JFrame {
 
             if (useObjBtn == useAction.getSource() && gameState == 2) {
                 clickCount++;
+                System.out.println(clickCount);
             }
+
         });
 
         // ---------- Take Item Button ------------ //
@@ -795,7 +797,7 @@ class PrimaryGUI extends JFrame {
         // Defines the style of confirm button for the game screen.
         confirmBtn.setBackground(Color.black);
         confirmBtn.setForeground(Color.white);
-        confirmBtn.setFont(new Font("Dialog", Font.BOLD, 20));
+        confirmBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
 
         // Adds the confirm button.
         gameButtonsPane.add(confirmBtn);
@@ -815,7 +817,7 @@ class PrimaryGUI extends JFrame {
         // Defines the style of cancel button for the game screen.
         cancelBtn.setBackground(Color.black);
         cancelBtn.setForeground(Color.white);
-        cancelBtn.setFont(new Font("Dialog", Font.BOLD, 20));
+        cancelBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
 
         // Adds the cancel button.
         gameButtonsPane.add(cancelBtn);
@@ -964,6 +966,7 @@ class PrimaryGUI extends JFrame {
 
         // Action Button interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addActionListener(message -> {
+
             if (passengerQuartersComputerCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Quarters")) {
                 openObjBtn.addActionListener(openComputer -> {
                     if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
@@ -1043,7 +1046,6 @@ class PrimaryGUI extends JFrame {
                                 audio.playSound("resources/sounds/Selection is Denied.wav");
                             }
                         }
-
                         if (inventory.size() > 0) {
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
@@ -1266,8 +1268,8 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
-                clickCount = 0;
                 gameState = 1;
+                clickCount = 0;
 
                 notification.setVisible(false);
                 selection.setOpaque(false);
