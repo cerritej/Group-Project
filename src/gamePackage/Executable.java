@@ -9,7 +9,7 @@ import java.io.IOException;
  * The Executable class contains the main method which allows the
  * application to be executed.
  *
- * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @author (Jeremiah Cerriteno, Kyle Jacobson)
  * @version (10 / 25 / 19)
  ***********************************************************************/
 public class Executable {

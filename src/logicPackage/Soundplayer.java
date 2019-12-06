@@ -9,7 +9,7 @@ import java.io.File;
  * The Soundplayer class allows all non-looping sound effects to be
  * played while the user interacts with the GUI.
  *
- * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @author (Jeremiah Cerriteno, Kyle Jacobson)
  * @version (11 / 29 / 19)
  ***********************************************************************/
 public class Soundplayer {

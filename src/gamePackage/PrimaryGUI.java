@@ -37,7 +37,7 @@ import javax.swing.SwingConstants;
  * The PrimaryGUI class creates the components and general functions
  * that can be displayed when the GUI is executed.
  *
- * @author (Jeremiah Cerriteno, Kyle Jacobson, Austin Jarema)
+ * @author (Jeremiah Cerriteno, Kyle Jacobson)
  * @version (10 / 25 / 19)
  ***********************************************************************/
 
@@ -699,7 +699,6 @@ class PrimaryGUI extends JFrame {
                 clickCount++;
                 System.out.println(clickCount);
             }
-
         });
 
         // ---------- Take Item Button ------------ //
@@ -966,7 +965,6 @@ class PrimaryGUI extends JFrame {
 
         // Action Button interactions with the Passenger Quarters Computer.
         passengerQuartersComputerCB.addActionListener(message -> {
-
             if (passengerQuartersComputerCB.isSelected() && gameState == 2 && currentLocation.getLocation().equals("Passenger Quarters")) {
                 openObjBtn.addActionListener(openComputer -> {
                     if (passengerQuartersComputerCB.isSelected() && openObjBtn == openComputer.getSource()) {
@@ -1101,7 +1099,6 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
-                clickCount = 0;
                 gameState = 1;
 
                 notification.setVisible(false);
@@ -1270,8 +1267,8 @@ class PrimaryGUI extends JFrame {
                     }
                 });
             } else {
-                gameState = 1;
                 clickCount = 0;
+                gameState = 1;
 
                 notification.setVisible(false);
                 selection.setOpaque(false);
