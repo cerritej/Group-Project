@@ -186,7 +186,7 @@ class PrimaryGUI extends JFrame {
         // soundPlayer object allows for non-looping sound effects to be played.
         Soundplayer audio = new Soundplayer();
 
-        // Allows an audio clip to play in the background on the main menu.
+        // Allows an audio clip to play in the e on the main menu.
         AudioInputStream musicMainMenu = AudioSystem.getAudioInputStream(new File("resources/music/Main Menu Theme.wav"));
         AudioFormat formatMusicMainMenu = musicMainMenu.getFormat();
         DataLine.Info infoMusicMainMenu = new DataLine.Info(Clip.class, formatMusicMainMenu);

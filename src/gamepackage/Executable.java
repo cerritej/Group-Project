@@ -24,7 +24,13 @@ final class Executable {
         SwingUtilities.invokeLater(() -> {
             try {
                 new PrimaryGUI();
-            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            } catch (IOException e) {
+                System.out.println("Error with playing sound file.");
+                e.printStackTrace();
+            } catch (UnsupportedAudioFileException e) {
+                System.out.println("Error with playing sound file.");
+                e.printStackTrace();
+            } catch (LineUnavailableException e) {
                 System.out.println("Error with playing sound file.");
                 e.printStackTrace();
             }
