@@ -851,14 +851,14 @@ class PrimaryGUI extends JFrame {
             pauseMessage.setVisible(false);
 
             // If on the main menu, the main menu song will resume.
-            if(gameState == 0) {
+            if (gameState == 0) {
                 // Resumes the background music.
                 audioClipMusicMainMenu.setMicrosecondPosition(clipTimeMainMenu);
                 audioClipMusicMainMenu.start();
             }
 
             // If in the main game, the main game song will resume.
-            if(gameState > 0) {
+            if (gameState > 0) {
                 // Resumes the background music.
                 audioClipMusicMainGame.setMicrosecondPosition(clipTimeMainGame);
                 audioClipMusicMainGame.start();
