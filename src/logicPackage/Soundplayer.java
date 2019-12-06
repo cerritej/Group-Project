@@ -13,7 +13,11 @@ import java.io.File;
  * @version (11 / 29 / 19)
  ***********************************************************************/
 public class Soundplayer {
-    public void playSound(String soundName) {
+    /******************************************************************
+     * The method for playing non-looping sound effects.
+     * @param soundName The name of the sound file being passed.
+     ******************************************************************/
+    public void playSound(final String soundName) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();

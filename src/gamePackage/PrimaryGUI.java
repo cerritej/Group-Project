@@ -797,7 +797,7 @@ class PrimaryGUI extends JFrame {
         // Defines the style of confirm button for the game screen.
         confirmBtn.setBackground(Color.black);
         confirmBtn.setForeground(Color.white);
-        confirmBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
+        confirmBtn.setFont(new Font("Dialog", Font.BOLD, 20));
 
         // Adds the confirm button.
         gameButtonsPane.add(confirmBtn);
@@ -817,7 +817,7 @@ class PrimaryGUI extends JFrame {
         // Defines the style of cancel button for the game screen.
         cancelBtn.setBackground(Color.black);
         cancelBtn.setForeground(Color.white);
-        cancelBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
+        cancelBtn.setFont(new Font("Dialog", Font.BOLD, 20));
 
         // Adds the cancel button.
         gameButtonsPane.add(cancelBtn);
@@ -1046,6 +1046,7 @@ class PrimaryGUI extends JFrame {
                                 audio.playSound("resources/sounds/Selection is Denied.wav");
                             }
                         }
+
                         if (inventory.size() > 0) {
                             if (passengerQuartersComputerCB.isSelected() && useObjBtn == useComputer.getSource() && inventory.get(0).equals("ACCESS CODE")) {
                                 notification.setText("WHAT ITEM WOULD YOU LIKE TO USE?");
@@ -1106,6 +1107,7 @@ class PrimaryGUI extends JFrame {
                 notification.setVisible(false);
                 selection.setOpaque(false);
                 selection.setVisible(false);
+                usableItem.setEnabled(false);
 
                 redArrowForwards.setEnabled(true);
             }

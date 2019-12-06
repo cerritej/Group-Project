@@ -11,11 +11,19 @@ public class Location {
     /** The name of the current location. */
     private String location;
 
+    /******************************************************************
+     * Returns the current location of the player.
+     * @return String
+     ******************************************************************/
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String currentArea) {
+    /******************************************************************
+     * Passes the currentArea parameter to the current location.
+     * @param currentArea The current location of the player.
+     ******************************************************************/
+    public void setLocation(final String currentArea) {
         this.location = currentArea;
     }
 }
