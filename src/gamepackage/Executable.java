@@ -1,4 +1,4 @@
-package gamePackage;
+package gamepackage;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -12,12 +12,15 @@ import java.io.IOException;
  * @author (Jeremiah Cerriteno, Kyle Jacobson)
  * @version (10 / 25 / 19)
  ***********************************************************************/
-public class Executable {
+final class Executable {
+    private Executable() {
+        // Blank constructor to fulfill Sun Checks Checkstyle standards.
+    }
     /******************************************************************
      * Main method that runs the primaryGUI class.
      * @param args The arguments for the main method.
      ******************************************************************/
-    public static void main(final String[] args) {
+     public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
                 new PrimaryGUI();

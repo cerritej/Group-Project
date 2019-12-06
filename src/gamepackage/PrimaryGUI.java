@@ -1,7 +1,7 @@
-package gamePackage;
+package gamepackage;
 
-import logicPackage.Location;
-import logicPackage.Soundplayer;
+import logicpackage.Location;
+import logicpackage.Soundplayer;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -536,6 +536,8 @@ class PrimaryGUI extends JFrame {
                                         });
                                     }
                                 });
+                            default:
+                                // Blank switch case to fulfill Sun Checks Checkstyle standards.
                         }
                     }
                 };

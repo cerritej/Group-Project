@@ -1,4 +1,4 @@
-package logicPackage;
+package logicpackage;
 
 /***********************************************************************
  * The Location class helps with recording where the player is
