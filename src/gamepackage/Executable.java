@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author (Jeremiah Cerriteno, Kyle Jacobson)
  * @version (10 / 25 / 19)
  ***********************************************************************/
-final class Executable {
+public final class Executable {
     private Executable() {
         // Blank constructor to fulfill Sun Checks Checkstyle standards.
     }

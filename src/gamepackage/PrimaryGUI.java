@@ -41,7 +41,7 @@ import javax.swing.SwingConstants;
  * @version (10 / 25 / 19)
  ***********************************************************************/
 
-class PrimaryGUI extends JFrame {
+public class PrimaryGUI extends JFrame {
     /***********************************************************************
      * Specifies what section of the game the player is at.
      ***********************************************************************/
