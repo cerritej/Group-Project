@@ -133,7 +133,7 @@ class PrimaryGUI extends JFrame {
     private final JButton confirmBtn = new JButton("CONFIRM");
 
     /***********************************************************************
-     * Unpauses the game.
+     * Resumes the game.
      ***********************************************************************/
     private final JButton cancelBtn = new JButton("CANCEL");
 
@@ -862,6 +862,7 @@ class PrimaryGUI extends JFrame {
                 // Resumes the main game music.
                 audioClipMusicMainGame.setMicrosecondPosition(clipTimeMainGame);
                 audioClipMusicMainGame.start();
+                audioClipMusicMainGame.loop(Clip.LOOP_CONTINUOUSLY);
             }
 
             // Main menu buttons will reappear.
